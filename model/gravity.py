@@ -304,6 +304,24 @@ def main() -> None:
     out["origin_in_allocation_fit"] = out.orig.isin(live).astype(int)
 
     save(out, "gravity_predictions", INTERIM)
+
+    # Persist the fitted coefficients so the method page can show what the model
+    # actually estimated rather than a hand-written description that drifts.
+    d = _design(panel).dropna(subset=alloc["spec"] + ["permits"])
+    d = _drop_separated(d, alloc["fe_keys"])
+    coef = pd.DataFrame({
+        "regressor": alloc["spec"],
+        "coef": alloc["beta"],
+        "se": alloc["se"],
+        "sd_x": [d[c].std() for c in alloc["spec"]],
+    })
+    coef["z"] = coef.coef / coef.se.replace(0, np.nan)
+    coef["std_effect"] = (coef.coef * coef.sd_x).abs()
+    coef["share"] = coef.std_effect / coef.std_effect.sum()
+    coef["n_obs"] = len(d)
+    coef["n_origins"] = int(d.orig.nunique())
+    coef["zero_share"] = float((d.permits == 0).mean())
+    save(coef.sort_values("std_effect", ascending=False), "gravity_coefficients", INTERIM)
     if (out.origin_in_allocation_fit == 0).any():
         miss = sorted(out.loc[out.origin_in_allocation_fit == 0, "orig"].unique())
         print(f"    origins with no recorded EU employment flow at all: {miss}")

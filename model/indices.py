@@ -260,6 +260,23 @@ def main() -> None:
         & (df["has_any_agreement"] == 1)
     ).astype(int)
 
+    # ---------------------------------------------------------------- scale ---
+    # How many people a corridor could plausibly carry that it does not already,
+    # in absolute terms: the model's expected annual flow minus what actually
+    # moves. Every other component here is a RATE or a rank, so a corridor
+    # running at 2% of expectation scores the same whether that means 3 people
+    # or 700. This is the term that separates them.
+    step("scale of the unrealised opportunity")
+    df["unrealised_flow"] = (df["predicted"] - df["actual_mean3"]).clip(lower=0)
+    df["scale_score"] = pct(np.log1p(df["unrealised_flow"]))
+    print(f"    unrealised annual flow: total {df.unrealised_flow.sum():,.0f}; "
+          f"median {df.unrealised_flow.median():.0f}; "
+          f"top corridor {df.unrealised_flow.max():,.0f}")
+    big = df.nlargest(5, "unrealised_flow")
+    for r in big.itertuples():
+        print(f"      {r.orig_name} -> {r.dest_name}: {r.unrealised_flow:,.0f}/yr "
+              f"(actual {r.actual_mean3:,.0f}, predicted {r.predicted:,.0f})")
+
     # ------------------------------------------------------------ WHO flag ---
     # Reported, never scored. Ranking a corridor down because its origin has a
     # fragile health workforce would be the wrong instrument - the list is about

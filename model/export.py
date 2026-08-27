@@ -85,6 +85,7 @@ CORRIDOR_FIELDS = {
     "d_es_vacancy_rate": 2, "d_es_unemployment": 1, "d_es_wage_eur": 0,
     # flags
     "low_hanging_fruit": 0, "origin_in_allocation_fit": 0, "latest_year": 0,
+    "unrealised_flow": 0, "scale_score": 1,
 }
 
 
@@ -197,6 +198,13 @@ def main() -> None:
         "n_corridors": int(len(df)),
         "n_origins": int(df.orig.nunique()),
         "n_destinations": int(df.dest.nunique()),
+        "gravity": (lambda c: {
+            "n_obs": int(c.n_obs.iloc[0]), "n_origins": int(c.n_origins.iloc[0]),
+            "zero_share": round(float(c.zero_share.iloc[0]), 3),
+            "terms": [{"name": r.regressor, "coef": round(r.coef, 3),
+                       "se": round(r.se, 3), "z": round(r.z, 1),
+                       "share": round(r.share, 3)} for r in c.itertuples()],
+        })(load("gravity_coefficients", INTERIM)) if True else None,
         "presets": PRESETS,
         "ease_weights": EASE_WEIGHTS,
         "potential_weights": POTENTIAL_WEIGHTS,

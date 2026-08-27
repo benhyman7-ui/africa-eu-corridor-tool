@@ -6,7 +6,7 @@
 
 const S = {
   corridors: [], meta: null, series: null, sectors: null, geo: null,
-  view: 'map', preset: 'cgd', combine: 0,
+  view: 'map', preset: 'cgd', combine: 0, scaleWeight: 0,
   top: {}, ease: {}, pot: {},
   filters: { origRegion: '', orig: '', destRegion: '', dest: '', flow: '0',
              consular: false, agreement: false, lhf: false, hideWho: false },
@@ -123,9 +123,18 @@ function rescore() {
     r.ease = weighted(r, S.ease, 'ease_score', p);
     r.potential = weighted(r, S.pot, 'potential_score', p);
     r.under = r.underutilisation_score ?? 50;
-    r.score = powerMean([
+    const base = powerMean([
       [r.under, t.underutilisation], [r.ease, t.ease], [r.potential, t.potential],
     ], p) ?? 50;
+    r.base_score = base;
+    // Scale enters GEOMETRICALLY against the finished base score, never as a
+    // fourth item in the average. A corridor that is easy, underused and
+    // valuable but could only ever move nine people should be discounted, not
+    // have its other merits diluted. Weight 0 leaves the base untouched.
+    const w = S.scaleWeight;
+    r.score = w > 0
+      ? Math.exp((Math.log(Math.max(base, 1)) + w * Math.log(Math.max(r.scale_score ?? 50, 1))) / (1 + w))
+      : base;
   }
 }
 function filtered() {
@@ -341,7 +350,7 @@ function buildSidebar() {
     for (const id of ['#fOrigRegion', '#fOrig', '#fDestRegion', '#fDest']) $(id).value = '';
     for (const id of ['#fConsular', '#fAgreement', '#fLHF', '#fWho']) $(id).checked = false;
     $('#fFlow').value = '0';
-    S.combine = 0;
+    S.combine = 0; S.scaleWeight = 0;
     S.view = 'map'; S.detail = null; S.mapSel = null; S.mapLines = 18;
     S.sort = { key: 'score', dir: -1 }; S.matrixMetric = 'score'; S.sector = 'O-Q';
     fillCountries(); syncTabs();
@@ -373,6 +382,24 @@ function buildSidebar() {
       class: 'seg', onclick: () => { S.combine = m.p; paintCombine(); render(); },
     }, m.label));
   paintCombine();
+
+  const sw = $('#scaleWeight'), swOut = $('#scaleWeightVal'), swNote = $('#scaleNote');
+  const paintScale = () => {
+    swOut.textContent = S.scaleWeight === 0 ? 'off' : S.scaleWeight.toFixed(1);
+    $('#scaleToggle').checked = S.scaleWeight > 0;
+    sw.disabled = S.scaleWeight === 0;
+    swNote.textContent = S.scaleWeight === 0
+      ? 'Ranking ignores how many people a corridor could actually carry.'
+      : `Unrealised annual flow folded in geometrically at weight ${S.scaleWeight.toFixed(1)} against the rest of the score.`;
+  };
+  $('#scaleToggle').addEventListener('change', e => {
+    S.scaleWeight = e.target.checked ? 0.5 : 0;
+    sw.value = S.scaleWeight || 0.5; paintScale(); render();
+  });
+  sw.addEventListener('input', e => {
+    S.scaleWeight = +e.target.value; paintScale(); render();
+  });
+  paintScale();
 
   const tabs = $('#tabs');
   for (const [k, label] of [['map', 'Map'], ['ranking', 'Ranking'], ['matrix', 'Matrix'],
@@ -565,6 +592,8 @@ const COLS = [
   { k: 'permits_mean3', l: 'Actual/yr', num: 0 },
   { k: 'predicted', l: 'Predicted', num: 0 },
   { k: 'median_income_gap', l: 'Income gap', num: 0, prefix: '$' },
+  { k: 'scale_score', l: 'Scale', bar: true },
+  { k: 'unrealised_flow', l: 'Unrealised/yr', num: 0 },
   { k: 'visa_refusal_rate', l: 'Visa refusal', rate: true },
   { k: 'consular_tier', l: 'Can apply?', pill: r => r.visa_consulate_present || r.dest_embassy_in_orig },
   { k: 'low_hanging_fruit', l: 'Flags', render: r => el('span', {},
@@ -903,6 +932,31 @@ const FACTOR_NOTES = {
   p_dest_demand: 'Destination job-vacancy rate, old-age dependency, inverse unemployment.',
 };
 
+const TERM_NOTES = {
+  log_dist: 'Great-circle distance between capitals, logged.',
+  contig: 'Shared land border.',
+  comlang_off: 'Same official language.',
+  comlang_ethno: 'Same language spoken by at least 9% of both populations.',
+  colony: 'One country formerly colonised the other.',
+  comcol: 'Both were colonised by the same power.',
+  log_diaspora: 'Nationals of the origin already resident in the destination (Eurostat), logged.',
+  log_routes: 'Direct air routes between the two countries, logged.',
+  log_forced: 'Refugees and asylum seekers from the origin in the destination (UNHCR), logged.',
+};
+
+function gravityTable() {
+  const g = S.meta.gravity;
+  if (!g) return '<p>Coefficient table unavailable in this build.</p>';
+  const rows = g.terms.map(t => `<tr>
+    <td><code>${t.name}</code><br><span style="font-size:11px;color:var(--ink-3)">${TERM_NOTES[t.name] || ''}</span></td>
+    <td style="text-align:right;font-variant-numeric:tabular-nums">${t.coef > 0 ? '+' : ''}${t.coef.toFixed(3)}</td>
+    <td style="text-align:right;font-variant-numeric:tabular-nums;color:var(--ink-3)">${t.se.toFixed(3)}</td>
+    <td style="text-align:right;font-variant-numeric:tabular-nums">${t.z.toFixed(1)}${Math.abs(t.z) > 2.58 ? '***' : Math.abs(t.z) > 1.96 ? '**' : Math.abs(t.z) > 1.64 ? '*' : ''}</td>
+    <td style="text-align:right;font-variant-numeric:tabular-nums;font-weight:${t.share > 0.15 ? 700 : 400}">${(t.share * 100).toFixed(0)}%</td></tr>`).join('');
+  return `<table><tr><th>Term</th><th style="text-align:right">Coef</th><th style="text-align:right">SE</th><th style="text-align:right">z</th><th style="text-align:right">Share of effect</th></tr>${rows}</table>
+  <p style="font-size:12.5px;color:var(--ink-3)">Fitted on ${fmt(g.n_obs)} corridor-years across ${g.n_origins} origins, of which ${(g.zero_share * 100).toFixed(0)}% are zeros. Share of effect is |coefficient x standard deviation of that term|, normalised — raw coefficients are not comparable across variables on different scales.</p>`;
+}
+
 function weightsTable() {
   const m = S.meta, names = Object.keys(m.presets);
   const share = (preset, group, key) => {
@@ -969,17 +1023,48 @@ power mean:</p>
 <p>Values are floored at 1 on the 0–100 scale, so a corridor scoring zero on something
 lands very low but still finite rather than being annihilated to nothing.</p>
 
-<h3>1. Underutilisation</h3>
+<h3>1. Underutilisation — what actually goes into it</h3>
 <p>A PPML gravity model is fitted to the <em>global</em> panel of first work permits — every
 reported citizenship into every EU state, 2018–${m.latest_year} — then used to predict each
 Africa–EU corridor. Fitting on Africa alone would have folded the anomaly we are hunting into
 the coefficients. PPML because roughly 40% of corridors record zero permits; log-OLS cannot use
 a zero and would discard exactly the observations that matter.</p>
-<p>The headline specification carries <strong>origin×year and destination×year fixed
-effects</strong>, so everything multilateral is absorbed and the residual is the
-corridor-specific anomaly. The estimator is implemented directly (IRLS with alternating
-weighted within-transformations) and verified against a dense-dummy statsmodels Poisson GLM to
-within 1e-13. Standard errors are clustered by corridor.</p>
+<p>The specification carries <strong>origin×year and destination×year fixed effects</strong>.
+Those absorb everything multilateral — how attractive Germany was in 2023, how much pressure
+Sudan was under that year, every national policy change — so what remains is specific to the
+<em>pair</em>. Only dyadic terms can enter; anything varying by origin alone or destination
+alone is already absorbed.</p>
+<p><strong>These are the terms, as actually estimated in this build:</strong></p>
+${gravityTable()}
+<p>The score is then built in three steps:</p>
+<ul>
+<li><strong>Predicted flow</strong> = exp(terms above + origin-year effect + destination-year
+effect), averaged over the last three years of fixed effects so one odd year cannot drive it.</li>
+<li><strong>Log gap</strong> = ln((actual + 0.5) / (predicted + 0.5)). The half-unit keeps
+corridors at exactly zero finite. Negative means fewer permits than expected.</li>
+<li><strong>Underutilisation score</strong> = percentile rank of the negated log gap across all
+1,458 corridors, so the largest shortfall scores 100.</li>
+</ul>
+<p>Two variants are computed and carried on every corridor card. The <em>absolute</em> spec
+replaces the origin fixed effect with origin fundamentals, which is the only way to see an
+origin that under-sends everywhere rather than just to one destination. The <em>structural</em>
+spec drops diaspora, because a corridor can look "as expected" precisely because no network
+ever formed.</p>
+<p>The estimator is implemented directly (IRLS with alternating weighted within-transformations)
+and verified against a dense-dummy statsmodels Poisson GLM to within 1e-13. Standard errors are
+clustered by corridor.</p>
+
+<h3>Scale, and why it is off by default</h3>
+<p>Every component above is a <em>rate</em> or a rank. A corridor running at 2% of its expected
+flow scores the same whether that means three people or seven hundred. The optional scale
+weighting fixes that using <strong>unrealised annual flow</strong> — predicted minus actual,
+floored at zero — which is the number of additional people the model implies the corridor could
+carry each year. Across all corridors that totals ${fmt(S.corridors.reduce((a, r) => a + (r.unrealised_flow || 0), 0))} a year.</p>
+<p>It is applied <strong>geometrically against the finished score</strong>, not as another item
+in the average: <code>final = (base<sup>1</sup> × scale<sup>w</sup>)<sup>1/(1+w)</sup></code>.
+That way a corridor which is easy, underused and valuable but could only ever move nine people
+is discounted rather than having its genuine merits diluted. It defaults to off because whether
+size should drive a funding decision is a judgement, not a fact.</p>
 
 <h3>2. Ease of unlocking</h3>
 <ul>
