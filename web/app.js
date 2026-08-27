@@ -978,10 +978,15 @@ async function boot() {
         return r.json();
       })));
 
+  // Columnar payload, with string fields dictionary-encoded to integer indices.
   const n = corr.columns[corr.fields[0]].length;
+  const dicts = corr.dicts || {};
   S.corridors = Array.from({ length: n }, (_, i) => {
     const o = {};
-    for (const f of corr.fields) o[f] = corr.columns[f][i];
+    for (const f of corr.fields) {
+      const v = corr.columns[f][i];
+      o[f] = dicts[f] ? (v === null || v === undefined ? null : dicts[f][v]) : v;
+    }
     return o;
   });
   S.meta = meta; S.series = series; S.sectors = sectors; S.geo = geo;

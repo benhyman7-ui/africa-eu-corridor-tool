@@ -113,12 +113,28 @@ def main() -> None:
     if missing:
         print(f"      absent from panel, skipped: {missing}")
     fields = {k: v for k, v in CORRIDOR_FIELDS.items() if k in df.columns}
-    # Columnar, not an array of objects: repeating 70 key names 1,458 times costs
-    # more than the data itself. The browser rehydrates on load.
+    # Columnar, not an array of objects: repeating 100 key names 1,458 times
+    # costs more than the data itself. The browser rehydrates on load.
     cols = {k: [clean(v, dp) for v in df[k].tolist()] for k, dp in fields.items()}
+
+    # String columns are then dictionary-encoded. They were 350 KB of an 854 KB
+    # payload, and most hold a handful of distinct values repeated 1,458 times -
+    # who_status alone was 48 KB for three possible strings.
+    dicts: dict[str, list] = {}
+    for k, vals in cols.items():
+        if not any(isinstance(v, str) for v in vals):
+            continue
+        uniq = sorted({v for v in vals if isinstance(v, str)})
+        if len(uniq) > len(vals) * 0.7:      # nothing to gain on near-unique text
+            continue
+        lut = {s: i for i, s in enumerate(uniq)}
+        dicts[k] = uniq
+        cols[k] = [lut.get(v) if isinstance(v, str) else None for v in vals]
+
     (WEBDATA / "corridors.json").write_text(
-        json.dumps({"fields": list(fields), "columns": cols},
+        json.dumps({"fields": list(fields), "columns": cols, "dicts": dicts},
                    separators=(",", ":")), encoding="utf-8")
+    print(f"      dictionary-encoded {len(dicts)} string fields")
 
     # ------------------------------------------------------- yearly series --
     step("series.json")
