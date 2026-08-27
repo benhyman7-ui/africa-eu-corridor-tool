@@ -259,6 +259,20 @@ function buildSidebar() {
   bind('#fConsular', 'consular', true); bind('#fAgreement', 'agreement', true);
   bind('#fLHF', 'lhf', true); bind('#fWho', 'hideWho', true);
 
+  const goHome = () => {
+    Object.assign(S.filters, { origRegion: '', orig: '', destRegion: '', dest: '',
+      flow: '0', consular: false, agreement: false, lhf: false, hideWho: false });
+    for (const id of ['#fOrigRegion', '#fOrig', '#fDestRegion', '#fDest']) $(id).value = '';
+    for (const id of ['#fConsular', '#fAgreement', '#fLHF', '#fWho']) $(id).checked = false;
+    $('#fFlow').value = '0';
+    $('#geoMean').checked = false; S.geoMean = false;
+    S.view = 'map'; S.detail = null; S.mapSel = null; S.mapLines = 18;
+    S.sort = { key: 'score', dir: -1 }; S.matrixMetric = 'score'; S.sector = 'O-Q';
+    fillCountries(); syncTabs(); applyPreset('cgd');   // applyPreset renders
+    scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  $('#homeBtn').addEventListener('click', goHome);
+
   $('#resetBtn').addEventListener('click', () => {
     Object.assign(S.filters, { origRegion: '', orig: '', destRegion: '', dest: '',
       flow: '0', consular: false, agreement: false, lhf: false, hideWho: false });
@@ -679,14 +693,15 @@ function viewDetail(r) {
       (r.forced_total ?? 0) > 0
         ? `${fmt(r.forced_total)} refugees + asylum seekers — demand the legal channel is not carrying`
         : 'none recorded'],
+    // One row, not three. Religion and Hofstede are the two inputs to a single
+    // scored factor, so they belong on its line as detail rather than standing
+    // alongside it as if they were separate barriers.
     [(r.f_cultural ?? 0) > 60, (r.f_cultural ?? 0) > 40, 'Cultural proximity',
-      `${r.cultural_basis || 'religion only'} · ${fmt(r.f_cultural, 0)}/100`],
-    [r.same_majority_religion, (r.religion_similarity ?? 0) > .5, 'Religious proximity',
-      `${r.majority_religion_orig || '?'} / ${r.majority_religion_dest || '?'} · sim ${fmt(r.religion_similarity, 2)}`],
-    [r.hofstede_distance != null && r.hofstede_distance < 1,
-      r.hofstede_distance != null, 'Hofstede cultural distance',
-      r.hofstede_distance == null ? 'no Hofstede basis for this origin'
-        : `${fmt(r.hofstede_distance, 2)} (Kogut–Singh, ${r.hofstede_dims_used}/6 dims)`],
+      `${fmt(r.f_cultural, 0)}/100 · religion ${fmt(r.religion_similarity, 2)}`
+      + ` (${r.majority_religion_orig || '?'}/${r.majority_religion_dest || '?'})`
+      + (r.hofstede_distance == null
+        ? ' · no Hofstede basis'
+        : ` · Hofstede ${fmt(r.hofstede_distance, 2)} (${r.hofstede_dims_used}/6 dims)`)],
   ];
   // Reported quietly, as one row among the others: it is context on how to
   // recruit, not a barrier to the corridor, and it never touches a score.
