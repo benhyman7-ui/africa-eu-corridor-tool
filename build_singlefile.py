@@ -25,7 +25,7 @@ def main() -> None:
     payload = {name: json.loads((WEB / "data" / f"{name}.json").read_text(encoding="utf-8"))
                for name in ("corridors", "meta", "series", "sectors", "geo")}
 
-    html = html.replace('<link rel="stylesheet" href="style.css">',
+    html = html.replace('<link rel="stylesheet" href="style.css?v=2">',
                         f"<style>\n{css}\n</style>")
 
     # The logo is a separate file on the hosted site; a standalone page has to
@@ -46,7 +46,7 @@ def main() -> None:
     # </script> inside a JSON string would end the script element early
     data = json.dumps(payload, separators=(",", ":")).replace("</", "<\\/")
     html = html.replace(
-        '<script src="app.js"></script>',
+        '<script src="app.js?v=2"></script>',
         f"<script>window.__CORRIDOR_DATA__={data};</script>\n<script>\n{js}\n</script>")
 
     if 'href="style.css"' in html or 'src="app.js"' in html:

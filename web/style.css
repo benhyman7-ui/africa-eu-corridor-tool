@@ -231,22 +231,38 @@ td.num { text-align: right; font-variant-numeric: tabular-nums; font-family: var
 .pill.ssl { color: var(--ink-3); border-color: var(--line-2); font-weight: 600; }
 
 /* ---------- matrix ---------- */
-.matrixwrap { overflow: auto; max-height: 72vh; }
-.matrix { border-collapse: collapse; font-size: 10px; }
+.matrixwrap { overflow: auto; max-height: 78vh; }
+.matrix { border-collapse: separate; border-spacing: 0; font-size: 11px; }
 .matrix th.rowh {
   position: sticky; left: 0; background: var(--panel); z-index: 3; text-align: left;
-  padding: 0 8px 0 6px; font-weight: 500; font-size: 11px; text-transform: none;
-  letter-spacing: 0; color: var(--ink-2); border-right: 1px solid var(--line);
-  white-space: nowrap; cursor: default;
+  padding: 0 12px 0 8px; font-weight: 500; font-size: 12px; text-transform: none;
+  letter-spacing: 0; color: var(--ink); border-right: 2px solid var(--line-2);
+  white-space: nowrap; cursor: default; min-width: 148px;
 }
-.matrix thead th { height: 96px; padding: 0; vertical-align: bottom; background: var(--panel); border: none; cursor: default; }
+.matrix tbody tr:hover th.rowh { background: var(--pale); color: var(--navy); }
+.matrix thead th {
+  height: 132px; padding: 0; vertical-align: bottom; background: var(--panel);
+  border: none; cursor: default; position: sticky; top: 0; z-index: 2;
+}
+.matrix thead th:first-child { z-index: 4; }
 .matrix thead th div {
   writing-mode: vertical-rl; transform: rotate(180deg);
-  font-size: 10px; font-weight: 500; color: var(--ink-2); padding: 0 0 5px 0;
+  font-size: 12px; font-weight: 500; color: var(--ink); padding: 0 0 7px 0;
   text-transform: none; letter-spacing: 0;
 }
-.matrix td { padding: 0; width: 17px; height: 17px; border: 1px solid var(--panel); cursor: pointer; }
+.matrix td {
+  padding: 0; width: 31px; min-width: 31px; height: 27px;
+  border: 1px solid var(--panel); cursor: pointer;
+  text-align: center; font-variant-numeric: tabular-nums;
+  font-family: var(--mono); font-size: 10.5px; font-weight: 600;
+  transition: outline-color .08s;
+}
 .matrix td:hover { outline: 2px solid var(--navy); outline-offset: -2px; }
+.matrix tr.regionrow th {
+  font-size: 10px; text-transform: uppercase; letter-spacing: .09em;
+  color: var(--ink-3); padding: 14px 8px 4px; font-weight: 700;
+  background: var(--panel); border-right: 2px solid var(--line-2);
+}
 
 /* ---------- map ---------- */
 .maplayout { display: grid; grid-template-columns: 1fr 260px; gap: 0; }

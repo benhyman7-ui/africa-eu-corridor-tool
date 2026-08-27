@@ -156,6 +156,32 @@ function rankScale(values) {
 // than the middle of the pack soaking up the vivid colours.
 const punch = (t, g = 1.35) => Math.pow(Math.max(0, Math.min(1, t)), g);
 
+// Ink that survives whatever the heat ramp puts underneath it. The RdYlGn scale
+// runs dark at both ends and pale through the middle, so a single fixed text
+// colour is unreadable across a third of the range either way.
+function readable(bg) {
+  const m = /rgb\((\d+),\s*(\d+),\s*(\d+)\)/.exec(bg);
+  if (!m) return 'var(--ink-3)';
+  const [r, g, b] = [+m[1], +m[2], +m[3]].map(c => {
+    c /= 255;
+    return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+  });
+  return (0.2126 * r + 0.7152 * g + 0.0722 * b) > 0.42
+    ? 'rgba(11,30,61,.82)' : 'rgba(255,255,255,.92)';
+}
+
+// Short enough to sit in a 30px cell without wrapping.
+function cellLabel(v, metric) {
+  if (v === null || v === undefined) return '';
+  if (metric === 'visa_refusal_rate') return Math.round(v * 100);
+  if (metric === 'permits_mean3') {
+    if (v === 0) return '';
+    return v >= 1000 ? (v / 1000).toFixed(v >= 10000 ? 0 : 1) + 'k' : Math.round(v);
+  }
+  if (metric === 'gap_log') return v.toFixed(1);
+  return Math.round(v);
+}
+
 /* ------------------------------------------------------------- side panel */
 function sliderBlock(host, obj, labels, onchange) {
   host.innerHTML = '';
@@ -560,20 +586,19 @@ function viewMatrix(rows) {
   for (const o of origins) {
     if (o.orig_subregion !== region) {
       region = o.orig_subregion;
-      body.appendChild(el('tr', {}, el('th', {
-        class: 'rowh', colspan: dests.length + 1,
-        style: 'font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);padding-top:10px;font-weight:700',
-      }, region)));
+      body.appendChild(el('tr', { class: 'regionrow' },
+        el('th', { class: 'rowh', colspan: dests.length + 1 }, region)));
     }
     const tr = el('tr', {}, el('th', { class: 'rowh' }, o.orig_name));
     for (const [d] of dests) {
       const r = lookup.get(o.orig + '|' + d);
       const v = r ? r[metric] : null;
+      const bg = colour(v);
       tr.appendChild(el('td', {
-        style: `background:${colour(v)}`,
+        style: `background:${bg};color:${readable(bg)}`,
         title: r ? `${r.orig_name} → ${r.dest_name}\n${metric}: ${metric === 'visa_refusal_rate' ? pctf(v) : fmt(v, 1)}\nactual ${fmt(r.permits_mean3, 0)} vs predicted ${fmt(r.predicted, 0)}` : '—',
         onclick: () => { if (r) { S.detail = r; render(); } },
-      }));
+      }, cellLabel(v, metric)));
     }
     body.appendChild(tr);
   }
