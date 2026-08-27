@@ -21,8 +21,10 @@ const TOP_LABELS = {
 const EASE_LABELS = {
   f_consular: 'Consular access', f_visa_success: 'Visa success rate',
   f_language: 'Language access', f_agreement: 'Legal channel',
-  f_connectivity: 'Air connectivity', f_proximity: 'Proximity',
-  f_admin: 'Origin admin capacity', f_cultural: 'Cultural proximity',
+  f_cultural: 'Cultural proximity', f_pathways: 'Pathway permissiveness',
+  f_salary_threshold: 'Salary threshold', f_recognition: 'Qualification recognition',
+  f_connectivity: 'Air connectivity', f_admin: 'Origin admin capacity',
+  f_proximity: 'Proximity',
 };
 const POT_LABELS = {
   p_income_gain: 'Income gain', p_skills_supply: 'Skills supply at origin',
@@ -822,6 +824,16 @@ function viewDetail(r) {
       (r.dest_official_languages || '–') + ' / ' + (r.origin_bridge_languages || 'none')],
     [r.has_binding, r.has_any_agreement, 'Legal channel in place',
       r.agreement_types || r.eu_instruments || 'none on file'],
+    [r.f_salary_threshold > 60, r.f_salary_threshold > 35, 'Salary threshold',
+      r.req_blue_card_salary_eur || r.req_general_permit_salary_eur
+        ? `€${fmt(r.req_blue_card_salary_eur || r.req_general_permit_salary_eur)} · ${fmt(r.salary_threshold_ratio, 1)}x destination median`
+        : (r.req_salary_basis || 'no fixed threshold on file')],
+    [r.f_recognition > 70, r.f_recognition > 45, 'Qualification recognition',
+      r.req_recognition_regime || 'not on file'],
+    [r.f_pathways > 60, r.f_pathways > 40, 'Legal pathway permissiveness',
+      `ICMPD promise ${fmt(r.icmpd_promise_mean, 0)} mean / ${fmt(r.icmpd_promise_best, 0)} best across ${fmt(r.icmpd_pathways_seen)} mapped pathways`],
+    [r.student_permits > 200, r.student_permits > 20, 'Student flow (feeder)',
+      `${fmt(r.student_permits, 0)}/yr students vs ${fmt(r.permits_mean3, 0)} workers`],
     [r.routes > 0, false, 'Direct flights', r.routes ? `${r.routes} routes` : 'none'],
     [r.diaspora > 1000, r.diaspora > 0, 'Existing diaspora', fmt(r.diaspora) + ' residents'],
     [false, (r.forced_total ?? 0) > 500, 'Forced displacement on this corridor',
@@ -897,6 +909,43 @@ function viewDetail(r) {
               el('span', { class: 'val' }, val)))))),
 
       el('div', { class: 'card' },
+        el('header', {}, el('h2', {}, 'What drives the prediction'),
+          el('span', { class: 'hint' }, 'these group into the underutilisation score')),
+        el('div', { class: 'pad' },
+          el('div', { class: 'decomp' }, (() => {
+            // The gravity terms one by one for THIS corridor: fitted coefficient
+            // times the corridor's own value, in log-permit units. Positive
+            // pushes expected flow up. Together with the fixed effects they make
+            // the prediction that underutilisation is measured against.
+            const g = S.meta.gravity;
+            if (!g) return [el('div', {}, 'unavailable')];
+            const val = {
+              log_dist: Math.log(Math.max(r.dist ?? 1, 1)),
+              comlang_off: r.comlang_off ?? 0,
+              colony: r.colony ?? 0,
+              log_diaspora: Math.log1p(Math.max(r.diaspora ?? 0, 0)),
+              log_routes: Math.log1p(Math.max(r.routes ?? 0, 0)),
+              log_forced: Math.log1p(Math.max(r.forced_total ?? 0, 0)),
+            };
+            const parts = g.terms.map(t => ({ n: t.name, x: t.coef * (val[t.name] ?? 0) }))
+              .filter(p => Math.abs(p.x) > 0.001)
+              .sort((a, b) => Math.abs(b.x) - Math.abs(a.x));
+            const mx = Math.max(...parts.map(p => Math.abs(p.x)), 1);
+            return parts.map(p => el('div', { class: 'row' },
+              el('div', { class: 'lbl', title: TERM_NOTES[p.n] || '' }, p.n),
+              el('div', { style: 'position:relative;height:14px;background:var(--pale);border-radius:3px' },
+                el('div', { style: 'position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line-2)' }),
+                el('div', { style: `position:absolute;top:0;bottom:0;border-radius:2px;background:${p.x > 0 ? 'var(--good)' : 'var(--bad)'};`
+                  + (p.x > 0 ? `left:50%;width:${(50 * p.x / mx).toFixed(1)}%` : `right:50%;width:${(50 * -p.x / mx).toFixed(1)}%`) })),
+              el('div', { class: 'v' }, (p.x > 0 ? '+' : '') + p.x.toFixed(2))));
+          })()),
+          el('div', { class: 'note', style: 'margin-top:12px' },
+            'Each bar is the fitted coefficient times this corridor\'s own value, in '
+            + `log-permit units. With the fixed effects they give ${fmt(r.predicted, 0)} `
+            + `predicted against ${fmt(r.permits_mean3, 0)} actual — a log gap of `
+            + `${fmt(r.gap_log, 2)}, which is what the underutilisation score ranks.`))),
+
+      el('div', { class: 'card' },
         el('header', {}, el('h2', {}, 'Score decomposition')),
         el('div', { class: 'pad' },
           el('div', { class: 'decomp' },
@@ -924,6 +973,9 @@ const FACTOR_NOTES = {
   f_language: 'Shared official language, or the destination working language present at origin.',
   f_agreement: 'Bilateral labour agreement, EU Talent or Mobility Partnership, CPLP, Decreto Flussi quota.',
   f_cultural: 'Religious composition similarity and Hofstede cultural distance, evenly balanced.',
+  f_pathways: 'How permissive the destination legal routes are, scored from the ICMPD/ECDPM pathway mapping.',
+  f_salary_threshold: 'Statutory wage floor relative to what a median worker in that destination earns.',
+  f_recognition: 'Whether a third-country qualification can realistically be recognised, and the language sitting on top of it.',
   f_connectivity: 'Direct air routes between the two countries.',
   f_admin: 'Origin government effectiveness and internet penetration — can the state issue documents.',
   f_proximity: 'Great-circle distance.',

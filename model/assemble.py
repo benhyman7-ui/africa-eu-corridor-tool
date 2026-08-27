@@ -326,6 +326,45 @@ def main() -> None:
         for c in ("refugees", "asylum_seekers", "forced_total"):
             C[c] = 0.0
 
+    # ---- student flows: already downloaded, never used until now ----------- #
+    step("student permits as a feeder indicator")
+    allr = _opt("eurostat_permits_allreason")
+    if allr is not None:
+        st = allr[allr.reason == "EDUC"].copy()
+        st["orig"] = st.orig_es.map(lambda c: to3.get(c))
+        st["dest"] = st.dest_es.map(es2iso3_dest)
+        st = st.dropna(subset=["orig", "dest"])
+        st = st[st.year >= ymax - 2]
+        st = (st.groupby(["orig", "dest"], as_index=False).value.mean()
+                .rename(columns={"value": "student_permits"}))
+        C = C.merge(st, on=["orig", "dest"], how="left")
+        C["student_permits"] = C.student_permits.fillna(0.0)
+        # Students are a documented feeder into work permits: a corridor already
+        # moving graduates has recruitment channels, credential recognition and
+        # alumni networks that a cold corridor does not.
+        C["student_to_work_ratio"] = (C.student_permits
+                                      / C.permits_mean3.replace(0, np.nan))
+        print(f"    {int((C.student_permits > 0).sum()):,} corridors carry student "
+              f"permits; {C.student_permits.sum():,.0f}/yr total vs "
+              f"{C.permits_mean3.sum():,.0f} work permits")
+
+    # ---- destination requirements and VFS ---------------------------------- #
+    step("salary thresholds, recognition regimes and VFS centres")
+    req = pd.read_csv(REF / "destination_requirements.csv", encoding="utf-8")
+    C = C.merge(req.drop(columns=["country"]).add_prefix("req_")
+                  .rename(columns={"req_iso3": "dest"}), on="dest", how="left")
+    vfs = pd.read_csv(REF / "vfs_centres.csv", encoding="utf-8")
+    vfs["vfs_present"] = 1
+    C = C.merge(vfs.rename(columns={"dest_iso3": "dest", "orig_iso3": "orig",
+                                    "operator": "vfs_operator",
+                                    "note": "vfs_note"})[
+                    ["dest", "orig", "vfs_present", "vfs_operator", "vfs_note"]],
+                on=["dest", "orig"], how="left")
+    C["vfs_present"] = C.vfs_present.fillna(0).astype(int)
+    print(f"    VFS/TLS/BLS centres on {int(C.vfs_present.sum()):,} corridors; "
+          f"salary threshold on file for "
+          f"{int(C.req_blue_card_salary_eur.notna().sum() / 54)} destinations")
+
     step("skills supply at origin (UNESCO UIS, WHO)")
     uis = _opt("uis_skills")
     if uis is not None:
@@ -350,6 +389,13 @@ def main() -> None:
                   f"{int(C.health_workforce_ratio.notna().sum()):,} corridors; "
                   f"median destination/origin ratio "
                   f"{C.health_workforce_ratio.median():.1f}x")
+
+    step("ICMPD pathway promise by destination")
+    icm = _opt("icmpd_by_destination")
+    if icm is not None:
+        C = C.merge(icm, on="dest", how="left")
+        print(f"    ICMPD promise attached to {int(C.icmpd_promise_mean.notna().sum()):,} "
+              f"corridors ({C.dest.nunique()} destinations)")
 
     step("Hofstede cultural distance (Kogut-Singh)")
     hof = _opt("hofstede")

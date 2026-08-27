@@ -1,0 +1,130 @@
+dest_iso3,orig_iso3,operator,note,confidence
+FRA,DZA,VFS Global,Algiers and Oran,high
+FRA,MAR,TLScontact,Casablanca Rabat Marrakech Fes Tangier Agadir,high
+FRA,TUN,TLScontact,Tunis and Sfax,high
+FRA,EGY,VFS Global,Cairo and Alexandria,high
+FRA,SEN,VFS Global,Dakar,high
+FRA,CIV,VFS Global,Abidjan,high
+FRA,CMR,VFS Global,Douala and Yaounde,high
+FRA,GAB,VFS Global,Libreville,medium
+FRA,MLI,TLScontact,Bamako,medium
+FRA,BFA,VFS Global,Ouagadougou,medium
+FRA,NER,VFS Global,Niamey,low
+FRA,GIN,VFS Global,Conakry,medium
+FRA,COD,VFS Global,Kinshasa,medium
+FRA,COG,VFS Global,Brazzaville,low
+FRA,MDG,VFS Global,Antananarivo,medium
+FRA,MUS,VFS Global,Port Louis,medium
+FRA,TGO,VFS Global,Lome,low
+FRA,BEN,VFS Global,Cotonou,low
+FRA,NGA,VFS Global,Lagos and Abuja,high
+FRA,KEN,TLScontact,Nairobi,medium
+FRA,ZAF,VFS Global,Johannesburg Cape Town Pretoria,high
+FRA,GHA,VFS Global,Accra,medium
+FRA,ETH,VFS Global,Addis Ababa,medium
+FRA,TZA,VFS Global,Dar es Salaam,low
+FRA,MRT,VFS Global,Nouakchott,low
+DEU,EGY,VFS Global,Cairo,high
+DEU,MAR,VFS Global,Casablanca and Rabat,high
+DEU,TUN,VFS Global,Tunis,high
+DEU,DZA,VFS Global,Algiers,medium
+DEU,NGA,VFS Global,Lagos and Abuja,high
+DEU,KEN,VFS Global,Nairobi,high
+DEU,ZAF,VFS Global,Pretoria Cape Town Johannesburg,high
+DEU,GHA,VFS Global,Accra,high
+DEU,ETH,VFS Global,Addis Ababa,medium
+DEU,TZA,VFS Global,Dar es Salaam,medium
+DEU,UGA,VFS Global,Kampala,medium
+DEU,SEN,VFS Global,Dakar,medium
+DEU,CIV,VFS Global,Abidjan,low
+DEU,CMR,VFS Global,Yaounde,medium
+DEU,ZMB,VFS Global,Lusaka,low
+DEU,NAM,VFS Global,Windhoek,low
+DEU,AGO,VFS Global,Luanda,low
+DEU,MOZ,VFS Global,Maputo,low
+DEU,ZWE,VFS Global,Harare,low
+ITA,MAR,VFS Global,Casablanca Rabat Tangier,high
+ITA,EGY,VFS Global,Cairo,high
+ITA,TUN,VFS Global,Tunis,high
+ITA,SEN,VFS Global,Dakar,medium
+ITA,CIV,VFS Global,Abidjan,medium
+ITA,GHA,VFS Global,Accra,medium
+ITA,NGA,VFS Global,Lagos and Abuja,medium
+ITA,ETH,VFS Global,Addis Ababa,medium
+ITA,ZAF,VFS Global,Pretoria and Johannesburg,medium
+ITA,KEN,VFS Global,Nairobi,medium
+ESP,MAR,BLS International,Casablanca Rabat Tangier Nador Tetouan,high
+ESP,DZA,BLS International,Algiers and Oran,high
+ESP,SEN,BLS International,Dakar,medium
+ESP,NGA,BLS International,Lagos and Abuja,medium
+ESP,EGY,BLS International,Cairo,medium
+ESP,CIV,BLS International,Abidjan,low
+ESP,ZAF,BLS International,Pretoria,low
+NLD,MAR,VFS Global,Casablanca and Rabat,high
+NLD,EGY,VFS Global,Cairo,medium
+NLD,NGA,VFS Global,Lagos and Abuja,medium
+NLD,ZAF,VFS Global,Pretoria and Cape Town,medium
+NLD,GHA,VFS Global,Accra,medium
+NLD,KEN,VFS Global,Nairobi,medium
+NLD,ETH,VFS Global,Addis Ababa,low
+NLD,DZA,VFS Global,Algiers,low
+BEL,MAR,TLScontact,Casablanca and Rabat,high
+BEL,COD,VFS Global,Kinshasa,high
+BEL,RWA,VFS Global,Kigali,medium
+BEL,BDI,VFS Global,Bujumbura,medium
+BEL,CMR,VFS Global,Yaounde,low
+BEL,SEN,VFS Global,Dakar,low
+BEL,TUN,TLScontact,Tunis,medium
+BEL,DZA,TLScontact,Algiers,medium
+SWE,MAR,VFS Global,Casablanca,medium
+SWE,EGY,VFS Global,Cairo,medium
+SWE,ETH,VFS Global,Addis Ababa,medium
+SWE,KEN,VFS Global,Nairobi,medium
+SWE,NGA,VFS Global,Abuja,low
+SWE,ZAF,VFS Global,Pretoria,low
+DNK,MAR,VFS Global,Casablanca,low
+DNK,EGY,VFS Global,Cairo,low
+DNK,KEN,VFS Global,Nairobi,low
+DNK,NGA,VFS Global,Abuja,low
+DNK,ZAF,VFS Global,Pretoria,low
+PRT,MAR,VFS Global,Casablanca and Rabat,medium
+PRT,AGO,VFS Global,Luanda,high
+PRT,MOZ,VFS Global,Maputo,high
+PRT,CPV,VFS Global,Praia,medium
+PRT,GNB,VFS Global,Bissau,medium
+PRT,STP,VFS Global,Sao Tome,low
+PRT,SEN,VFS Global,Dakar,low
+PRT,NGA,VFS Global,Lagos and Abuja,low
+AUT,EGY,VFS Global,Cairo,low
+AUT,MAR,VFS Global,Rabat,low
+AUT,NGA,VFS Global,Abuja,low
+AUT,ZAF,VFS Global,Pretoria,low
+FIN,MAR,VFS Global,Rabat,low
+FIN,EGY,VFS Global,Cairo,low
+FIN,NGA,VFS Global,Abuja,low
+FIN,ETH,VFS Global,Addis Ababa,low
+FIN,KEN,VFS Global,Nairobi,low
+IRL,NGA,VFS Global,Abuja and Lagos,high
+IRL,ZAF,VFS Global,Pretoria,medium
+IRL,KEN,VFS Global,Nairobi,medium
+IRL,EGY,VFS Global,Cairo,medium
+IRL,GHA,VFS Global,Accra,low
+IRL,MAR,VFS Global,Rabat,low
+MLT,EGY,VFS Global,Cairo,medium
+MLT,MAR,VFS Global,Casablanca,low
+MLT,LBY,VFS Global,Tripoli,low
+MLT,TUN,VFS Global,Tunis,low
+CZE,EGY,VFS Global,Cairo,low
+CZE,MAR,VFS Global,Rabat,low
+CZE,ZAF,VFS Global,Pretoria,low
+POL,EGY,VFS Global,Cairo,medium
+POL,MAR,VFS Global,Casablanca,low
+POL,NGA,VFS Global,Abuja and Lagos,medium
+POL,ZAF,VFS Global,Pretoria,low
+POL,KEN,VFS Global,Nairobi,low
+GRC,EGY,VFS Global,Cairo,medium
+GRC,MAR,VFS Global,Casablanca,low
+GRC,ZAF,VFS Global,Pretoria,low
+HUN,EGY,VFS Global,Cairo,low
+HUN,MAR,VFS Global,Rabat,low
+HUN,ZAF,VFS Global,Pretoria,low

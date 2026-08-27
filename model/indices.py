@@ -31,14 +31,17 @@ PRESETS = {
 # Sub-weights inside the ease-of-unlocking index. The UI shows these on a 0-10
 # scale; only the ratios matter, not the absolute numbers.
 EASE_WEIGHTS = {
-    "f_consular": 0.19,      # can you physically lodge an application
-    "f_visa_success": 0.14,  # and does that consulate actually say yes
-    "f_language": 0.15,      # can you work in the destination's language
-    "f_agreement": 0.14,     # is there a legal channel already pointed at you
-    "f_cultural": 0.15,      # religion and Hofstede, evenly balanced
-    "f_connectivity": 0.09,  # can you get there
-    "f_admin": 0.09,         # can the origin issue you documents
-    "f_proximity": 0.05,
+    "f_consular": 0.16,      # can you physically lodge an application
+    "f_visa_success": 0.12,  # and does that consulate actually say yes
+    "f_language": 0.12,      # can you work in the destination's language
+    "f_agreement": 0.11,     # is there a legal channel already pointed at you
+    "f_cultural": 0.12,      # religion and Hofstede, evenly balanced
+    "f_pathways": 0.11,      # how permissive the destination's legal routes are
+    "f_salary_threshold": 0.10,   # is the wage floor reachable
+    "f_recognition": 0.08,   # will your qualification be accepted
+    "f_connectivity": 0.05,  # can you get there
+    "f_admin": 0.05,         # can the origin issue you documents
+    "f_proximity": 0.03,
 }
 
 # Inside f_cultural. The concept note specifies Hofstede; religion is our own
@@ -159,21 +162,29 @@ def main() -> None:
     # Wikidata is the fallback for Ireland and Cyprus, which are outside the
     # Schengen visa statistics entirely.
     in_country = (df["visa_consulate_present"] == 1) | (df["dest_embassy_in_orig"] == 1)
+    vfs = df.get("vfs_present", pd.Series(0, index=df.index)) == 1
 
+    # An outsourced visa centre is a real place in the applicant's own country
+    # that takes biometrics and forwards the file. Slightly below a mission,
+    # because the decision still happens elsewhere and fees are higher, but far
+    # above having to cross a border.
     df["f_consular"] = np.select(
         [in_country,
+         vfs,
          df["dest_missions_in_orig"] > 0,
          df["neighbour_embassy"] == 1],
-        [100.0, 65.0, np.maximum(40.0, reach)],
+        [100.0, 82.0, 65.0, np.maximum(40.0, reach)],
         default=reach)
 
     df["consular_tier"] = np.select(
         [df["visa_consulate_present"] == 1,
          df["dest_embassy_in_orig"] == 1,
+         vfs,
          df["dest_missions_in_orig"] > 0,
          df["neighbour_embassy"] == 1],
         ["Visa consulate in country", "Embassy in country",
-         "Consular post in country", "Embassy in a neighbour"],
+         "Outsourced visa centre in country", "Consular post in country",
+         "Embassy in a neighbour"],
         default=np.where(near.isna(), "No mission reachable in Africa",
                          "Embassy elsewhere in region"))
 
@@ -232,6 +243,49 @@ def main() -> None:
         df["religion_proximity"] * w_r + df["hofstede_proximity"].fillna(0) * w_h,
         df["religion_proximity"])
     df["cultural_basis"] = np.where(has_h, "religion + Hofstede", "religion only")
+
+    # ---- salary threshold ---------------------------------------------------
+    # A wage floor is an absolute gate, and it bites hardest exactly where the
+    # volume is: a EUR 48k Blue Card threshold is irrelevant to a surgeon and
+    # fatal to a care worker. Scored against the destination's own median income
+    # so a high threshold in a high-wage country is not double-counted.
+    thr = df.get("req_blue_card_salary_eur")
+    gen = df.get("req_general_permit_salary_eur")
+    if thr is not None:
+        eff = thr.fillna(gen) if gen is not None else thr
+        # ratio of the threshold to what a median worker there actually earns
+        df["salary_threshold_ratio"] = eff / df["d_inc_median_annual_ppp"]
+        df["f_salary_threshold"] = pct(df["salary_threshold_ratio"], invert=True)
+        # unknown threshold is not the same as no threshold
+        df.loc[eff.isna(), "f_salary_threshold"] = 50.0
+    else:
+        df["f_salary_threshold"] = 50.0
+        df["salary_threshold_ratio"] = np.nan
+
+    # ---- recognition of qualifications --------------------------------------
+    # Curated regime notes, scored coarsely: whether the destination runs a
+    # recognition process that a third-country applicant can realistically
+    # complete, and whether language sits on top of it.
+    reg = df.get("req_recognition_regime", pd.Series("", index=df.index)).fillna("")
+    lang_req = df.get("req_language_requirement", pd.Series("", index=df.index)).fillna("")
+    slow = reg.str.contains("slow|nostrification|bottleneck|queue", case=False)
+    heavy_lang = lang_req.str.contains("B1|B2|required", case=False)
+    df["f_recognition"] = (100.0
+                           - 25.0 * slow.astype(float)
+                           - 20.0 * heavy_lang.astype(float)
+                           - 15.0 * reg.eq("").astype(float))
+    df["f_recognition"] = df["f_recognition"].clip(0, 100)
+
+    # ---- ICMPD pathway permissiveness ---------------------------------------
+    if "icmpd_promise_mean" in df.columns:
+        df["f_pathways"] = pct(0.6 * df["icmpd_promise_mean"].fillna(50)
+                               + 0.4 * df["icmpd_promise_best"].fillna(50))
+    else:
+        df["f_pathways"] = 50.0
+
+    # ---- students as a feeder ----------------------------------------------
+    if "student_permits" in df.columns:
+        df["p_student_feeder"] = pct(np.log1p(df["student_permits"]))
 
     # ------------------------------------------------------------ composites --
     step("composites")
