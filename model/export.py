@@ -17,7 +17,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "pipeline"))
 from _common import INTERIM, REF, WEBDATA, countries, load, step  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from indices import EASE_WEIGHTS, POTENTIAL_WEIGHTS, PRESETS  # noqa: E402
+from indices import ACCESS_WEIGHTS, EASE_WEIGHTS, POTENTIAL_WEIGHTS, PRESETS  # noqa: E402
 
 # NACE A*10 -> the occupation families the tool exposes.
 SECTORS = {
@@ -45,7 +45,7 @@ CORRIDOR_FIELDS = {
     "permits_seasonal": 1, "permits_other_emp": 1,
     # composites
     "score_cgd": 1, "score_ajf": 1, "score_balanced": 1, "score_cgd_geometric": 1,
-    "underutilisation_score": 1, "ease_score": 1, "potential_score": 1,
+    "underutilisation_score": 1, "access_score": 1, "ease_score": 1, "potential_score": 1,
     # components
     "u_gap": 1, "u_gap_absolute": 1, "u_gap_structural": 1,
     "p_income_gain": 1, "p_labour_supply": 1, "p_dest_demand": 1, "p_skills_supply": 1,
@@ -216,6 +216,7 @@ def main() -> None:
                        "share": round(r.share, 3)} for r in c.itertuples()],
         })(load("gravity_coefficients", INTERIM)) if True else None,
         "presets": PRESETS,
+        "access_weights": ACCESS_WEIGHTS,
         "ease_weights": EASE_WEIGHTS,
         "potential_weights": POTENTIAL_WEIGHTS,
         "sectors": SECTORS,

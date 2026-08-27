@@ -23,25 +23,43 @@ from _common import INTERIM, load, save, step  # noqa: E402
 # CGD framing: find corridors where flows are unexpectedly low AND the barriers
 # to fixing that are unexpectedly small. Potential matters but is not the lead.
 PRESETS = {
-    "cgd": {"underutilisation": 0.50, "ease": 0.35, "potential": 0.15},
-    "ajf": {"underutilisation": 0.25, "ease": 0.25, "potential": 0.50},
-    "balanced": {"underutilisation": 0.34, "ease": 0.33, "potential": 0.33},
+    "cgd": {"underutilisation": 0.40, "access": 0.30, "ease": 0.15, "potential": 0.15},
+    "ajf": {"underutilisation": 0.20, "access": 0.25, "ease": 0.15, "potential": 0.40},
+    "balanced": {"underutilisation": 0.25, "access": 0.25, "ease": 0.25, "potential": 0.25},
+}
+
+# ACCESS is separated out from ease because it answers a different question:
+# not "how hard is this" but "can this legally and physically happen at all".
+# Buried among eleven ease components, a consular score of 24 was diluted by
+# ten others and Slovenia scored 65 overall while having almost no consular
+# presence and no legal channel pointed at Africa. These four combine
+# HARMONICALLY, so the weakest one dominates - which is how gates actually work.
+# Only the two genuine gates. The first attempt also put legal channel and
+# pathway permissiveness in here, and access collapsed to about 8 for every
+# destination - because f_agreement is zero on 1,241 of 1,458 corridors and a
+# harmonic mean is dominated by its smallest term. A dimension that reads 8
+# everywhere carries no information. An absent bilateral agreement is a negative
+# signal, not a gate: most labour migration runs on ordinary national permits.
+# Agreement and pathway quality therefore sit in ease, where they belong.
+ACCESS_WEIGHTS = {
+    "f_consular": 0.65,      # can an application physically be lodged
+    "f_visa_success": 0.35,  # and does that consulate say yes
 }
 
 # Sub-weights inside the ease-of-unlocking index. The UI shows these on a 0-10
 # scale; only the ratios matter, not the absolute numbers.
+# EASE is what remains once access is carved out: real frictions, but ones a
+# determined applicant or a well-designed programme can work around.
 EASE_WEIGHTS = {
-    "f_consular": 0.16,      # can you physically lodge an application
-    "f_visa_success": 0.12,  # and does that consulate actually say yes
-    "f_language": 0.12,      # can you work in the destination's language
-    "f_agreement": 0.11,     # is there a legal channel already pointed at you
-    "f_cultural": 0.12,      # religion and Hofstede, evenly balanced
-    "f_pathways": 0.11,      # how permissive the destination's legal routes are
-    "f_salary_threshold": 0.10,   # is the wage floor reachable
-    "f_recognition": 0.08,   # will your qualification be accepted
-    "f_connectivity": 0.05,  # can you get there
-    "f_admin": 0.05,         # can the origin issue you documents
-    "f_proximity": 0.03,
+    "f_language": 0.20,           # can you work in the destination's language
+    "f_agreement": 0.17,          # is a legal channel already pointed at you
+    "f_pathways": 0.16,           # are the destination's routes usable
+    "f_salary_threshold": 0.15,   # is the wage floor reachable
+    "f_recognition": 0.12,        # will your qualification be accepted
+    "f_cultural": 0.10,           # religion and Hofstede, evenly balanced
+    "f_connectivity": 0.06,       # can you get there
+    "f_admin": 0.03,              # can the origin issue you documents
+    "f_proximity": 0.01,
 }
 
 # Inside f_cultural. The concept note specifies Hofstede; religion is our own
@@ -289,21 +307,27 @@ def main() -> None:
 
     # ------------------------------------------------------------ composites --
     step("composites")
+    # Harmonic, not arithmetic: a gate is only as open as its narrowest point.
+    aw = sum(ACCESS_WEIGHTS.values())
+    df["access_score"] = aw / sum(w / df[k].clip(lower=5) for k, w in ACCESS_WEIGHTS.items())
     df["ease_score"] = sum(df[k] * w for k, w in EASE_WEIGHTS.items())
     df["potential_score"] = sum(df[k] * w for k, w in POTENTIAL_WEIGHTS.items())
     df["underutilisation_score"] = df["u_gap"]
 
     for name, w in PRESETS.items():
         df[f"score_{name}"] = (w["underutilisation"] * df["underutilisation_score"]
+                               + w["access"] * df["access_score"]
                                + w["ease"] * df["ease_score"]
                                + w["potential"] * df["potential_score"])
 
     # A hard zero on any dimension should collapse the score, which an arithmetic
     # mean hides. Offered alongside, not instead.
+    w = PRESETS["cgd"]
     df["score_cgd_geometric"] = (
-        df["underutilisation_score"].clip(lower=1) ** PRESETS["cgd"]["underutilisation"]
-        * df["ease_score"].clip(lower=1) ** PRESETS["cgd"]["ease"]
-        * df["potential_score"].clip(lower=1) ** PRESETS["cgd"]["potential"])
+        df["underutilisation_score"].clip(lower=1) ** w["underutilisation"]
+        * df["access_score"].clip(lower=1) ** w["access"]
+        * df["ease_score"].clip(lower=1) ** w["ease"]
+        * df["potential_score"].clip(lower=1) ** w["potential"])
 
     # --------------------------------------------------- low-hanging fruit ----
     # The brief's own test: the legal channel exists, this origin is already
@@ -350,15 +374,13 @@ def main() -> None:
           f"({int(PRESETS['cgd']['underutilisation'] * 100)}% underutilisation / "
           f"{int(PRESETS['cgd']['ease'] * 100)}% ease / "
           f"{int(PRESETS['cgd']['potential'] * 100)}% potential)")
-    print(f"    {'corridor':<34}{'score':>6}{'under':>7}{'ease':>6}{'poten':>7}"
-          f"{'actual':>8}{'pred':>7}{'emb':>5}{'agr':>5}")
+    print(f"    {'corridor':<34}{'score':>6}{'under':>7}{'acces':>6}{'ease':>6}"
+          f"{'poten':>7}{'actual':>8}{'pred':>7}")
     for r in top.itertuples():
         pair = f"{nm.get(r.orig, r.orig)} -> {nd.get(r.dest, r.dest)}"
         print(f"    {pair:<34}{r.score_cgd:>6.0f}{r.underutilisation_score:>7.0f}"
-              f"{r.ease_score:>6.0f}{r.potential_score:>7.0f}"
-              f"{r.actual_mean3:>8.0f}{r.predicted:>7.0f}"
-              f"{'Y' if r.dest_embassy_in_orig else '-':>5}"
-              f"{'Y' if r.has_any_agreement else '-':>5}")
+              f"{r.access_score:>6.0f}{r.ease_score:>6.0f}{r.potential_score:>7.0f}"
+              f"{r.actual_mean3:>8.0f}{r.predicted:>7.0f}")
     print(f"\n    low-hanging-fruit corridors (below prediction, easy, "
           f"channel already exists): {int(df.low_hanging_fruit.sum())}")
     print(f"    median annual income gap: ${df.median_income_gap.median():,.0f} "

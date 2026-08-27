@@ -65,22 +65,50 @@ SIGNALS = {
 BOUND = r"\b%s\b"          # word-boundary match on a country name
 DURATION = re.compile(r"at least (\d+)\s*(month|year)", re.I)
 
-# How promising a pathway is as a route for African labour mobility. Barriers
-# subtract, volume-capable routes add. This is our judgement made explicit, not
-# an ICMPD field: the weights are here to be argued with.
-PROMISE = {
-    "mentions_quota": -14,               # a cap is a hard ceiling on volume
+# Signals of a route that is genuinely OPEN and genuinely LABOUR. The first
+# version of this scored on absence of barriers, which rewarded pathways for
+# saying nothing - and handed Slovenia a high score on the strength of two
+# bilateral agreements with Serbia and Bosnia and a volunteers permit. Evidence
+# of opportunity now has to be positive and stated.
+OPPORTUNITY = {
+    "mentions_seasonal": +12,        # genuinely high-volume in practice
+    "mentions_shortage_list": +10,   # demand officially acknowledged
+    "mentions_contract": +8,         # employer-driven, so a real job exists
+    "mentions_renewable": +7,        # leads somewhere, not a dead end
+    "mentions_eu_blue_card": +6,     # portable and well understood
+    "mentions_skilled": +5,          # vocational, not only graduate
+    "mentions_stated_duration": +4,  # concrete enough to plan around
+}
+BARRIERS = {
+    "mentions_quota": -12,               # a cap is a hard ceiling on volume
     "mentions_labour_market_test": -12,  # employer must prove no local hire
+    "mentions_self_employed": -12,       # needs capital; rarely moves volume
     "mentions_language": -10,
     "mentions_salary": -8,               # a threshold excludes lower-wage work
-    "mentions_highly_skilled": -6,       # narrows the eligible population
-    "mentions_self_employed": -12,       # needs capital; rarely moves volume
-    "mentions_seasonal": +10,            # genuinely high-volume in practice
-    "mentions_contract": +8,             # employer-driven, so a real job exists
-    "mentions_eu_blue_card": +6,         # portable and well understood
-    "mentions_skilled": +4,
-    "mentions_shortage_list": +6,        # demand is officially acknowledged
+    "mentions_highly_skilled": -5,       # narrows the eligible population
 }
+# Near-fatal for an AFRICAN corridor specifically. A route reserved for Serbian
+# or Western Balkans nationals is not an opportunity here however open it is,
+# and a volunteers or working-holiday permit is not labour mobility.
+DISQUALIFIERS = {
+    "restricted_nationality": -40,
+    "non_labour_route": -32,
+}
+
+# Nationalities and blocs that appear as eligibility restrictions and exclude
+# African applicants by construction.
+NON_AFRICAN_RESTRICTION = (
+    r"\b(?:serbia|serbian|bosnia|herzegovina|montenegro|north macedonia|macedonian|"
+    r"albania|albanian|kosovo|western balkans|ukrain\w*|moldova|belarus|georgia|"
+    r"armenia|azerbaijan|russia|turkey|t.rkiye|india|indian|pakistan|bangladesh|"
+    r"philippines|filipino|vietnam|indonesia|nepal|sri lanka|china|chinese|"
+    r"japan|korea|taiwan|brazil|argentina|colombia|mexico|chile|peru|"
+    r"united kingdom|british|switzerland|norway|iceland|canada|australia|"
+    r"new zealand|united states|american)\b")
+# "trainee" and "internship" are deliberately absent: the intra-corporate
+# transfer route explicitly covers trainee employees and is real paid work.
+NON_LABOUR = (r"volunteer|au pair|working holiday|youth mobility|"
+              r"\bstudent\b|\bstudy\b|pupil|\bschool\b")
 
 
 def _text(h: str) -> str:
@@ -149,12 +177,30 @@ def main() -> None:
     df["country_confidence"] = np.where(df.anchor.notna(), "named", "inferred")
 
     # ---- promise score ----------------------------------------------------- #
-    step("scoring pathways")
-    df["promise_raw"] = 50 + sum(df[k] * v for k, v in PROMISE.items() if k in df)
-    df["promise"] = df.promise_raw.clip(0, 100)
-    df["barrier_count"] = sum(df[k] for k in
-                              ["mentions_quota", "mentions_labour_market_test",
-                               "mentions_language", "mentions_salary"] if k in df)
+    step("scoring pathways on positive evidence")
+    blob = (df.title.fillna("") + " " + df.description.fillna("")).str.lower()
+    df["mentions_stated_duration"] = df.min_months.notna().astype(int)
+    df["mentions_renewable"] = blob.str.contains(
+        r"renewab|extend|permanent|long[- ]term|indefinite", regex=True).astype(int)
+    df["restricted_nationality"] = blob.str.contains(
+        NON_AFRICAN_RESTRICTION, regex=True).astype(int)
+    df["non_labour_route"] = blob.str.contains(NON_LABOUR, regex=True).astype(int)
+
+    opp = sum(df[k] * v for k, v in OPPORTUNITY.items() if k in df)
+    bar = sum(df[k] * v for k, v in BARRIERS.items() if k in df)
+    dis = sum(df[k] * v for k, v in DISQUALIFIERS.items() if k in df)
+    gross = 50 + opp + bar + dis
+
+    # A description that states nothing is an UNKNOWN pathway, not a good one.
+    # Scores are pulled towards 20 in proportion to how little the record says,
+    # so silence can no longer buy a middling score.
+    signals = [k for k in list(OPPORTUNITY) + list(BARRIERS) if k in df]
+    df["signal_count"] = df[signals].sum(axis=1)
+    df["informativeness"] = (df.signal_count / 4.0).clip(upper=1.0)
+    df["promise"] = (20 + (gross - 20) * df.informativeness).clip(0, 100)
+
+    df["opportunity_points"] = opp
+    df["barrier_count"] = sum(df[k] for k in BARRIERS if k in df)
     save(df, "icmpd_pathways")
 
     # ---- per-destination roll-up ------------------------------------------- #
@@ -165,6 +211,8 @@ def main() -> None:
               .agg(icmpd_promise_mean=("promise", "mean"),
                    icmpd_promise_best=("promise", "max"),
                    icmpd_barriers_mean=("barrier_count", "mean"),
+                   icmpd_informativeness=("informativeness", "mean"),
+                   icmpd_open_routes=("promise", lambda s: int((s >= 60).sum())),
                    icmpd_pathways_seen=("promise", "size"),
                    icmpd_named_share=("country_confidence",
                                       lambda s: (s == "named").mean()))
@@ -185,6 +233,12 @@ def main() -> None:
           f"(89% leave-one-out); {df.country.nunique()} of 27 countries covered")
     print(f"    promise score: median {df.promise.median():.0f}, "
           f"range {df.promise.min():.0f}-{df.promise.max():.0f}")
+    print(f"    nationality-restricted (Balkans, Ukraine, Asia etc): "
+          f"{int(df.restricted_nationality.sum())} pathways")
+    print(f"    non-labour routes (volunteer, au pair, study): "
+          f"{int(df.non_labour_route.sum())} pathways")
+    print(f"    uninformative (fewer than 4 stated signals): "
+          f"{int((df.informativeness < 1).sum())} of {len(df)}")
     top = dest.nlargest(5, "icmpd_promise_mean")
     nmm = dict(zip(cc.iso3, cc.name))
     print("    most promising destination pathway mixes:")

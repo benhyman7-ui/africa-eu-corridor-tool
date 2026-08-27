@@ -7,7 +7,7 @@
 const S = {
   corridors: [], meta: null, series: null, sectors: null, geo: null,
   view: 'map', preset: 'cgd', combine: 0, scaleWeight: 0,
-  top: {}, ease: {}, pot: {},
+  top: {}, access: {}, ease: {}, pot: {},
   filters: { origRegion: '', orig: '', destRegion: '', dest: '', flow: '0',
              consular: false, agreement: false, lhf: false, hideWho: false },
   sort: { key: 'score', dir: -1 },
@@ -16,13 +16,16 @@ const S = {
 };
 
 const TOP_LABELS = {
-  underutilisation: 'Underutilisation', ease: 'Ease of unlocking', potential: 'Potential',
+  underutilisation: 'Underutilisation', access: 'Access (can it happen)',
+  ease: 'Ease (how hard)', potential: 'Potential',
+};
+const ACCESS_LABELS = {
+  f_consular: 'Consular access', f_visa_success: 'Visa success rate',
 };
 const EASE_LABELS = {
-  f_consular: 'Consular access', f_visa_success: 'Visa success rate',
   f_language: 'Language access', f_agreement: 'Legal channel',
-  f_cultural: 'Cultural proximity', f_pathways: 'Pathway permissiveness',
-  f_salary_threshold: 'Salary threshold', f_recognition: 'Qualification recognition',
+  f_pathways: 'Pathway permissiveness', f_salary_threshold: 'Salary threshold',
+  f_recognition: 'Qualification recognition', f_cultural: 'Cultural proximity',
   f_connectivity: 'Air connectivity', f_admin: 'Origin admin capacity',
   f_proximity: 'Proximity',
 };
@@ -97,11 +100,11 @@ const esc = s => String(s ?? '').replace(/[&<>"]/g, c =>
    Values are floored at 1 on the 0–100 scale so a true zero produces a very low
    but finite score rather than log(0) or a divide by zero. */
 const FLOOR = 1;
-function powerMean(pairs, p) {
+function powerMean(pairs, p, floor) {
   let num = 0, den = 0;
   for (const [v, w] of pairs) {
     if (!(w > 0) || v === null || v === undefined || Number.isNaN(v)) continue;
-    const x = Math.max(v, FLOOR);
+    const x = Math.max(v, floor ?? FLOOR);
     num += w * (p === 0 ? Math.log(x) : Math.pow(x, p));
     den += w;
   }
@@ -109,8 +112,8 @@ function powerMean(pairs, p) {
   return p === 0 ? Math.exp(num / den) : Math.pow(num / den, 1 / p);
 }
 
-function weighted(row, weights, fallback, p) {
-  const out = powerMean(Object.entries(weights).map(([k, w]) => [row[k], w]), p);
+function weighted(row, weights, fallback, p, floor) {
+  const out = powerMean(Object.entries(weights).map(([k, w]) => [row[k], w]), p, floor);
   return out === null ? (row[fallback] ?? 50) : out;
 }
 
@@ -118,6 +121,11 @@ function rescore() {
   const t = S.top;
   const p = S.combine;          // 1 additive, 0 geometric, -1 harmonic
   for (const r of S.corridors) {
+    // Access is ALWAYS harmonic regardless of the combine setting, because it
+    // is a gate rather than a trade-off: no consulate is not compensated by a
+    // permissive pathway list. This is the fix for corridors scoring well on
+    // paper while being unreachable in practice.
+    r.access = weighted(r, S.access, 'access_score', -1, 5);
     // The penalty has to bite at the COMPONENT level too. Applying it only
     // across the three headline dimensions let a corridor with no consular
     // access whatsoever still post a respectable ease score, because the
@@ -126,7 +134,8 @@ function rescore() {
     r.potential = weighted(r, S.pot, 'potential_score', p);
     r.under = r.underutilisation_score ?? 50;
     const base = powerMean([
-      [r.under, t.underutilisation], [r.ease, t.ease], [r.potential, t.potential],
+      [r.under, t.underutilisation], [r.access, t.access],
+      [r.ease, t.ease], [r.potential, t.potential],
     ], p) ?? 50;
     r.base_score = base;
     // Scale enters GEOMETRICALLY against the finished base score, never as a
@@ -273,9 +282,11 @@ function applyPreset(name) {
   const p = S.meta.presets[name];
   const mx = Math.max(...Object.values(p));
   for (const k of Object.keys(TOP_LABELS)) S.top[k] = Math.round(p[k] / mx * 100) / 10;
+  Object.assign(S.access, toTen(S.meta.access_weights));
   Object.assign(S.ease, toTen(S.meta.ease_weights));
   Object.assign(S.pot, toTen(S.meta.potential_weights));
   syncSliders($('#topWeights'), S.top);
+  syncSliders($('#accessWeights'), S.access);
   syncSliders($('#easeWeights'), S.ease);
   syncSliders($('#potWeights'), S.pot);
   [...$('#presets').children].forEach((b, i) =>
@@ -297,9 +308,11 @@ function buildSidebar() {
       name === 'cgd' ? 'CGD' : name === 'ajf' ? 'AJF' : 'Balanced'));
 
   for (const k of Object.keys(TOP_LABELS)) S.top[k] = 5;
+  Object.assign(S.access, toTen(m.access_weights));
   Object.assign(S.ease, toTen(m.ease_weights));
   Object.assign(S.pot, toTen(m.potential_weights));
   sliderBlock($('#topWeights'), S.top, TOP_LABELS, () => { markCustom(); render(); });
+  sliderBlock($('#accessWeights'), S.access, ACCESS_LABELS, () => { markCustom(); render(); });
   sliderBlock($('#easeWeights'), S.ease, EASE_LABELS, () => { markCustom(); render(); });
   sliderBlock($('#potWeights'), S.pot, POT_LABELS, () => { markCustom(); render(); });
 
@@ -589,6 +602,7 @@ const COLS = [
       r.orig_name, el('span', { class: 'arrow' }, '→'), r.dest_name) },
   { k: 'score', l: 'Score', bar: true },
   { k: 'under', l: 'Under', bar: true },
+  { k: 'access', l: 'Access', bar: true },
   { k: 'ease', l: 'Ease', bar: true },
   { k: 'potential', l: 'Potential', bar: true },
   { k: 'permits_mean3', l: 'Actual/yr', num: 0 },
@@ -855,7 +869,8 @@ function viewDetail(r) {
   if (r.who_ssl_2023) checks.push([
     'info', false, 'WHO health workforce safeguards list',
     r.who_expected_removal ? 'listed 2023, expected off in 2026' : 'listed 2023 and 2026']);
-  const comps = [...Object.keys(EASE_LABELS).map(k => [EASE_LABELS[k], r[k]]),
+  const comps = [...Object.keys(ACCESS_LABELS).map(k => [ACCESS_LABELS[k], r[k]]),
+    ...Object.keys(EASE_LABELS).map(k => [EASE_LABELS[k], r[k]]),
     ...Object.keys(POT_LABELS).map(k => [POT_LABELS[k], r[k]])];
 
   return el('div', {},
@@ -949,7 +964,8 @@ function viewDetail(r) {
         el('header', {}, el('h2', {}, 'Score decomposition')),
         el('div', { class: 'pad' },
           el('div', { class: 'decomp' },
-            [['Underutilisation', r.under], ['Ease of unlocking', r.ease], ['Potential', r.potential]]
+            [['Underutilisation', r.under], ['Access', r.access],
+             ['Ease', r.ease], ['Potential', r.potential]]
               .map(([l, v]) => el('div', { class: 'row' },
                 el('div', { class: 'lbl', style: 'font-weight:700' }, l),
                 el('div', { class: 'bar' }, el('i', { style: `width:${v ?? 0}%` })),
@@ -1014,11 +1030,13 @@ function weightsTable() {
   const share = (preset, group, key) => {
     const top = m.presets[preset];
     if (group === 'under') return top.underutilisation;
-    const src = group === 'ease' ? m.ease_weights : m.potential_weights;
+    const src = group === 'access' ? m.access_weights
+      : group === 'ease' ? m.ease_weights : m.potential_weights;
     const tot = Object.values(src).reduce((a, b) => a + b, 0);
-    return top[group === 'ease' ? 'ease' : 'potential'] * (src[key] / tot);
+    return top[group] * (src[key] / tot);
   };
   const rows = [['Underutilisation', 'under', null],
+    ...Object.keys(m.access_weights).map(k => [ACCESS_LABELS[k], 'access', k]),
     ...Object.keys(m.ease_weights).map(k => [EASE_LABELS[k], 'ease', k]),
     ...Object.keys(m.potential_weights).map(k => [POT_LABELS[k], 'potential', k])];
   const head = `<tr><th>Factor</th><th>What it measures</th>${
@@ -1031,12 +1049,12 @@ function weightsTable() {
       return `<td style="text-align:right;font-variant-numeric:tabular-nums${lead ? ';font-weight:700' : ''}">${v.toFixed(1)}%</td>`;
     }).join('');
     const dim = group === 'under' ? 'Underutilisation'
-      : group === 'ease' ? 'Ease' : 'Potential';
+      : group === 'access' ? 'Access' : group === 'ease' ? 'Ease' : 'Potential';
     return `<tr><td><strong>${label}</strong><br><span style="font-size:11px;color:var(--ink-3)">${dim}</span></td><td style="font-size:12.5px">${note}</td>${cells}</tr>`;
   }).join('');
   const totals = names.map(n => {
     const t = m.presets[n];
-    return `<td style="text-align:right;font-weight:700">${((t.underutilisation + t.ease + t.potential) * 100).toFixed(0)}%</td>`;
+    return `<td style="text-align:right;font-weight:700">${((t.underutilisation + t.access + t.ease + t.potential) * 100).toFixed(0)}%</td>`;
   }).join('');
   return `<table>${head}${body}<tr><td colspan="2" style="font-weight:700">Total</td>${totals}</tr></table>`;
 }
@@ -1118,7 +1136,18 @@ That way a corridor which is easy, underused and valuable but could only ever mo
 is discounted rather than having its genuine merits diluted. It defaults to off because whether
 size should drive a funding decision is a judgement, not a fact.</p>
 
-<h3>2. Ease of unlocking</h3>
+<h3>2. Access — can this happen at all</h3>
+<p>Consular access, legal channel, pathway permissiveness and visa success rate are pulled
+out of the general friction index and treated as a <strong>gate</strong>, because they answer
+a different question from the rest: not how hard a corridor is, but whether it is possible.</p>
+<p>They combine <strong>harmonically</strong>, always, regardless of the combining rule chosen
+in the sidebar — the weakest of the four dominates. That is deliberate. Buried among eleven
+ease components, a consular score of 24 was being diluted by ten others, and Slovenia scored
+65 overall while having almost no consular presence in Africa and no legal channel pointed at
+any African origin. A permissive pathway list does not compensate for there being nowhere to
+lodge an application.</p>
+
+<h3>3. Ease — how hard, once it is possible</h3>
 <ul>
 <li><strong>Consular access</strong>, tiered. ${Math.round(100 * t.can_apply_in_country / m.n_corridors)}%
 of corridors let an applicant lodge an application in their own country. Most EU work visas
@@ -1163,7 +1192,7 @@ here because ease of settlement affects whether a corridor sustains itself, it i
 visible component, and the whole thing can be set to zero. It is <strong>not</strong> a
 recommendation to select workers on religion.</p>
 
-<h3>3. Potential</h3>
+<h3>4. Potential</h3>
 <p>Income gain is the <strong>log of the annual increase in median income</strong> from origin to
 destination, using the World Bank Poverty and Inequality Platform (2021 PPP). Median rather than
 GNI per capita: GNI pc is a mean over the whole economy, dragged upward by the top of the
