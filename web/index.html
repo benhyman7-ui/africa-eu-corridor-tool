@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Africa → EU Labour Mobility Corridors | Africa Jobs Fund</title>
+<meta name="description" content="Every Africa-to-EU labour mobility corridor scored on underutilisation, ease of unlocking, and potential.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/svg+xml" href="assets/ajf-mark.svg">
+<link rel="apple-touch-icon" href="assets/ajf-mark.svg">
+</head>
+<body>
+<div class="app">
+
+  <aside class="side">
+    <a class="brand" href="https://africajobsfund.com" target="_blank" rel="noopener"
+       style="text-decoration:none" title="Africa Jobs Fund">
+      <img src="assets/ajf-logo.svg" alt="Africa Jobs Fund">
+    </a>
+
+    <div class="side-inner">
+      <div class="group">
+        <h3>Weighting preset</h3>
+        <div class="presets" id="presets"></div>
+        <div class="note" id="presetNote"></div>
+      </div>
+
+      <div class="group">
+        <h3>Score weights <span style="text-transform:none;letter-spacing:0;font-weight:400">(0–10)</span></h3>
+        <div id="topWeights"></div>
+        <details>
+          <summary>Ease of unlocking — components</summary>
+          <div class="sub-weights" id="easeWeights"></div>
+        </details>
+        <details>
+          <summary>Potential — components</summary>
+          <div class="sub-weights" id="potWeights"></div>
+        </details>
+        <label class="check" style="margin-top:10px">
+          <input type="checkbox" id="geoMean">
+          <span>Geometric mean — a zero on any dimension collapses the score</span>
+        </label>
+      </div>
+
+      <div class="group">
+        <h3>Origin</h3>
+        <label class="fld">
+          <span>Region</span>
+          <select id="fOrigRegion"><option value="">All African regions</option></select>
+        </label>
+        <label class="fld">
+          <span>Country</span>
+          <select id="fOrig"><option value="">All origin countries</option></select>
+        </label>
+      </div>
+
+      <div class="group">
+        <h3>Destination</h3>
+        <label class="fld">
+          <span>Region</span>
+          <select id="fDestRegion"><option value="">All EU regions</option></select>
+        </label>
+        <label class="fld">
+          <span>Country</span>
+          <select id="fDest"><option value="">All destinations</option></select>
+        </label>
+      </div>
+
+      <div class="group">
+        <h3>Filters</h3>
+        <label class="fld">
+          <span>Current flow</span>
+          <select id="fFlow">
+            <option value="0">Any</option>
+            <option value="zero">Zero permits last year</option>
+            <option value="1">At least 1/yr</option>
+            <option value="25">At least 25/yr</option>
+            <option value="100">At least 100/yr</option>
+          </select>
+        </label>
+        <label class="check"><input type="checkbox" id="fConsular"> Can apply in country</label>
+        <label class="check"><input type="checkbox" id="fAgreement"> Agreement or EU instrument</label>
+        <label class="check"><input type="checkbox" id="fLHF"> Low-hanging fruit only</label>
+        <label class="check"><input type="checkbox" id="fWho"> Hide WHO safeguards-list origins</label>
+        <button class="ghost" id="resetBtn" style="width:100%;margin-top:9px">Reset all filters</button>
+        <div class="note" id="filterCount"></div>
+      </div>
+
+      <button class="ghost" id="themeBtn" style="width:100%">Toggle light / dark</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="tabs" id="tabs"></div>
+      <div class="spacer"></div>
+      <button class="ghost" id="csvBtn">Download CSV</button>
+    </div>
+
+    <div class="stats" id="stats"></div>
+    <div id="view"><div class="loading">Loading corridor data…</div></div>
+  </main>
+
+</div>
+<script src="app.js"></script>
+</body>
+</html>

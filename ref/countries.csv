@@ -1,0 +1,82 @@
+iso3,iso2,m49,name,iso_name,side,region,subregion,eurostat_code,in_eurostat_citizen,wb_income,capital,lat,lon
+DZA,DZ,012,Algeria,Algeria,origin,Africa,Northern Africa,DZ,1,Upper middle income,Algiers,36.7397,3.05097
+AGO,AO,024,Angola,Angola,origin,Africa,Middle Africa,AO,1,Lower middle income,Luanda,-8.81155,13.242
+BEN,BJ,204,Benin,Benin,origin,Africa,Western Africa,BJ,1,Lower middle income,Porto-Novo,6.4779,2.6323
+BWA,BW,072,Botswana,Botswana,origin,Africa,Southern Africa,BW,1,Upper middle income,Gaborone,-24.6544,25.9201
+BFA,BF,854,Burkina Faso,Burkina Faso,origin,Africa,Western Africa,BF,1,Low income,Ouagadougou,12.3605,-1.53395
+BDI,BI,108,Burundi,Burundi,origin,Africa,Eastern Africa,BI,1,Low income,Bujumbura,-3.3784,29.3639
+CPV,CV,132,Cabo Verde,Cabo Verde,origin,Africa,Western Africa,CV,1,Upper middle income,Praia,14.9218,-23.5087
+CMR,CM,120,Cameroon,Cameroon,origin,Africa,Middle Africa,CM,1,Lower middle income,Yaounde,3.8721,11.5174
+CAF,CF,140,Central African Rep.,Central African Republic,origin,Africa,Middle Africa,CF,1,Low income,Bangui,5.63056,21.6407
+TCD,TD,148,Chad,Chad,origin,Africa,Middle Africa,TD,1,Low income,N'Djamena,12.1048,15.0445
+COM,KM,174,Comoros,Comoros,origin,Africa,Eastern Africa,KM,1,Lower middle income,Moroni,-11.6986,43.2418
+COG,CG,178,Congo-Brazzaville,Congo,origin,Africa,Middle Africa,CG,1,Lower middle income,Brazzaville,-4.2767,15.2662
+COD,CD,180,DR Congo,"Congo, Democratic Republic of the",origin,Africa,Middle Africa,CD,1,Low income,Kinshasa,-4.325,15.3222
+DJI,DJ,262,Djibouti,Djibouti,origin,Africa,Eastern Africa,DJ,1,Lower middle income,Djibouti,11.5806,43.1425
+EGY,EG,818,"Egypt, Arab Rep.",Egypt,origin,Africa,Northern Africa,EG,1,Lower middle income,Cairo,30.0982,31.2461
+GNQ,GQ,226,Equatorial Guinea,Equatorial Guinea,origin,Africa,Middle Africa,GQ,1,Upper middle income,Malabo,3.7523,8.7741
+ERI,ER,232,Eritrea,Eritrea,origin,Africa,Eastern Africa,ER,1,Low income,Asmara,15.3315,38.9183
+SWZ,SZ,748,Eswatini,Eswatini,origin,Africa,Southern Africa,SZ,1,Lower middle income,Mbabane,-26.5225,31.4659
+ETH,ET,231,Ethiopia,Ethiopia,origin,Africa,Eastern Africa,ET,1,Low income,Addis Ababa,9.02274,38.7468
+GAB,GA,266,Gabon,Gabon,origin,Africa,Middle Africa,GA,1,Upper middle income,Libreville,0.38832,9.45162
+GMB,GM,270,The Gambia,Gambia,origin,Africa,Western Africa,GM,1,Low income,Banjul,13.4495,-16.5885
+GHA,GH,288,Ghana,Ghana,origin,Africa,Western Africa,GH,1,Lower middle income,Accra,5.57045,-0.20795
+GIN,GN,324,Guinea,Guinea,origin,Africa,Western Africa,GN,1,Lower middle income,Conakry,9.51667,-13.7
+GNB,GW,624,Guinea-Bissau,Guinea-Bissau,origin,Africa,Western Africa,GW,1,Low income,Bissau,11.8037,-15.1804
+CIV,CI,384,Côte d'Ivoire,Côte d'Ivoire,origin,Africa,Western Africa,CI,1,Lower middle income,Yamoussoukro,5.332,-4.0305
+KEN,KE,404,Kenya,Kenya,origin,Africa,Eastern Africa,KE,1,Lower middle income,Nairobi,-1.27975,36.8126
+LSO,LS,426,Lesotho,Lesotho,origin,Africa,Southern Africa,LS,1,Lower middle income,Maseru,-29.5208,27.7167
+LBR,LR,430,Liberia,Liberia,origin,Africa,Western Africa,LR,1,Low income,Monrovia,6.30039,-10.7957
+LBY,LY,434,Libya,Libya,origin,Africa,Northern Africa,LY,1,Upper middle income,Tripoli,32.8578,13.1072
+MDG,MG,450,Madagascar,Madagascar,origin,Africa,Eastern Africa,MG,1,Low income,Antananarivo,-20.4667,45.7167
+MWI,MW,454,Malawi,Malawi,origin,Africa,Eastern Africa,MW,1,Low income,Lilongwe,-13.9899,33.7703
+MLI,ML,466,Mali,Mali,origin,Africa,Western Africa,ML,1,Low income,Bamako,13.5667,-7.50034
+MRT,MR,478,Mauritania,Mauritania,origin,Africa,Western Africa,MR,1,Lower middle income,Nouakchott,18.2367,-15.9824
+MUS,MU,480,Mauritius,Mauritius,origin,Africa,Eastern Africa,MU,1,Upper middle income,Port Louis,-20.1605,57.4977
+MAR,MA,504,Morocco,Morocco,origin,Africa,Northern Africa,MA,1,Lower middle income,Rabat,33.9905,-6.8704
+MOZ,MZ,508,Mozambique,Mozambique,origin,Africa,Eastern Africa,MZ,1,Low income,Maputo,-25.9664,32.5713
+NAM,NA,516,Namibia,Namibia,origin,Africa,Southern Africa,NA,1,Lower middle income,Windhoek,-22.5648,17.0931
+NER,NE,562,Niger,Niger,origin,Africa,Western Africa,NE,1,Low income,Niamey,13.514,2.1073
+NGA,NG,566,Nigeria,Nigeria,origin,Africa,Western Africa,NG,1,Lower middle income,Abuja,9.05804,7.48906
+RWA,RW,646,Rwanda,Rwanda,origin,Africa,Eastern Africa,RW,1,Low income,Kigali,-1.95325,30.0587
+STP,ST,678,São Tomé & Príncipe,Sao Tome and Principe,origin,Africa,Middle Africa,ST,1,Lower middle income,Sao Tome,0.20618,6.6071
+SEN,SN,686,Senegal,Senegal,origin,Africa,Western Africa,SN,1,Lower middle income,Dakar,14.7247,-17.4734
+SYC,SC,690,Seychelles,Seychelles,origin,Africa,Eastern Africa,SC,1,High income,Victoria,-4.6309,55.4466
+SLE,SL,694,Sierra Leone,Sierra Leone,origin,Africa,Western Africa,SL,1,Low income,Freetown,8.4821,-13.2134
+SOM,SO,706,"Somalia, Fed. Rep.",Somalia,origin,Africa,Eastern Africa,SO,1,Low income,Mogadishu,2.07515,45.3254
+ZAF,ZA,710,South Africa,South Africa,origin,Africa,Southern Africa,ZA,1,Upper middle income,Pretoria,-25.746,28.1871
+SSD,SS,728,South Sudan,South Sudan,origin,Africa,Eastern Africa,SS,1,Low income,Juba,4.85,31.6
+SDN,SD,729,Sudan,Sudan,origin,Africa,Northern Africa,SD,1,Low income,Khartoum,15.5932,32.5363
+TZA,TZ,834,Tanzania,"Tanzania, United Republic of",origin,Africa,Eastern Africa,TZ,1,Lower middle income,Dodoma,-6.17486,35.7382
+TGO,TG,768,Togo,Togo,origin,Africa,Western Africa,TG,1,Lower middle income,Lome,6.1228,1.2255
+TUN,TN,788,Tunisia,Tunisia,origin,Africa,Northern Africa,TN,1,Lower middle income,Tunis,36.7899,10.21
+UGA,UG,800,Uganda,Uganda,origin,Africa,Eastern Africa,UG,1,Low income,Kampala,0.314269,32.5729
+ZMB,ZM,894,Zambia,Zambia,origin,Africa,Eastern Africa,ZM,1,Lower middle income,Lusaka,-15.3982,28.2937
+ZWE,ZW,716,Zimbabwe,Zimbabwe,origin,Africa,Eastern Africa,ZW,1,Lower middle income,Harare,-17.8312,31.0672
+AUT,AT,040,Austria,Austria,destination,EU-27,Western Europe,AT,0,High income,Vienna,48.2201,16.3798
+BEL,BE,056,Belgium,Belgium,destination,EU-27,Western Europe,BE,0,High income,Brussels,50.8371,4.36761
+BGR,BG,100,Bulgaria,Bulgaria,destination,EU-27,Eastern Europe,BG,0,High income,Sofia,42.7105,23.3238
+CYP,CY,196,Cyprus,Cyprus,destination,EU-27,Southern Europe,CY,0,High income,Nicosia,35.1676,33.3736
+CZE,CZ,203,Czechia,Czechia,destination,EU-27,Eastern Europe,CZ,0,High income,Prague,50.0878,14.4205
+DEU,DE,276,Germany,Germany,destination,EU-27,Western Europe,DE,0,High income,Berlin,52.5235,13.4115
+DNK,DK,208,Denmark,Denmark,destination,EU-27,Northern Europe,DK,0,High income,Copenhagen,55.6763,12.5681
+EST,EE,233,Estonia,Estonia,destination,EU-27,Northern Europe,EE,0,High income,Tallinn,59.4392,24.7586
+GRC,GR,300,Greece,Greece,destination,EU-27,Southern Europe,EL,0,High income,Athens,37.9792,23.7166
+ESP,ES,724,Spain,Spain,destination,EU-27,Southern Europe,ES,0,High income,Madrid,40.4167,-3.70327
+FIN,FI,246,Finland,Finland,destination,EU-27,Northern Europe,FI,0,High income,Helsinki,60.1608,24.9525
+FRA,FR,250,France,France,destination,EU-27,Western Europe,FR,0,High income,Paris,48.8566,2.35097
+HRV,HR,191,Croatia,Croatia,destination,EU-27,Southern Europe,HR,1,High income,Zagreb,45.8069,15.9614
+HUN,HU,348,Hungary,Hungary,destination,EU-27,Eastern Europe,HU,0,High income,Budapest,47.4984,19.0408
+IRL,IE,372,Ireland,Ireland,destination,EU-27,Western Europe,IE,0,High income,Dublin,53.3441,-6.26749
+ITA,IT,380,Italy,Italy,destination,EU-27,Southern Europe,IT,0,High income,Rome,41.8955,12.4823
+LTU,LT,440,Lithuania,Lithuania,destination,EU-27,Northern Europe,LT,0,High income,Vilnius,54.6896,25.2799
+LUX,LU,442,Luxembourg,Luxembourg,destination,EU-27,Western Europe,LU,0,High income,Luxembourg,49.61,6.1296
+LVA,LV,428,Latvia,Latvia,destination,EU-27,Northern Europe,LV,0,High income,Riga,56.9465,24.1048
+MLT,MT,470,Malta,Malta,destination,EU-27,Southern Europe,MT,0,High income,Valletta,35.9042,14.5189
+NLD,NL,528,Netherlands,"Netherlands, Kingdom of the",destination,EU-27,Western Europe,NL,0,High income,Amsterdam,52.3738,4.89095
+POL,PL,616,Poland,Poland,destination,EU-27,Eastern Europe,PL,0,High income,Warsaw,52.26,21.02
+PRT,PT,620,Portugal,Portugal,destination,EU-27,Southern Europe,PT,0,High income,Lisbon,38.7072,-9.13552
+ROU,RO,642,Romania,Romania,destination,EU-27,Eastern Europe,RO,0,High income,Bucharest,44.4479,26.0979
+SWE,SE,752,Sweden,Sweden,destination,EU-27,Northern Europe,SE,0,High income,Stockholm,59.3327,18.0645
+SVN,SI,705,Slovenia,Slovenia,destination,EU-27,Southern Europe,SI,0,High income,Ljubljana,46.0546,14.5044
+SVK,SK,703,Slovakia,Slovakia,destination,EU-27,Eastern Europe,SK,0,High income,Bratislava,48.1484,17.1073

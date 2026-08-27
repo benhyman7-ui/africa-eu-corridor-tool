@@ -1,0 +1,69 @@
+dest_iso3,orig_iso3,instrument,instrument_type,year_signed,sector_scope,binding,status,confidence,source_url,notes
+ESP,MAR,GECCO circular migration programme (Huelva),seasonal_scheme,2001,Agriculture,binding,active,high,https://www.mites.gob.es/,Annual quota of seasonal agricultural workers; the largest single managed Africa-EU labour channel
+ESP,MRT,Framework agreement on migration,bilateral_labour_agreement,2007,General,binding,active,medium,https://www.boe.es/,Cooperation framework covering labour migration and readmission
+ESP,SEN,Framework agreement on migration,bilateral_labour_agreement,2006,General;Fisheries,binding,active,medium,https://www.boe.es/,Signed during the Cayucos period; includes labour placement provisions
+ESP,GMB,Framework agreement on migration,bilateral_labour_agreement,2006,General,binding,active,medium,https://www.boe.es/,
+ESP,CPV,Framework agreement on migration,bilateral_labour_agreement,2007,General,binding,active,medium,https://www.boe.es/,
+ESP,MLI,Framework agreement on migration,bilateral_labour_agreement,2007,General,binding,active,medium,https://www.boe.es/,
+ESP,NER,Framework agreement on migration,bilateral_labour_agreement,2008,General,binding,active,low,https://www.boe.es/,
+ESP,GIN,Framework agreement on migration,bilateral_labour_agreement,2007,General,binding,active,low,https://www.boe.es/,
+ESP,MAR,EU Mobility Partnership,mobility_partnership,2013,General,declaratory,active,high,https://ec.europa.eu/,EU-level partnership with Member State participation
+FRA,TUN,Accord de gestion concertee des flux migratoires,bilateral_labour_agreement,2008,General;ICT;Health,binding,active,high,https://www.legifrance.gouv.fr/,Includes a skills-and-talents list of eligible occupations
+FRA,SEN,Accord de gestion concertee des flux migratoires,bilateral_labour_agreement,2006,General,binding,active,high,https://www.legifrance.gouv.fr/,Revised 2009
+FRA,BEN,Accord de gestion concertee des flux migratoires,bilateral_labour_agreement,2007,General,binding,active,medium,https://www.legifrance.gouv.fr/,
+FRA,COG,Accord de gestion concertee des flux migratoires,bilateral_labour_agreement,2007,General,binding,active,medium,https://www.legifrance.gouv.fr/,
+FRA,GAB,Accord de gestion concertee des flux migratoires,bilateral_labour_agreement,2007,General,binding,active,medium,https://www.legifrance.gouv.fr/,
+FRA,CPV,Accord de gestion concertee des flux migratoires,bilateral_labour_agreement,2008,General,binding,active,medium,https://www.legifrance.gouv.fr/,
+FRA,BFA,Accord de gestion concertee des flux migratoires,bilateral_labour_agreement,2009,General,binding,active,medium,https://www.legifrance.gouv.fr/,
+FRA,CMR,Accord de gestion concertee des flux migratoires,bilateral_labour_agreement,2009,General,binding,active,medium,https://www.legifrance.gouv.fr/,
+FRA,MUS,Accord de gestion concertee des flux migratoires,bilateral_labour_agreement,2008,General;Hospitality,binding,active,medium,https://www.legifrance.gouv.fr/,
+FRA,MAR,Franco-Moroccan labour convention,bilateral_labour_agreement,1963,General,binding,active,high,https://www.legifrance.gouv.fr/,Long-standing convention underpinning the largest Africa-France corridor
+FRA,DZA,Franco-Algerian accord on movement and employment,bilateral_labour_agreement,1968,General,binding,active,high,https://www.legifrance.gouv.fr/,Distinct legal regime from ordinary French immigration law
+ITA,MAR,Decreto Flussi preferential quota,preferential_quota,2023,General;Agriculture;Construction,binding,active,high,https://www.interno.gov.it/,Reserved annual quota for countries with migration cooperation agreements
+ITA,TUN,Decreto Flussi preferential quota,preferential_quota,2023,General;Agriculture,binding,active,high,https://www.interno.gov.it/,
+ITA,EGY,Decreto Flussi preferential quota,preferential_quota,2023,General;Agriculture;Construction,binding,active,high,https://www.interno.gov.it/,
+ITA,DZA,Decreto Flussi preferential quota,preferential_quota,2023,General,binding,active,high,https://www.interno.gov.it/,
+ITA,CIV,Decreto Flussi preferential quota,preferential_quota,2023,General,binding,active,high,https://www.interno.gov.it/,
+ITA,ETH,Decreto Flussi preferential quota,preferential_quota,2023,General,binding,active,high,https://www.interno.gov.it/,
+ITA,GMB,Decreto Flussi preferential quota,preferential_quota,2023,General,binding,active,high,https://www.interno.gov.it/,
+ITA,GHA,Decreto Flussi preferential quota,preferential_quota,2023,General,binding,active,high,https://www.interno.gov.it/,
+ITA,GIN,Decreto Flussi preferential quota,preferential_quota,2023,General,binding,active,high,https://www.interno.gov.it/,
+ITA,MLI,Decreto Flussi preferential quota,preferential_quota,2023,General,binding,active,high,https://www.interno.gov.it/,
+ITA,MUS,Decreto Flussi preferential quota,preferential_quota,2023,General,binding,active,high,https://www.interno.gov.it/,
+ITA,NER,Decreto Flussi preferential quota,preferential_quota,2023,General,binding,active,high,https://www.interno.gov.it/,
+ITA,NGA,Decreto Flussi preferential quota,preferential_quota,2023,General,binding,active,high,https://www.interno.gov.it/,
+ITA,SEN,Decreto Flussi preferential quota,preferential_quota,2023,General;Agriculture,binding,active,high,https://www.interno.gov.it/,
+ITA,SDN,Decreto Flussi preferential quota,preferential_quota,2023,General,binding,active,medium,https://www.interno.gov.it/,
+DEU,MAR,Migration and mobility cooperation,bilateral_labour_agreement,2022,Health;ICT;Trades,declaratory,active,medium,https://www.auswaertiges-amt.de/,
+DEU,EGY,Migration and mobility cooperation,bilateral_labour_agreement,2024,Health;Trades,declaratory,active,medium,https://www.auswaertiges-amt.de/,
+DEU,KEN,Migration and mobility agreement,bilateral_labour_agreement,2024,ICT;Health;Trades,binding,active,high,https://www.bundesregierung.de/,Signed 2024; explicitly a skilled-labour channel
+DEU,GHA,Migration and mobility cooperation,bilateral_labour_agreement,2024,Health;Trades,declaratory,active,medium,https://www.auswaertiges-amt.de/,
+DEU,NGA,Migration and mobility cooperation,bilateral_labour_agreement,2024,Health;ICT,declaratory,active,low,https://www.auswaertiges-amt.de/,
+DEU,TUN,Migration and mobility cooperation,bilateral_labour_agreement,2023,Health;Trades,declaratory,active,medium,https://www.auswaertiges-amt.de/,
+PRT,AGO,CPLP Mobility Agreement,cplp_mobility,2021,General,binding,active,high,https://www.cplp.org/,Lusophone mobility framework; residence and work facilitation
+PRT,CPV,CPLP Mobility Agreement,cplp_mobility,2021,General,binding,active,high,https://www.cplp.org/,
+PRT,GNB,CPLP Mobility Agreement,cplp_mobility,2021,General,binding,active,high,https://www.cplp.org/,
+PRT,MOZ,CPLP Mobility Agreement,cplp_mobility,2021,General,binding,active,high,https://www.cplp.org/,
+PRT,STP,CPLP Mobility Agreement,cplp_mobility,2021,General,binding,active,high,https://www.cplp.org/,
+PRT,GNQ,CPLP Mobility Agreement,cplp_mobility,2021,General,binding,active,medium,https://www.cplp.org/,Equatorial Guinea acceded to CPLP in 2014
+PRT,CPV,Portugal-Cabo Verde labour agreement,bilateral_labour_agreement,1997,General,binding,active,medium,https://www.portugal.gov.pt/,
+GRC,EGY,Seasonal agricultural workers agreement,seasonal_scheme,2022,Agriculture,binding,active,high,https://www.mfa.gr/,Up to 5000 seasonal agricultural workers per cycle
+GRC,MAR,Bilateral labour cooperation,bilateral_labour_agreement,2023,Agriculture,declaratory,proposed,low,https://www.mfa.gr/,
+BEL,MAR,Belgian-Moroccan labour convention,bilateral_labour_agreement,1964,General,binding,dormant,high,https://www.belgium.be/,Historic guest-worker convention; largely superseded
+BEL,TUN,Belgian-Tunisian labour convention,bilateral_labour_agreement,1969,General,binding,dormant,medium,https://www.belgium.be/,
+BEL,MAR,PALIM Global Skill Partnership,skills_partnership,2019,ICT,declaratory,completed,high,https://www.enabel.be/,ICT training pilot; Global Skill Partnership model
+NLD,MAR,Netherlands-Morocco labour agreement,bilateral_labour_agreement,1969,General,binding,dormant,medium,https://www.rijksoverheid.nl/,
+NLD,TUN,Netherlands-Tunisia labour agreement,bilateral_labour_agreement,1971,General,binding,dormant,low,https://www.rijksoverheid.nl/,
+EU,MAR,EU Talent Partnership,talent_partnership,2022,ICT;Health;Trades;Green,declaratory,active,high,https://home-affairs.ec.europa.eu/,EU-level; open to Member State participation
+EU,TUN,EU Talent Partnership,talent_partnership,2022,ICT;Health;Trades,declaratory,active,high,https://home-affairs.ec.europa.eu/,
+EU,EGY,EU Talent Partnership,talent_partnership,2022,ICT;Health;Trades,declaratory,active,high,https://home-affairs.ec.europa.eu/,
+EU,NGA,EU Talent Partnership,talent_partnership,2023,ICT;Health,declaratory,active,high,https://home-affairs.ec.europa.eu/,
+EU,SEN,EU Talent Partnership,talent_partnership,2023,ICT;Agriculture;Green,declaratory,active,high,https://home-affairs.ec.europa.eu/,
+EU,CPV,EU Mobility Partnership,mobility_partnership,2008,General,declaratory,active,high,https://ec.europa.eu/,First EU Mobility Partnership with an African state
+EU,TUN,EU Mobility Partnership,mobility_partnership,2014,General,declaratory,active,high,https://ec.europa.eu/,
+EU,MAR,EU Mobility Partnership,mobility_partnership,2013,General,declaratory,active,high,https://ec.europa.eu/,
+EU,NGA,Common Agenda on Migration and Mobility,mobility_partnership,2015,General,declaratory,active,medium,https://ec.europa.eu/,
+EU,ETH,Common Agenda on Migration and Mobility,mobility_partnership,2015,General,declaratory,active,medium,https://ec.europa.eu/,
+EU,MAR,THAMM labour migration governance programme,skills_partnership,2019,General;Trades,declaratory,active,medium,https://www.icmpd.org/,EU-funded; North Africa labour migration governance
+EU,TUN,THAMM labour migration governance programme,skills_partnership,2019,General;Trades,declaratory,active,medium,https://www.icmpd.org/,
+EU,EGY,THAMM labour migration governance programme,skills_partnership,2019,General;Trades,declaratory,active,medium,https://www.icmpd.org/,
