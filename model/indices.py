@@ -48,9 +48,10 @@ EASE_WEIGHTS = {
 CULTURAL_MIX = {"religion": 0.5, "hofstede": 0.5}
 
 POTENTIAL_WEIGHTS = {
-    "p_income_gain": 0.50,
-    "p_labour_supply": 0.25,
-    "p_dest_demand": 0.25,
+    "p_income_gain": 0.40,
+    "p_skills_supply": 0.20,   # can the origin actually produce these workers
+    "p_labour_supply": 0.20,   # and how many idle working-age people are there
+    "p_dest_demand": 0.20,
 }
 
 
@@ -108,9 +109,28 @@ def main() -> None:
     df["income_multiple"] = (df["d_gni_pc_ppp"] / df["o_gni_pc_ppp"]).replace(
         [np.inf, -np.inf], np.nan)
 
+    # Quantity: how many working-age people are available and idle.
     df["labour_supply"] = (df["o_working_age_pop"].fillna(0)
                            * df["o_youth_unemployment"].fillna(0) / 100.0)
     df["p_labour_supply"] = pct(np.log1p(df["labour_supply"]))
+
+    # Quality: whether the origin trains anyone. Until now the panel carried
+    # literacy, tertiary enrolment and secondary attainment and used none of
+    # them in any score, so a country with twenty million idle young people and
+    # no training system ranked identically to one with a large college sector.
+    skills = {
+        "o_literacy": 1.0,
+        "o_tertiary_enrolment": 1.0,
+        "o_upper_secondary_attain": 0.8,
+        "o_vocational_enrolment_share": 1.0,     # UIS TVET
+        "o_vocational_share_secondary": 0.6,     # World Bank fallback
+        "o_grad_stem": 0.8,
+        "o_bachelor_attainment": 0.6,
+    }
+    have = {k: w for k, w in skills.items() if k in df.columns}
+    num = sum(pct(df[k]) * w for k, w in have.items())
+    df["p_skills_supply"] = num / sum(have.values()) if have else 50.0
+    df["skills_inputs_present"] = sum(df[k].notna().astype(int) for k in have)
 
     demand = (pct(df.get("d_es_vacancy_rate", pd.Series(np.nan, index=df.index)))
               + pct(df.get("d_es_old_age_dependency", pd.Series(np.nan, index=df.index)))

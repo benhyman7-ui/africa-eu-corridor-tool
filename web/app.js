@@ -25,8 +25,24 @@ const EASE_LABELS = {
   f_admin: 'Origin admin capacity', f_cultural: 'Cultural proximity',
 };
 const POT_LABELS = {
-  p_income_gain: 'Income gain', p_labour_supply: 'Labour supply at origin',
-  p_dest_demand: 'Destination demand',
+  p_income_gain: 'Income gain', p_skills_supply: 'Skills supply at origin',
+  p_labour_supply: 'Labour supply at origin', p_dest_demand: 'Destination demand',
+};
+
+// NACE sector -> the origin-side supply measure that speaks to it. UNESCO's
+// ISCED fields of study line up with the occupation families closely enough to
+// use directly; health also has a real headcount from WHO.
+const SECTOR_SUPPLY = {
+  'O-Q': { field: 'o_grad_health_welfare', label: 'health & welfare graduates',
+           extra: 'o_nurses_midwives_per_10k', extraLabel: 'nurses+midwives /10k' },
+  'J':   { field: 'o_grad_ict', label: 'ICT graduates' },
+  'F':   { field: 'o_grad_engineering_construction', label: 'engineering & construction graduates' },
+  'B-E': { field: 'o_grad_engineering_construction', label: 'engineering & construction graduates' },
+  'A':   { field: 'o_grad_agriculture', label: 'agriculture graduates' },
+  'G-I': { field: 'o_grad_services', label: 'services graduates' },
+  'R_S': { field: 'o_grad_services', label: 'services graduates' },
+  'M_N': { field: 'o_grad_business_law', label: 'business & law graduates' },
+  'K':   { field: 'o_grad_business_law', label: 'business & law graduates' },
 };
 // Weak-link penalty. Geometric is the default: it is the standard way to say
 // "a corridor is only as good as its worst binding constraint" without letting
@@ -681,9 +697,19 @@ function viewSectors(rows) {
   }).filter(Boolean);
   const gains = scored.map(r => r.sec_gain).filter(v => v !== null);
   const gLo = Math.min(...gains), gHi = Math.max(...gains);
+  // Origin-side supply for this sector, ranked across the corridors on screen.
+  const sup = SECTOR_SUPPLY[S.sector];
+  const supRank = sup ? rankScale(scored.map(r => r[sup.field])) : null;
   for (const r of scored) {
     const g = r.sec_gain === null ? 50 : 100 * (r.sec_gain - gLo) / ((gHi - gLo) || 1);
-    r.sec_score = 0.4 * r.score + 0.35 * r.sec_demand + 0.25 * g;
+    const sv = supRank ? supRank(r[sup.field]) : null;
+    r.sec_supply = sv === null ? null : sv * 100;
+    // Destination demand and origin supply now carry equal weight. Ranking a
+    // corridor on vacancies alone said nothing about whether the origin trains
+    // anyone for the work.
+    r.sec_score = sv === null
+      ? 0.40 * r.score + 0.35 * r.sec_demand + 0.25 * g
+      : 0.32 * r.score + 0.26 * r.sec_demand + 0.20 * g + 0.22 * r.sec_supply;
   }
   scored.sort((a, b) => b.sec_score - a.sec_score);
 
@@ -697,6 +723,8 @@ function viewSectors(rows) {
     el('td', {}, el('div', { class: 'bar' }, el('i', { style: `width:${r.sec_score}%` }),
       el('b', {}, r.sec_score.toFixed(0)))),
     el('td', { class: 'num' }, fmt(r.sec_vac, 1) + '%'),
+    el('td', { class: 'num', title: sup ? sup.label : '' },
+      sup && r[sup.field] != null ? fmt(r[sup.field], 1) + '%' : '–'),
     el('td', { class: 'num' }, r.sec_wage ? '€' + fmt(r.sec_wage) : '–'),
     el('td', { class: 'num' }, '$' + fmt(r.o_inc_median_annual_ppp)),
     el('td', { class: 'num' }, fmt(r.permits_mean3, 0)),
@@ -708,6 +736,10 @@ function viewSectors(rows) {
       `SSL marks an origin on the WHO health workforce safeguards list `
       + `(${S.meta.totals.who_origins} of ${S.meta.n_origins} origins), where active `
       + `international recruitment of health personnel is discouraged. Never affects the ranking.`) : null,
+    sup ? el('div', { class: 'note', style: 'margin:0 0 12px;padding:6px 0 6px 10px' },
+      `Origin supply is the share of tertiary graduates in ${sup.label} (UNESCO UIS)`
+      + (sup.extra ? ', alongside WHO health workforce density on the corridor card' : '')
+      + '. Available for 44 of 54 origins; corridors without it are scored on the other three terms.') : null,
     el('div', { class: 'callout' },
       el('strong', {}, 'This overlay is modelled, not observed. '),
       'Eurostat reports bilateral permits by permit category, never by occupation, so no dataset states how many Ghanaian nurses entered Germany. Sector scores combine destination-side vacancy and pay by NACE sector with the corridor score and the origin income gap. Treat them as a prioritisation aid, not a measurement.'),
@@ -715,7 +747,7 @@ function viewSectors(rows) {
       el('header', {}, el('h2', {}, 'Sector overlay'), sel),
       el('div', { class: 'tablewrap' }, el('table', {},
         el('thead', {}, el('tr', {},
-          ['#', 'Corridor', 'Sector score', 'Vacancy rate', 'Sector pay', 'Origin median income', 'Actual/yr', 'Under']
+          ['#', 'Corridor', 'Sector score', 'Vacancy rate', 'Origin supply', 'Sector pay', 'Origin median income', 'Actual/yr', 'Under']
             .map(h => el('th', { class: ['#', 'Corridor'].includes(h) ? '' : 'num' }, h)))),
         body))));
 }
@@ -1136,10 +1168,14 @@ async function boot() {
   const bundled = window.__CORRIDOR_DATA__;
   const [corr, meta, series, sectors, geo] = bundled
     ? names.map(n => bundled[n])
-    : await Promise.all(names.map(f => fetch(`data/${f}.json`).then(r => {
-        if (!r.ok) throw new Error(`${f}.json: HTTP ${r.status}`);
-        return r.json();
-      })));
+    // 'no-cache' revalidates rather than re-downloads: the browser sends an
+    // If-None-Match and gets a 304 when nothing changed, so this costs almost
+    // nothing but guarantees a data refresh is never served behind new code.
+    : await Promise.all(names.map(f =>
+        fetch(`data/${f}.json`, { cache: 'no-cache' }).then(r => {
+          if (!r.ok) throw new Error(`${f}.json: HTTP ${r.status}`);
+          return r.json();
+        })));
 
   // Columnar payload, with string fields dictionary-encoded to integer indices.
   const n = corr.columns[corr.fields[0]].length;

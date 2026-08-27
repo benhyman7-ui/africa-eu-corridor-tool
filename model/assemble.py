@@ -326,6 +326,31 @@ def main() -> None:
         for c in ("refugees", "asylum_seekers", "forced_total"):
             C[c] = 0.0
 
+    step("skills supply at origin (UNESCO UIS, WHO)")
+    uis = _opt("uis_skills")
+    if uis is not None:
+        cols = [c for c in uis.columns if c != "iso3"]
+        C = C.merge(uis.add_prefix("o_").rename(columns={"o_iso3": "orig"}),
+                    on="orig", how="left")
+        got = C[[f"o_{c}" for c in cols if f"o_{c}" in C.columns]].notna().any(axis=1)
+        print(f"    UIS field-of-study data for {C[got].orig.nunique()} of "
+              f"{C.orig.nunique()} origins")
+    who_w = _opt("who_workforce")
+    if who_w is not None:
+        C = C.merge(who_w.add_prefix("o_").rename(columns={"o_iso3": "orig"}),
+                    on="orig", how="left")
+        C = C.merge(who_w.add_prefix("d_").rename(columns={"d_iso3": "dest"}),
+                    on="dest", how="left")
+        if "o_nurses_midwives_per_10k" in C.columns:
+            # The health-workforce ratio is the sharpest single statement of how
+            # differently staffed the two ends of a corridor are.
+            C["health_workforce_ratio"] = (C.d_nurses_midwives_per_10k
+                                           / C.o_nurses_midwives_per_10k.replace(0, pd.NA))
+            print(f"    health workforce density on both sides for "
+                  f"{int(C.health_workforce_ratio.notna().sum()):,} corridors; "
+                  f"median destination/origin ratio "
+                  f"{C.health_workforce_ratio.median():.1f}x")
+
     step("Hofstede cultural distance (Kogut-Singh)")
     hof = _opt("hofstede")
     if hof is not None:

@@ -31,6 +31,7 @@ FETCHERS = [
     ("wikidata_embassies", "consular presence"),
     ("factbook", "religion and language profiles"),
     ("hofstede", "cultural dimensions"),
+    ("skills_supply", "origin skills: UIS graduates by field, WHO health workforce"),
     ("icmpd_pathways", "ICMPD/ECDPM legal pathway roster"),
     ("conflict_refugees", "UNHCR bilateral stocks (+ UCDP where reachable)"),
     ("schengen_visas", "visa refusal rates and consulate presence"),

@@ -48,7 +48,13 @@ CORRIDOR_FIELDS = {
     "underutilisation_score": 1, "ease_score": 1, "potential_score": 1,
     # components
     "u_gap": 1, "u_gap_absolute": 1, "u_gap_structural": 1,
-    "p_income_gain": 1, "p_labour_supply": 1, "p_dest_demand": 1,
+    "p_income_gain": 1, "p_labour_supply": 1, "p_dest_demand": 1, "p_skills_supply": 1,
+    "skills_inputs_present": 0, "health_workforce_ratio": 1,
+    "o_nurses_midwives_per_10k": 1, "d_nurses_midwives_per_10k": 1,
+    "o_grad_health_welfare": 1, "o_grad_ict": 1, "o_grad_engineering_construction": 1,
+    "o_grad_agriculture": 1, "o_grad_services": 1, "o_grad_business_law": 1,
+    "o_grad_stem": 1, "o_vocational_enrolment_share": 1, "o_literacy": 1,
+    "o_tertiary_enrolment": 1,
     "f_consular": 1, "f_language": 1, "f_agreement": 1, "f_connectivity": 1,
     "f_proximity": 1, "f_admin": 1, "f_cultural": 1,
     # raw facts for the corridor card

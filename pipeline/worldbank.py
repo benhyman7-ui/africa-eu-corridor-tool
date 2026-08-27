@@ -28,6 +28,8 @@ WDI = {
     "SE.TER.ENRR": "tertiary_enrolment",
     "SE.SEC.CUAT.UP.ZS": "upper_secondary_attain",
     "SE.ADT.LITR.ZS": "literacy",
+    "SE.SEC.ENRL.VO.ZS": "vocational_share_secondary",
+    "SE.TER.CUAT.BA.ZS": "bachelor_attainment",
     # demography and pressure
     "SP.POP.TOTL": "population",
     "SP.POP.GROW": "population_growth",
