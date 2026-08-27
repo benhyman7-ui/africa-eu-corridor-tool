@@ -357,3 +357,13 @@ svg.map .lbl { font-size: 7.5px; fill: var(--ink-2); pointer-events: none; font-
 }
 .homebtn:hover { border-color: var(--gold); color: var(--ink); background: var(--gold-soft); }
 .homebtn span { font-size: 14px; line-height: 1; }
+
+/* Segmented control for the weak-link penalty. */
+.segbtns { display: flex; gap: 4px; }
+.seg {
+  flex: 1; padding: 6px 4px; border-radius: 5px; border: 1px solid var(--line-2);
+  background: transparent; color: var(--ink-2); font-size: 11px; font-weight: 600;
+  transition: .12s;
+}
+.seg:hover { border-color: var(--gold); color: var(--ink); }
+.seg.on { background: var(--navy); border-color: var(--navy); color: #fff; }

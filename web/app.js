@@ -6,7 +6,7 @@
 
 const S = {
   corridors: [], meta: null, series: null, sectors: null, geo: null,
-  view: 'map', preset: 'cgd', geoMean: false,
+  view: 'map', preset: 'cgd', combine: 0,
   top: {}, ease: {}, pot: {},
   filters: { origRegion: '', orig: '', destRegion: '', dest: '', flow: '0',
              consular: false, agreement: false, lhf: false, hideWho: false },
@@ -28,6 +28,15 @@ const POT_LABELS = {
   p_income_gain: 'Income gain', p_labour_supply: 'Labour supply at origin',
   p_dest_demand: 'Destination demand',
 };
+// Weak-link penalty. Geometric is the default: it is the standard way to say
+// "a corridor is only as good as its worst binding constraint" without letting
+// a single low score annihilate everything, which harmonic nearly does.
+const COMBINE_MODES = [
+  { p: 1, label: 'Additive', note: 'Strengths offset weaknesses one for one. A 3 and a 9 average to 6, the same as two 6s.' },
+  { p: 0, label: 'Balanced', note: 'Geometric mean. Weak factors drag the score down more than strong ones lift it: half 3s and half 9s score 5.2 against 6.0 for straight 6s.' },
+  { p: -1, label: 'Strict', note: 'Harmonic mean. The weakest factor dominates: half 3s and half 9s score 4.5 against 6.0 for straight 6s. Use when a single blocker really does stop a corridor.' },
+];
+
 const PRESET_NOTES = {
   cgd: 'Corridors where flows are unexpectedly low and the barriers to fixing that are unexpectedly small — the framing in the CGD/TMO concept note.',
   ajf: 'Leads on income gain: the log of the annual gap in median income between the two countries.',
@@ -54,28 +63,53 @@ const esc = s => String(s ?? '').replace(/[&<>"]/g, c =>
   ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
 /* ---------------------------------------------------------------- scoring */
-function weighted(row, weights, fallback) {
+/* Weighted power mean, the one formula that spans what we want here.
+
+     p =  1   arithmetic  — a strength offsets a weakness one for one
+     p →  0   geometric   — proportional penalty; a zero collapses the score
+     p = -1   harmonic    — the weakest factor dominates
+
+   Take a corridor scoring 6/10 everywhere against one scoring 3 on half its
+   factors and 9 on the other half. Arithmetic calls them equal at 6.0.
+   Geometric gives the even corridor 6.0 and the lopsided one 5.2. Harmonic
+   widens that to 6.0 against 4.5. That matches how corridors actually behave:
+   no consulate is not compensated by a large wage gap, it just stops people
+   applying.
+
+   Values are floored at 1 on the 0–100 scale so a true zero produces a very low
+   but finite score rather than log(0) or a divide by zero. */
+const FLOOR = 1;
+function powerMean(pairs, p) {
   let num = 0, den = 0;
-  for (const [k, w] of Object.entries(weights)) {
-    const v = row[k];
-    if (w > 0 && v !== null && v !== undefined) { num += v * w; den += w; }
+  for (const [v, w] of pairs) {
+    if (!(w > 0) || v === null || v === undefined || Number.isNaN(v)) continue;
+    const x = Math.max(v, FLOOR);
+    num += w * (p === 0 ? Math.log(x) : Math.pow(x, p));
+    den += w;
   }
-  return den > 0 ? num / den : (row[fallback] ?? 50);
+  if (den <= 0) return null;
+  return p === 0 ? Math.exp(num / den) : Math.pow(num / den, 1 / p);
 }
+
+function weighted(row, weights, fallback, p) {
+  const out = powerMean(Object.entries(weights).map(([k, w]) => [row[k], w]), p);
+  return out === null ? (row[fallback] ?? 50) : out;
+}
+
 function rescore() {
-  const t = S.top, sum = (t.underutilisation + t.ease + t.potential) || 1;
+  const t = S.top;
+  const p = S.combine;          // 1 additive, 0 geometric, -1 harmonic
   for (const r of S.corridors) {
-    r.ease = weighted(r, S.ease, 'ease_score');
-    r.potential = weighted(r, S.pot, 'potential_score');
+    // The penalty has to bite at the COMPONENT level too. Applying it only
+    // across the three headline dimensions let a corridor with no consular
+    // access whatsoever still post a respectable ease score, because the
+    // arithmetic mean of its other components papered over the zero.
+    r.ease = weighted(r, S.ease, 'ease_score', p);
+    r.potential = weighted(r, S.pot, 'potential_score', p);
     r.under = r.underutilisation_score ?? 50;
-    if (S.geoMean) {
-      r.score = Math.exp((Math.log(Math.max(r.under, 1)) * t.underutilisation
-        + Math.log(Math.max(r.ease, 1)) * t.ease
-        + Math.log(Math.max(r.potential, 1)) * t.potential) / sum);
-    } else {
-      r.score = (r.under * t.underutilisation + r.ease * t.ease
-        + r.potential * t.potential) / sum;
-    }
+    r.score = powerMean([
+      [r.under, t.underutilisation], [r.ease, t.ease], [r.potential, t.potential],
+    ], p) ?? 50;
   }
 }
 function filtered() {
@@ -291,10 +325,14 @@ function buildSidebar() {
     for (const id of ['#fOrigRegion', '#fOrig', '#fDestRegion', '#fDest']) $(id).value = '';
     for (const id of ['#fConsular', '#fAgreement', '#fLHF', '#fWho']) $(id).checked = false;
     $('#fFlow').value = '0';
-    $('#geoMean').checked = false; S.geoMean = false;
+    S.combine = 0;
     S.view = 'map'; S.detail = null; S.mapSel = null; S.mapLines = 18;
     S.sort = { key: 'score', dir: -1 }; S.matrixMetric = 'score'; S.sector = 'O-Q';
-    fillCountries(); syncTabs(); applyPreset('cgd');   // applyPreset renders
+    fillCountries(); syncTabs();
+    [...$('#combineBtns').children].forEach((b, i) =>
+      b.classList.toggle('on', COMBINE_MODES[i].p === S.combine));
+    $('#combineNote').textContent = COMBINE_MODES.find(m => m.p === S.combine).note;
+    applyPreset('cgd');   // applyPreset renders
     scrollTo({ top: 0, behavior: 'smooth' });
   };
   $('#homeBtn').addEventListener('click', goHome);
@@ -307,7 +345,18 @@ function buildSidebar() {
     $('#fFlow').value = '0';
     fillCountries(); S.mapSel = null; S.detail = null; render();
   });
-  $('#geoMean').addEventListener('change', e => { S.geoMean = e.target.checked; render(); });
+  const cb = $('#combineBtns');
+  const paintCombine = () => {
+    [...cb.children].forEach((b, i) =>
+      b.classList.toggle('on', COMBINE_MODES[i].p === S.combine));
+    $('#combineNote').textContent =
+      (COMBINE_MODES.find(m => m.p === S.combine) || {}).note || '';
+  };
+  for (const m of COMBINE_MODES)
+    cb.appendChild(el('button', {
+      class: 'seg', onclick: () => { S.combine = m.p; paintCombine(); render(); },
+    }, m.label));
+  paintCombine();
 
   const tabs = $('#tabs');
   for (const [k, label] of [['map', 'Map'], ['ranking', 'Ranking'], ['matrix', 'Matrix'],
@@ -803,6 +852,57 @@ function viewDetail(r) {
               el('div', { class: 'v' }, fmt(v, 0)))))))));
 }
 
+
+/* Every factor, what it measures, and its share of the total score under each
+   preset. Built from the live weight objects rather than written out by hand,
+   so it cannot drift from what the tool actually computes. */
+const FACTOR_NOTES = {
+  underutilisation: 'Shortfall against the PPML gravity benchmark — how far below expected flows actually are.',
+  f_consular: 'Whether an application can be lodged in the origin country, next door, or only across the region.',
+  f_visa_success: 'Schengen short-stay refusal rate, as a proxy for whether the consulate says yes.',
+  f_language: 'Shared official language, or the destination working language present at origin.',
+  f_agreement: 'Bilateral labour agreement, EU Talent or Mobility Partnership, CPLP, Decreto Flussi quota.',
+  f_cultural: 'Religious composition similarity and Hofstede cultural distance, evenly balanced.',
+  f_connectivity: 'Direct air routes between the two countries.',
+  f_admin: 'Origin government effectiveness and internet penetration — can the state issue documents.',
+  f_proximity: 'Great-circle distance.',
+  p_income_gain: 'Log of the annual gap in median income, World Bank PIP, 2021 PPP.',
+  p_labour_supply: 'Working-age population times youth unemployment at origin.',
+  p_dest_demand: 'Destination job-vacancy rate, old-age dependency, inverse unemployment.',
+};
+
+function weightsTable() {
+  const m = S.meta, names = Object.keys(m.presets);
+  const share = (preset, group, key) => {
+    const top = m.presets[preset];
+    if (group === 'under') return top.underutilisation;
+    const src = group === 'ease' ? m.ease_weights : m.potential_weights;
+    const tot = Object.values(src).reduce((a, b) => a + b, 0);
+    return top[group === 'ease' ? 'ease' : 'potential'] * (src[key] / tot);
+  };
+  const rows = [['Underutilisation', 'under', null],
+    ...Object.keys(m.ease_weights).map(k => [EASE_LABELS[k], 'ease', k]),
+    ...Object.keys(m.potential_weights).map(k => [POT_LABELS[k], 'potential', k])];
+  const head = `<tr><th>Factor</th><th>What it measures</th>${
+    names.map(n => `<th style="text-align:right">${n === 'cgd' ? 'CGD' : n === 'ajf' ? 'AJF' : 'Balanced'}</th>`).join('')}</tr>`;
+  const body = rows.map(([label, group, key]) => {
+    const note = FACTOR_NOTES[key || 'underutilisation'] || '';
+    const cells = names.map(n => {
+      const v = share(n, group, key) * 100;
+      const lead = v === Math.max(...names.map(x => share(x, group, key) * 100));
+      return `<td style="text-align:right;font-variant-numeric:tabular-nums${lead ? ';font-weight:700' : ''}">${v.toFixed(1)}%</td>`;
+    }).join('');
+    const dim = group === 'under' ? 'Underutilisation'
+      : group === 'ease' ? 'Ease' : 'Potential';
+    return `<tr><td><strong>${label}</strong><br><span style="font-size:11px;color:var(--ink-3)">${dim}</span></td><td style="font-size:12.5px">${note}</td>${cells}</tr>`;
+  }).join('');
+  const totals = names.map(n => {
+    const t = m.presets[n];
+    return `<td style="text-align:right;font-weight:700">${((t.underutilisation + t.ease + t.potential) * 100).toFixed(0)}%</td>`;
+  }).join('');
+  return `<table>${head}${body}<tr><td colspan="2" style="font-weight:700">Total</td>${totals}</tr></table>`;
+}
+
 /* ----------------------------------------------------------------- method */
 function viewMethod() {
   const t = S.meta.totals, m = S.meta;
@@ -813,6 +913,29 @@ function viewMethod() {
 <p>It scores all <strong>${fmt(m.n_corridors)}</strong> corridors from ${m.n_origins} African
 countries to the ${m.n_destinations} EU member states on three dimensions and lets you
 re-weight them. It is a prioritisation instrument, not a causal estimate.</p>
+
+<h3>Every factor and what it is worth</h3>
+<p>Shares below are each factor's slice of the whole score under the three presets, so
+each column sums to 100%. Move any slider and these change; the bold figure marks the
+preset that leans hardest on that factor.</p>
+${weightsTable()}
+
+<h3>How the factors combine</h3>
+<p>By default the tool takes a <strong>weighted geometric mean</strong> rather than a plain
+average, at both levels — across the eight ease components, across the three potential
+components, and across the three headline dimensions. The reason is that corridor barriers
+are not substitutes for one another. A large wage gap does not compensate for there being
+nowhere in the country to lodge a visa application; the applicant simply cannot apply.</p>
+<p>The control sits under the weights and offers three rules, all versions of the weighted
+power mean:</p>
+<table>
+<tr><th>Rule</th><th>Formula</th><th>Even 6s vs half 3s and half 9s</th></tr>
+<tr><td><strong>Additive</strong></td><td>arithmetic mean (p = 1)</td><td>6.0 vs 6.0 — treated as identical</td></tr>
+<tr><td><strong>Balanced</strong> (default)</td><td>geometric mean (p → 0)</td><td>6.0 vs 5.2</td></tr>
+<tr><td><strong>Strict</strong></td><td>harmonic mean (p = −1)</td><td>6.0 vs 4.5</td></tr>
+</table>
+<p>Values are floored at 1 on the 0–100 scale, so a corridor scoring zero on something
+lands very low but still finite rather than being annihilated to nothing.</p>
 
 <h3>1. Underutilisation</h3>
 <p>A PPML gravity model is fitted to the <em>global</em> panel of first work permits — every
