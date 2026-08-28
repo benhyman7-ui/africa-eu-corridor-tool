@@ -122,10 +122,17 @@ def main() -> None:
     # been purely decorative. Min-max scaling the log keeps the compression the
     # log is there to provide: the step from a $2k gap to $12k counts for far
     # more than the step from $22k to $32k.
+    # Winsorised at the 2nd/98th percentile before scaling. Raw min-max let two
+    # outliers set both endpoints - Seychelles, a rich origin, pinned the floor
+    # and Luxembourg the ceiling - which squeezed the middle half of all
+    # corridors into 18 of the 100 points. At 40% of Potential a flat factor
+    # cannot move a ranking. Clipping the tails doubles the spread and costs
+    # only the ordering WITHIN the extreme 2% tails, which is not information
+    # anyone should be acting on anyway.
     lg = df["log_income_gap"]
-    lo, hi = lg.min(), lg.max()
-    df["p_income_gain"] = (100 * (lg - lo) / (hi - lo)).fillna(50.0) if hi > lo \
-        else pd.Series(50.0, index=df.index)
+    lo, hi = lg.quantile(0.02), lg.quantile(0.98)
+    df["p_income_gain"] = (100 * (lg.clip(lo, hi) - lo) / (hi - lo)) if hi > lo \
+        else pd.Series(np.nan, index=df.index)
 
     df["income_multiple"] = (df["d_gni_pc_ppp"] / df["o_gni_pc_ppp"]).replace(
         [np.inf, -np.inf], np.nan)
