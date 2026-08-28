@@ -1,0 +1,7 @@
+language_a,language_b,proximity,basis
+Afrikaans,Dutch,0.85,Afrikaans descends from 17th-century Dutch and the two remain substantially mutually intelligible in writing
+Czech,Slovak,0.80,Long-documented high mutual intelligibility; a single literary standard until 1918
+Danish,Swedish,0.70,Mainland Scandinavian dialect continuum
+Spanish,Portuguese,0.65,High written intelligibility; asymmetric in speech
+Luxembourgish,German,0.75,Moselle Franconian variety within the German dialect continuum
+Arabic,Maltese,0.45,Shared Semitic core but Latin script and a heavy Romance superstrate cut usable intelligibility well below the Semitic default

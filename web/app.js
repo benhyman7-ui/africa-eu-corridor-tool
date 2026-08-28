@@ -891,8 +891,16 @@ function viewDetail(r) {
       'Schengen visa refusal rate',
       r.visa_refusal_rate == null ? 'no visa operation' :
         `${pctf(r.visa_refusal_rate)} of ${fmt(r.visa_applications)} applications`],
-    [r.shared_official_language, r.dest_language_present_at_origin, 'Shared working language',
-      (r.dest_official_languages || '–') + ' / ' + (r.origin_bridge_languages || 'none')],
+    [r.shared_official_language, r.dest_language_present_at_origin, 'Language',
+      // The origin's OWN official languages lead. This line used to show the
+      // derived "bridge" language on the origin side, which made Egypt read as
+      // English when its official language is Arabic.
+      (r.origin_official_languages || '–').replace(/;/g, ', ') + ' → '
+      + (r.dest_official_languages || '–').replace(/;/g, ', ')
+      + (r.origin_bridge_languages && r.origin_bridge_languages !== r.origin_official_languages
+          ? ` · widely used at origin: ${r.origin_bridge_languages.replace(/;/g, ', ')}` : '')
+      + (!r.shared_official_language && r.language_proximity > 0 && r.closest_language_pair
+          ? ` · closest pair ${r.closest_language_pair.replace('-', '–')} (${r.language_proximity.toFixed(2)})` : '')],
     [r.has_binding, r.has_any_agreement, 'Legal channel in place',
       r.agreement_types || r.eu_instruments || 'none on file'],
     [r.f_salary_threshold > 60, r.f_salary_threshold > 35, 'Salary threshold',
@@ -1088,13 +1096,13 @@ const FACTOR_NOTES = {
   underutilisation: 'Shortfall against the PPML gravity benchmark — how far below expected flows actually are.',
   f_consular: 'Whether an application can be lodged in the origin country, next door, or only across the region.',
   f_visa_success: 'Schengen short-stay refusal rate, as a proxy for whether the consulate says yes.',
-  f_language: 'Shared official language, or the destination working language present at origin.',
+  f_language: 'Shared official language, or the destination working language present at origin. Where neither holds, partial credit for how closely related the nearest pair of languages is — a Lusophone origin starts closer to Spanish than a Swahili-speaking one.',
   f_agreement: 'Bilateral labour agreement, EU Talent or Mobility Partnership, CPLP, Decreto Flussi quota.',
   f_cultural: 'Religious composition similarity and Hofstede cultural distance, evenly balanced.',
   f_pathways: 'How permissive the destination legal routes are (ICMPD/ECDPM mapping), reduced where those routes are reserved for non-African nationalities.',
   f_salary_threshold: 'Statutory wage floor relative to what a median worker in that destination earns.',
   f_recognition: 'Whether a third-country qualification can realistically be recognised, and the language sitting on top of it.',
-  f_connectivity: 'Direct air routes between the two countries.',
+  f_connectivity: 'Passengers carried on direct airport pairs (Eurostat), best year since 2019, including non-scheduled charter traffic.',
   f_admin: 'Origin government effectiveness and internet penetration — can the state issue documents.',
   f_processing: 'How long a permit decision takes: the 90-day deadline in the recast Single Permit Directive, the 45-day track for EU Talent Partnership applicants, and national fast-track schemes.',
   f_proximity: 'Great-circle distance. Shown for context only — it is already a regressor in the gravity model, so it is not scored again here.',
@@ -1435,10 +1443,18 @@ function render() {
   rescore();
   const rows = filtered();
   $('#filterCount').textContent = `${fmt(rows.length)} of ${fmt(S.corridors.length)} corridors match`;
-  renderStats(rows);
   const host = $('#view');
   host.innerHTML = '';
-  if (S.detail) { host.appendChild(viewDetail(S.detail)); return; }
+  // Inside a corridor, the panel-wide totals are about a set the reader has
+  // just left. Hide the strip and give the corridor the full height.
+  if (S.detail) {
+    $('#stats').innerHTML = '';
+    $('#stats').style.display = 'none';
+    host.appendChild(viewDetail(S.detail));
+    return;
+  }
+  $('#stats').style.display = '';
+  renderStats(rows);
   const srt = sorted(rows);
   host.appendChild(
     S.view === 'map' ? viewMap(rows) :

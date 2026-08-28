@@ -27,7 +27,8 @@ FETCHERS = [
     ("eurostat_context", "diaspora and destination labour demand"),
     ("worldbank", "income, demography, governance"),
     ("cepii", "distance, language, colonial ties"),
-    ("openflights", "air connectivity"),
+    ("openflights", "air connectivity (legacy scheduled routes, fallback)"),
+    ("eurostat_air", "air passengers by country pair, incl. charter"),
     ("wikidata_embassies", "consular presence"),
     ("factbook", "religion and language profiles"),
     ("hofstede", "cultural dimensions"),
@@ -37,6 +38,7 @@ FETCHERS = [
     ("schengen_visas", "visa refusal rates and consulate presence"),
     ("pip_income", "median income"),
     ("eures_shortages", "EURES widespread shortage occupations"),
+    ("undesa_migrant_stock", "UN DESA bilateral migrant stock"),
     ("geometry", "country outlines for the map"),
 ]
 STAGES = [

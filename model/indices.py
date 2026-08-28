@@ -253,17 +253,45 @@ def main() -> None:
     bridge_overlap = [
         len(set(str(a).split(";")) & set(str(b).split(";")) - {""}) > 0
         for a, b in zip(df["origin_bridge_languages"], df["dest_official_languages"])]
-    df["f_language"] = np.select(
+    tier = np.select(
         [df["shared_official_language"] == 1,
          df["dest_language_present_at_origin"] == 1,
          np.array(bridge_overlap)],
         [100.0, 70.0, 40.0], default=10.0)
 
+    # Relatedness, for corridors that share no language outright. The tiers
+    # above are set overlap, so they scored a Lusophone origin looking at Spain
+    # exactly the same as a Swahili-speaking one - both at the floor - when a
+    # Portuguese speaker plainly starts closer to Spanish. This floors the
+    # corridor at 10 and adds up to 45 points for how close the nearest pair of
+    # languages actually is, then takes whichever of the two readings is higher
+    # so a shared language is never scored below a merely related one.
+    prox = df.get("language_proximity", pd.Series(0.0, index=df.index)).fillna(0.0)
+    df["f_language"] = np.maximum(tier, 10.0 + 45.0 * prox)
+
     df["f_agreement"] = np.select(
         [df["has_binding"] == 1, df["n_agreements"] > 0, df["n_eu_instruments"] > 0],
         [100.0, 75.0, 50.0], default=0.0)
 
-    df["f_connectivity"] = pct(np.log1p(df["routes"]))
+    # Air connectivity, from Eurostat airport-pair passenger counts rather than
+    # the OpenFlights route list. OpenFlights is a 2014 snapshot of SCHEDULED
+    # routes and returned zero for 91% of corridors, Egypt-Poland among them.
+    # Eurostat counts people actually carried and includes non-scheduled
+    # traffic, so the seasonal tourist charters that make up much of the
+    # Europe-Africa network are in it.
+    #
+    # OpenFlights survives only as a fallback: Czechia does not disseminate the
+    # airport-pair dataset at all, so its corridors would otherwise read as
+    # unconnected. A corridor with neither is scored low but not zero - it means
+    # no direct service is on record, which usually means a one-stop connection.
+    pax = df.get("air_passengers", pd.Series(np.nan, index=df.index))
+    has_pax = pax.notna() & (pax > 0)
+    routes_only = ~has_pax & (df["routes"].fillna(0) > 0)
+    rank = pct(np.log1p(pax.where(has_pax)))
+    df["f_connectivity"] = np.select(
+        [has_pax, routes_only],
+        [50.0 + 0.5 * rank, 45.0],
+        default=10.0)
     df["f_proximity"] = pct(np.log(df["dist"].clip(lower=1)), invert=True)
 
     # How long a decision takes. Built only from things that are written down:
@@ -447,8 +475,21 @@ def main() -> None:
     # running at 2% of expectation scores the same whether that means 3 people
     # or 700. This is the term that separates them.
     step("scale of the unrealised opportunity")
+    # Scale is the SIZE of the corridor the model expects, not the shortfall.
+    #
+    # It used to be (predicted - actual) clipped at zero, which was wrong twice
+    # over. It double-counted underutilisation, which already measures the
+    # shortfall and is a headline term in its own right. And because the clip
+    # sends every over-performing corridor to zero, it actively penalised the
+    # big ones: Germany runs above its prediction, so its gap clipped to nothing
+    # and it scored 30, while Luxembourg's slight underperformance on a tiny
+    # base scored 43. Turning scale weighting on promoted the smallest
+    # destinations in the EU, which is the opposite of what it is for.
+    #
+    # Predicted flow is the model's estimate of how many people the corridor
+    # can carry, which is what "how big is this opportunity" means.
     df["unrealised_flow"] = (df["predicted"] - df["actual_mean3"]).clip(lower=0)
-    df["scale_score"] = pct(np.log1p(df["unrealised_flow"]))
+    df["scale_score"] = pct(np.log1p(df["predicted"].clip(lower=0)))
     print(f"    unrealised annual flow: total {df.unrealised_flow.sum():,.0f}; "
           f"median {df.unrealised_flow.median():.0f}; "
           f"top corridor {df.unrealised_flow.max():,.0f}")

@@ -80,6 +80,8 @@ CORRIDOR_FIELDS = {
     "nearest_embassy_country": 0,
     "shared_official_language": 0, "dest_language_present_at_origin": 0,
     "origin_bridge_languages": 0, "dest_official_languages": 0,
+    "origin_official_languages": 0, "closest_language_pair": 0,
+    "language_proximity": 2, "air_passengers": 0, "air_year": 0,
     "religion_similarity": 3, "religion_catholic_similarity": 3,
     "same_majority_religion": 0, "majority_religion_orig": 0,
     "majority_religion_dest": 0,

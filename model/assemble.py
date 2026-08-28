@@ -61,9 +61,52 @@ def _opt(name: str) -> pd.DataFrame | None:
         return None
 
 
+def language_proximity() -> callable:
+    """Closeness of two languages on 0-1, from ref/language_families.csv.
+
+    Tiered rather than continuous because that is all the underlying
+    classification supports: same language, same subfamily, same family, or
+    unrelated. A handful of pairs where the tier badly misstates real
+    intelligibility carry an explicit override with its basis recorded -
+    Afrikaans and Dutch sit far above the West-Germanic default, Maltese and
+    Arabic well below the Semitic one.
+    """
+    fam = pd.read_csv(REF / "language_families.csv", encoding="utf-8",
+                      keep_default_na=False, na_values=[""])
+    ov = pd.read_csv(REF / "language_proximity_overrides.csv", encoding="utf-8")
+    f = {r.language: (r.family, r.subfamily) for r in fam.itertuples()}
+    o = {}
+    for r in ov.itertuples():
+        o[(r.language_a, r.language_b)] = float(r.proximity)
+        o[(r.language_b, r.language_a)] = float(r.proximity)
+
+    def prox(a: str, b: str) -> float:
+        if not a or not b:
+            return 0.0
+        if a == b:
+            return 1.0
+        if (a, b) in o:
+            return o[(a, b)]
+        fa, fb = f.get(a), f.get(b)
+        if fa is None or fb is None:
+            return 0.0            # unclassified, e.g. bare "Creole"
+        if fa[1] == fb[1]:
+            return 0.60
+        if fa[0] == fb[0]:
+            # Same family only. Indo-European spans English to Greek to Polish,
+            # so this is worth a token rather than a real score: shared script
+            # and cognate vocabulary make the language easier to learn, which
+            # is not nothing, but it is not intelligibility.
+            return 0.15
+        return 0.0
+
+    return prox
+
+
 def main() -> None:
     cc = countries()
     to3 = iso2_to_iso3()
+    lang_prox = language_proximity()
     o3 = cc[cc.side == "origin"].set_index("iso3")
     d3 = cc[cc.side == "destination"].set_index("iso3")
     es2iso3_dest = dict(zip(cc[cc.side == "destination"].eurostat_code,
@@ -81,42 +124,31 @@ def main() -> None:
                 .value.sum().rename(columns={"value": "permits"}))
 
     # ------------------------------------------------------------- diaspora --
-    dia = _opt("eurostat_diaspora")
-    if dia is not None:
-        dia["orig"] = dia.orig_es.map(lambda c: to3.get(c))
-        dia["dest"] = dia.dest_es.map(es2iso3_dest)
-        dia = (dia.dropna(subset=["orig", "dest"])
-                  .groupby(["orig", "dest", "year"], as_index=False)
-                  .value.sum().rename(columns={"value": "diaspora"}))
-    else:
-        dia = pd.DataFrame(columns=["orig", "dest", "year", "diaspora"])
-
-    # Diaspora momentum: compound annual growth of the citizenship stock.
+    # UN DESA, not Eurostat. Eurostat migr_pop1ctz is a reporting series and
+    # seven destinations publish no third-country citizenship detail at all:
+    # France gave African figures for 2018 and never again, Denmark stopped
+    # after 2022, and Cyprus, Greece, Croatia, Malta and Poland have never
+    # published any. Spain reports ten of fifty-four African citizenships.
+    # Zero-filling that made the panel assert there are no Moroccans in France,
+    # and since diaspora is a gravity regressor the error propagated into the
+    # underutilisation benchmark for all 54 French corridors.
     #
-    # This is NOT net migration, and the difference matters. Naturalisation
-    # removes people from a citizenship stock, so a corridor that integrates
-    # its arrivals quickly can look flat while still receiving plenty of them,
-    # and deaths and return migration pull the same way. Read it as direction
-    # of travel, not as a flow.
+    # UN DESA estimates the full matrix instead of passing through what states
+    # choose to publish. It carries 9.27m Africa-EU migrants against Eurostat's
+    # 3.89m, and the 5.4m difference is overwhelmingly France.
     #
-    # A growth rate off a tiny base is noise - going from 3 residents to 9 is
-    # not a corridor opening - so anything under MIN_BASE is left NaN rather
-    # than scored, and the panel needs a real span behind it.
-    MIN_BASE, MIN_SPAN = 50, 3
-    if len(dia):
-        dg = dia.dropna(subset=["diaspora"]).sort_values("year")
-        agg = (dg.groupby(["orig", "dest"])
-                 .agg(first=("diaspora", "first"), last=("diaspora", "last"),
-                      y0=("year", "min"), y1=("year", "max")).reset_index())
-        span = agg.y1 - agg.y0
-        ok = (agg["first"] >= MIN_BASE) & (span >= MIN_SPAN) & (agg.last > 0)
-        agg["diaspora_cagr"] = np.where(
-            ok, (agg.last / agg["first"]).where(ok, np.nan) ** (1.0 / span.where(span > 0)) - 1.0,
-            np.nan)
-        dgrowth = agg[["orig", "dest", "diaspora_cagr"]]
-        print(f"    diaspora growth on {int(ok.sum())} corridors "
-              f"(base >= {MIN_BASE}, span >= {MIN_SPAN}y)")
+    # Unlisted pairs here ARE genuine zeros, unlike in Eurostat: the UN table
+    # omits pairs with negligible estimated stock rather than suppressing
+    # unreported ones, and every pair it does list carries a value.
+    und = _opt("undesa_migrant_stock")
+    if und is not None:
+        dia_stock = und[["orig", "dest", "stock_2024"]].rename(
+            columns={"stock_2024": "diaspora"})
+        dgrowth = und[["orig", "dest", "diaspora_cagr"]]
+        print(f"    UN DESA stock on {len(dia_stock)} corridors, "
+              f"growth on {int(und.diaspora_cagr.notna().sum())}")
     else:
+        dia_stock = pd.DataFrame(columns=["orig", "dest", "diaspora"])
         dgrowth = pd.DataFrame(columns=["orig", "dest", "diaspora_cagr"])
 
     # --------------------------------------------------------- dyadic terms --
@@ -129,7 +161,19 @@ def main() -> None:
     step("global estimation panel")
     g = flows.merge(geo, on=["orig", "dest"], how="left")
     g = g.merge(routes, on=["orig", "dest"], how="left")
-    g = g.merge(dia, on=["orig", "dest", "year"], how="left")
+    # UN DESA is five-yearly to 2020 then 2024, so the panel years in between
+    # are filled at the constant growth rate the two endpoints imply. That is
+    # what the CAGR already asserts; it adds no precision the source lacks, it
+    # just stops a slow-moving stock being held flat across seven years.
+    if len(dia_stock):
+        g = g.merge(und[["orig", "dest", "stock_2020", "stock_2024",
+                         "diaspora_cagr"]], on=["orig", "dest"], how="left")
+        yrs = (g.year - 2020).clip(lower=0, upper=4)
+        grown = g.stock_2020 * (1 + g.diaspora_cagr.fillna(0.0)) ** yrs
+        g["diaspora"] = grown.where(grown.notna(), g.stock_2024)
+        g = g.drop(columns=["stock_2020", "stock_2024", "diaspora_cagr"])
+    else:
+        g["diaspora"] = np.nan
     # Bilateral forced displacement: the concept note lists UNHCR stocks as a
     # network/push covariate, and a corridor already carrying refugees has
     # revealed demand the labour channel is not serving.
@@ -205,10 +249,15 @@ def main() -> None:
     # dyadic
     C = C.merge(geo, on=["orig", "dest"], how="left")
     C = C.merge(routes, on=["orig", "dest"], how="left")
-    C = C.merge(dia[dia.year == dia.year.max()][["orig", "dest", "diaspora"]]
-                if len(dia) else dia, on=["orig", "dest"], how="left")
+    C = C.merge(dia_stock, on=["orig", "dest"], how="left")
     C = C.merge(dgrowth, on=["orig", "dest"], how="left")
     C = C.merge(load("consular_presence"), on=["orig", "dest"], how="left")
+    _air = _opt("eurostat_air_pairs")
+    if _air is not None:
+        C = C.merge(_air, on=["orig", "dest"], how="left")
+    for _c in ("air_passengers", "air_year"):
+        if _c not in C.columns:
+            C[_c] = np.nan
 
     # distance fallback for pairs CEPII predates
     need = C.dist.isna()
@@ -250,7 +299,20 @@ def main() -> None:
         # the destination working language present in the origin at all
         usable = len(o_all & d_off) > 0
         o_bridge = langs(r.orig, "lang_bridge")
+
+        # Closest related pair across the two countries, for corridors that
+        # share no language outright. A Lusophone origin is genuinely closer to
+        # Spain than a Swahili-speaking one is, and the old binary overlap
+        # scored both identically at the floor.
+        best, best_pair = 0.0, ""
+        for a in o_all:
+            for b in d_off:
+                pr = lang_prox(a, b)
+                if pr > best:
+                    best, best_pair = pr, f"{a}-{b}"
         rows.append({
+            "language_proximity": best,
+            "closest_language_pair": best_pair,
             "religion_similarity": rel_sim,
             "religion_catholic_similarity": cath_sim,
             "same_majority_religion": int(maj_o == maj_d and maj_o != ""),
@@ -258,6 +320,7 @@ def main() -> None:
             "majority_religion_dest": maj_d.replace("rel_", ""),
             "shared_official_language": int(shared),
             "dest_language_present_at_origin": int(usable),
+            "origin_official_languages": ";".join(sorted(o_off)),
             "origin_bridge_languages": ";".join(sorted(o_bridge)),
             "dest_official_languages": ";".join(sorted(d_off)),
         })
