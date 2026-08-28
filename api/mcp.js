@@ -427,7 +427,8 @@ module.exports = function (req, res) {
       usage: 'POST JSON-RPC 2.0 to this URL. Add it in Cowork as a custom connector.',
       tools: TOOLS.map(t => t.name),
       corridors: CORRIDORS.length,
-      generated: DATA.generated,
+      dataset: DATA.dataset,
+      latest_year: DATA.latest_year,
     });
     return;
   }

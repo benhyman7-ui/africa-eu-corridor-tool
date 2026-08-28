@@ -161,7 +161,9 @@ def write_mcp_payload(df: pd.DataFrame, meta: dict) -> None:
             if c is not None and c != "":
                 row[k] = c
         rows.append(row)
-    payload = {"generated": meta.get("generated"), "corridors": rows,
+    payload = {"dataset": meta.get("generated_note"),
+               "latest_year": meta.get("latest_year"),
+               "n_corridors": meta.get("n_corridors"), "corridors": rows,
                "meta": {k: meta[k] for k in
                         ("presets", "access_weights", "ease_weights",
                          "potential_weights", "sectors", "shortage", "gravity",
