@@ -201,6 +201,26 @@ def main() -> None:
 
     df["opportunity_points"] = opp
     df["barrier_count"] = sum(df[k] for k in BARRIERS if k in df)
+
+    # ---- how broad is each nationality-restricted route -------------------- #
+    # A destination that runs its labour migration through Balkans or Eastern
+    # European bilateral deals is demonstrably oriented away from Africa, and
+    # the wider the roles those deals cover the more of the labour market they
+    # account for. Breadth counts the occupation types a route touches, plus a
+    # premium for bloc-wide restrictions (a Western Balkans directive covers six
+    # countries) and for general-employment framing rather than one occupation.
+    roles = ["mentions_skilled", "mentions_highly_skilled", "mentions_seasonal",
+             "mentions_researcher", "mentions_ict", "mentions_self_employed",
+             "mentions_contract"]
+    bloc = blob.str.contains(r"western balkans|balkan|eastern partnership|"
+                             r"and\s+\w+\s*,\s*\w+", regex=True).astype(int)
+    general = blob.str.contains(
+        r"\bwork permit\b|\bemployment agreement\b|employed person|"
+        r"single permit|\bdirective\b|any (sector|occupation|employment)",
+        regex=True).astype(int)
+    df["route_breadth"] = (1 + df[[c for c in roles if c in df]].sum(axis=1)
+                           + 2 * bloc + 1 * general)
+    df["restriction_load"] = df.restricted_nationality * df.route_breadth
     save(df, "icmpd_pathways")
 
     # ---- per-destination roll-up ------------------------------------------- #
@@ -213,6 +233,9 @@ def main() -> None:
                    icmpd_barriers_mean=("barrier_count", "mean"),
                    icmpd_informativeness=("informativeness", "mean"),
                    icmpd_open_routes=("promise", lambda s: int((s >= 60).sum())),
+                   icmpd_restricted_n=("restricted_nationality", "sum"),
+                   icmpd_restricted_share=("restricted_nationality", "mean"),
+                   icmpd_restriction_load=("restriction_load", "mean"),
                    icmpd_pathways_seen=("promise", "size"),
                    icmpd_named_share=("country_confidence",
                                       lambda s: (s == "named").mean()))

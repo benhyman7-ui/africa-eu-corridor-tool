@@ -67,6 +67,9 @@ CORRIDOR_FIELDS = {
     "req_key_requirements": 0,
     "icmpd_promise_mean": 1, "icmpd_promise_best": 1, "icmpd_pathways_seen": 0,
     "icmpd_named_share": 2, "icmpd_barriers_mean": 2,
+    "icmpd_restricted_n": 0, "icmpd_restricted_share": 2,
+    "icmpd_restriction_load": 2, "africa_orientation_penalty": 2,
+    "f_pathways_unpenalised": 1,
     # raw facts for the corridor card
     "dist": 0, "routes": 0, "diaspora": 0,
     "dest_embassy_in_orig": 0, "dest_missions_in_orig": 0, "orig_embassy_in_dest": 0,

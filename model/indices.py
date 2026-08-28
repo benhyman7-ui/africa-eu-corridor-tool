@@ -42,8 +42,9 @@ PRESETS = {
 # signal, not a gate: most labour migration runs on ordinary national permits.
 # Agreement and pathway quality therefore sit in ease, where they belong.
 ACCESS_WEIGHTS = {
-    "f_consular": 0.65,      # can an application physically be lodged
-    "f_visa_success": 0.35,  # and does that consulate say yes
+    "f_consular": 0.50,      # can an application physically be lodged
+    "f_visa_success": 0.30,  # and does that consulate say yes
+    "f_pathways": 0.20,      # and is there a route an African applicant can use
 }
 
 # Sub-weights inside the ease-of-unlocking index. The UI shows these on a 0-10
@@ -51,14 +52,13 @@ ACCESS_WEIGHTS = {
 # EASE is what remains once access is carved out: real frictions, but ones a
 # determined applicant or a well-designed programme can work around.
 EASE_WEIGHTS = {
-    "f_language": 0.20,           # can you work in the destination's language
-    "f_agreement": 0.17,          # is a legal channel already pointed at you
-    "f_pathways": 0.16,           # are the destination's routes usable
-    "f_salary_threshold": 0.15,   # is the wage floor reachable
-    "f_recognition": 0.12,        # will your qualification be accepted
-    "f_cultural": 0.10,           # religion and Hofstede, evenly balanced
-    "f_connectivity": 0.06,       # can you get there
-    "f_admin": 0.03,              # can the origin issue you documents
+    "f_language": 0.24,           # can you work in the destination's language
+    "f_agreement": 0.20,          # is a legal channel already pointed at you
+    "f_salary_threshold": 0.18,   # is the wage floor reachable
+    "f_recognition": 0.14,        # will your qualification be accepted
+    "f_cultural": 0.12,           # religion and Hofstede, evenly balanced
+    "f_connectivity": 0.07,       # can you get there
+    "f_admin": 0.04,              # can the origin issue you documents
     "f_proximity": 0.01,
 }
 
@@ -296,10 +296,25 @@ def main() -> None:
 
     # ---- ICMPD pathway permissiveness ---------------------------------------
     if "icmpd_promise_mean" in df.columns:
-        df["f_pathways"] = pct(0.6 * df["icmpd_promise_mean"].fillna(50)
-                               + 0.4 * df["icmpd_promise_best"].fillna(50))
+        base = pct(0.6 * df["icmpd_promise_mean"].fillna(50)
+                   + 0.4 * df["icmpd_promise_best"].fillna(50))
+        # Africa-orientation penalty. Where a destination's mapped routes are
+        # substantially reserved for non-African nationalities - Western Balkans
+        # directives, Serbia and Bosnia agreements, Moldova and Georgia seasonal
+        # schemes - that is evidence the country channels labour migration away
+        # from Africa, and it applies to EVERY corridor from that destination.
+        # Scaled by breadth, so a bloc-wide general work agreement costs more
+        # than one narrow occupational route.
+        # NOT named `load`: that shadows the imported load() for the whole of
+        # main(), which breaks the corridors_base read at the top of the function.
+        restr = df.get("icmpd_restriction_load", pd.Series(0.0, index=df.index)).fillna(0)
+        rmax = max(restr.max(), 1e-9)
+        df["africa_orientation_penalty"] = 0.40 * (restr / rmax)   # up to -40%
+        df["f_pathways"] = base * (1 - df["africa_orientation_penalty"])
+        df["f_pathways_unpenalised"] = base
     else:
         df["f_pathways"] = 50.0
+        df["africa_orientation_penalty"] = 0.0
 
     # ---- students as a feeder ----------------------------------------------
     if "student_permits" in df.columns:

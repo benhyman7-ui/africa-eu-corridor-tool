@@ -21,10 +21,11 @@ const TOP_LABELS = {
 };
 const ACCESS_LABELS = {
   f_consular: 'Consular access', f_visa_success: 'Visa success rate',
+  f_pathways: 'Usable pathways',
 };
 const EASE_LABELS = {
   f_language: 'Language access', f_agreement: 'Legal channel',
-  f_pathways: 'Pathway permissiveness', f_salary_threshold: 'Salary threshold',
+  f_salary_threshold: 'Salary threshold',
   f_recognition: 'Qualification recognition', f_cultural: 'Cultural proximity',
   f_connectivity: 'Air connectivity', f_admin: 'Origin admin capacity',
   f_proximity: 'Proximity',
@@ -989,7 +990,7 @@ const FACTOR_NOTES = {
   f_language: 'Shared official language, or the destination working language present at origin.',
   f_agreement: 'Bilateral labour agreement, EU Talent or Mobility Partnership, CPLP, Decreto Flussi quota.',
   f_cultural: 'Religious composition similarity and Hofstede cultural distance, evenly balanced.',
-  f_pathways: 'How permissive the destination legal routes are, scored from the ICMPD/ECDPM pathway mapping.',
+  f_pathways: 'How permissive the destination legal routes are (ICMPD/ECDPM mapping), reduced where those routes are reserved for non-African nationalities.',
   f_salary_threshold: 'Statutory wage floor relative to what a median worker in that destination earns.',
   f_recognition: 'Whether a third-country qualification can realistically be recognised, and the language sitting on top of it.',
   f_connectivity: 'Direct air routes between the two countries.',
@@ -1146,6 +1147,20 @@ ease components, a consular score of 24 was being diluted by ten others, and Slo
 65 overall while having almost no consular presence in Africa and no legal channel pointed at
 any African origin. A permissive pathway list does not compensate for there being nowhere to
 lodge an application.</p>
+
+<h3>The Africa-orientation penalty</h3>
+<p>Where a destination's mapped routes are substantially reserved for
+<strong>non-African nationalities</strong> — Western Balkans directives, Slovenia's
+employment agreements with Serbia and Bosnia, Germany's Moldova and Georgia seasonal
+scheme — that is evidence the country channels its labour migration away from Africa,
+and it says something about every African corridor into it, not just one.</p>
+<p>So usable-pathway scores are cut by up to 40% in proportion to how much of a
+destination's portfolio is nationality-restricted, weighted by how broad those routes
+are: a bloc-wide general work agreement covering six countries costs far more than one
+narrow occupational route. <strong>16 of 27 destinations</strong> carry some penalty.
+Slovenia takes the maximum, its pathway score falling from 61 to 37. Because usable
+pathways sit inside the harmonic access gate, that flows through to every one of its
+54 corridors.</p>
 
 <h3>3. Ease — how hard, once it is possible</h3>
 <ul>
