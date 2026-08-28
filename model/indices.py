@@ -52,10 +52,10 @@ ACCESS_WEIGHTS = {
 # EASE is what remains once access is carved out: real frictions, but ones a
 # determined applicant or a well-designed programme can work around.
 EASE_WEIGHTS = {
-    "f_language": 0.24,           # can you work in the destination's language
-    "f_agreement": 0.20,          # is a legal channel already pointed at you
+    "f_language": 0.26,           # can you work in the destination's language
+    "f_agreement": 0.22,          # is a legal channel already pointed at you
     "f_salary_threshold": 0.18,   # is the wage floor reachable
-    "f_recognition": 0.14,        # will your qualification be accepted
+    "f_recognition": 0.09,        # coarse: language requirement only, see note
     "f_cultural": 0.12,           # religion and Hofstede, evenly balanced
     "f_connectivity": 0.07,       # can you get there
     "f_admin": 0.04,              # can the origin issue you documents
@@ -212,7 +212,13 @@ def main() -> None:
     # visa operation at all get the null-to-median treatment rather than a zero,
     # because "no applications" is not the same as "everyone refused"; the
     # absence itself is already penalised through f_consular.
+    # NaN, not 50, where the destination runs no visa operation in that country.
+    # Schengen data covers only 19% of corridors, and inserting a fabricated 50
+    # into a HARMONIC gate for the other 81% pulled every corridor towards the
+    # middle and cost real signal. A missing term is now dropped and the
+    # remaining weights renormalise.
     df["f_visa_success"] = pct(df["visa_refusal_rate"], invert=True)
+    df.loc[df.visa_refusal_rate.isna(), "f_visa_success"] = np.nan
 
     # Language: does the destination's working language exist at the origin at all
     bridge_overlap = [
@@ -274,8 +280,12 @@ def main() -> None:
         # ratio of the threshold to what a median worker there actually earns
         df["salary_threshold_ratio"] = eff / df["d_inc_median_annual_ppp"]
         df["f_salary_threshold"] = pct(df["salary_threshold_ratio"], invert=True)
-        # unknown threshold is not the same as no threshold
-        df.loc[eff.isna(), "f_salary_threshold"] = 50.0
+        # Unknown is unknown. Only 3 of 27 destinations publish a Blue Card
+        # figure and 5 a general-permit figure, so scoring the rest at 50
+        # made this component dead weight on 70% of corridors AND created a
+        # documentation bias: the destinations that publish a number are the
+        # ones that get marked down for it.
+        df.loc[eff.isna(), "f_salary_threshold"] = np.nan
     else:
         df["f_salary_threshold"] = 50.0
         df["salary_threshold_ratio"] = np.nan
@@ -286,12 +296,19 @@ def main() -> None:
     # complete, and whether language sits on top of it.
     reg = df.get("req_recognition_regime", pd.Series("", index=df.index)).fillna("")
     lang_req = df.get("req_language_requirement", pd.Series("", index=df.index)).fillna("")
-    slow = reg.str.contains("slow|nostrification|bottleneck|queue", case=False)
+    # The "slow" adjective was mine, written unevenly across a curated file, and
+    # it fired mostly on the big destinations because those are the ones I wrote
+    # most about. Scoring on my own prose density is documentation bias, not
+    # measurement, so only the stated language requirement survives - that is a
+    # fact in the source rather than a judgement in the note.
     heavy_lang = lang_req.str.contains("B1|B2|required", case=False)
-    df["f_recognition"] = (100.0
-                           - 25.0 * slow.astype(float)
-                           - 20.0 * heavy_lang.astype(float)
-                           - 15.0 * reg.eq("").astype(float))
+    # Same documentation bias, and worse: this scored -0.29 against actual
+    # flows, because the destinations with richly documented recognition
+    # regimes are the large ones that actually move people. Penalising a
+    # destination for HAVING a described process is backwards. Countries with
+    # nothing on file are now NaN rather than being handed a free pass.
+    df["f_recognition"] = 100.0 - 30.0 * heavy_lang.astype(float)
+    df.loc[reg.eq(""), "f_recognition"] = np.nan
     df["f_recognition"] = df["f_recognition"].clip(0, 100)
 
     # ---- ICMPD pathway permissiveness ---------------------------------------
@@ -323,9 +340,21 @@ def main() -> None:
     # ------------------------------------------------------------ composites --
     step("composites")
     # Harmonic, not arithmetic: a gate is only as open as its narrowest point.
-    aw = sum(ACCESS_WEIGHTS.values())
-    df["access_score"] = aw / sum(w / df[k].clip(lower=5) for k, w in ACCESS_WEIGHTS.items())
-    df["ease_score"] = sum(df[k] * w for k, w in EASE_WEIGHTS.items())
+    def wmean(weights, harmonic=False, floor=5.0):
+        """Weighted mean that renormalises around whatever is actually present."""
+        num = pd.Series(0.0, index=df.index)
+        den = pd.Series(0.0, index=df.index)
+        for k, w in weights.items():
+            v = df[k]
+            ok = v.notna()
+            num = num + np.where(ok, w / v.clip(lower=floor) if harmonic else v * w, 0.0)
+            den = den + np.where(ok, w, 0.0)
+        den = den.replace(0, np.nan)
+        out = den / num if harmonic else num / den
+        return out.fillna(50.0)
+
+    df["access_score"] = wmean(ACCESS_WEIGHTS, harmonic=True)
+    df["ease_score"] = wmean(EASE_WEIGHTS)
     df["potential_score"] = sum(df[k] * w for k, w in POTENTIAL_WEIGHTS.items())
     df["underutilisation_score"] = df["u_gap"]
 
@@ -347,8 +376,12 @@ def main() -> None:
     # --------------------------------------------------- low-hanging fruit ----
     # The brief's own test: the legal channel exists, this origin is already
     # eligible, and almost nobody uses it.
+    # Access, not ease. Under the old test 34 of 74 flagged corridors had an
+    # access score under 30 - "easy" corridors with nowhere to lodge an
+    # application. A corridor cannot be low-hanging if it cannot be reached.
     df["low_hanging_fruit"] = (
         (df["gap_log"] < -0.7)              # materially below prediction
+        & (df["access_score"] > df["access_score"].median())
         & (df["ease_score"] > df["ease_score"].median())
         & (df["has_any_agreement"] == 1)
     ).astype(int)
