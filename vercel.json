@@ -5,9 +5,44 @@
   "outputDirectory": "web",
   "framework": null,
   "headers": [
-    { "source": "/data/(.*)", "headers": [
-      { "key": "Cache-Control", "value": "public, max-age=0, s-maxage=86400, stale-while-revalidate=604800" } ] },
-    { "source": "/assets/(.*)", "headers": [
-      { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" } ] }
-  ]
+    {
+      "source": "/data/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=86400, stale-while-revalidate=604800"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=300, stale-while-revalidate=3600"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/mcp",
+      "destination": "/api/mcp"
+    }
+  ],
+  "functions": {
+    "api/mcp.js": {
+      "maxDuration": 30,
+      "memory": 1024
+    }
+  }
 }

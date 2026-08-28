@@ -145,6 +145,39 @@ recommendation to select workers on religion.
 
 ---
 
+## MCP server (Cowork custom connector)
+
+The deployment also speaks [MCP](https://modelcontextprotocol.io), so the corridor
+data can be queried directly from Cowork, Claude Desktop or any MCP client rather
+than read off the web page.
+
+**To add it in Cowork:** Settings -> Connectors -> Add custom connector, and give it
+
+```
+https://<your-deployment>.vercel.app/mcp
+```
+
+No authentication - the endpoint is read-only and serves the same public data the
+site already publishes. Opening that URL in a browser returns a short description
+of the server and its tools, which is a quick way to confirm a deployment is live.
+
+Five tools:
+
+| Tool | What it answers |
+|---|---|
+| `list_countries` | The 54 origins and 27 destinations, with ISO3 codes and subregions |
+| `search_corridors` | Ranked corridors, filtered by country, subregion, preset, score, current flow, low-hanging-fruit, WHO flag |
+| `get_corridor` | Everything behind one corridor: components, gravity comparison, and the underlying facts |
+| `get_methodology` | Weights, fitted gravity coefficients, and the source register with vintage and confidence |
+| `get_sector_shortages` | EURES widespread shortage occupations by sector family |
+
+`api/mcp.js` implements JSON-RPC over Streamable HTTP directly rather than using
+the MCP SDK. The site deploys with `buildCommand` and `installCommand` both null,
+so a dependency would mean adding a build pipeline to serve a small and stable
+protocol surface. Its data comes from `api/corridors.json`, which `build.py`
+writes alongside the browser payload - so the connector and the web app can never
+disagree about a score.
+
 ## Repository layout
 
 ```
@@ -157,14 +190,20 @@ pipeline/                 one fetcher per source, all HTTP-cached
   eurostat_context.py     diaspora, vacancies, sector pay, unemployment
   worldbank.py            WDI + WGI
   cepii.py                distance, language, colonial ties
-  openflights.py          air connectivity
+  openflights.py          legacy scheduled routes (fallback only)
+  eurostat_air.py         airport-pair passengers, incl. charter
+  undesa_migrant_stock.py bilateral diaspora
+  eures_shortages.py      EU shortage occupations
   wikidata_embassies.py   consular presence
   factbook.py             religion and language profiles
 model/
   assemble.py             corridor panel + global estimation panel
   gravity.py              PPML with high-dimensional fixed effects (+ --validate)
   indices.py              percentile components and composites
-  export.py               compact JSON for the front end
+  export.py               compact JSON for the front end + api/corridors.json
+api/
+  mcp.js                  MCP server (Cowork custom connector)
+  corridors.json          its data, written by build.py
 ref/
   countries.csv           generated code spine
   agreements.csv          curated agreements register  <- edit me

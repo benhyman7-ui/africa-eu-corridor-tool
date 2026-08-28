@@ -14,7 +14,7 @@ import numpy as np
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "pipeline"))
-from _common import INTERIM, REF, WEBDATA, countries, load, step  # noqa: E402
+from _common import INTERIM, REF, ROOT, WEBDATA, countries, load, step  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from indices import ACCESS_WEIGHTS, EASE_WEIGHTS, POTENTIAL_WEIGHTS, PRESETS  # noqa: E402
@@ -104,6 +104,73 @@ CORRIDOR_FIELDS = {
     "low_hanging_fruit": 0, "origin_in_allocation_fit": 0, "latest_year": 0,
     "unrealised_flow": 0, "scale_score": 1,
 }
+
+
+# Fields the MCP server exposes. Row-oriented and deliberately narrower than the
+# browser payload: an agent reading a corridor wants the score, what drives it
+# and the facts behind it, not every intermediate the front end happens to use.
+MCP_FIELDS = [
+    "orig", "dest", "orig_name", "dest_name", "orig_subregion", "dest_subregion",
+    "score_cgd", "score_ajf", "score_balanced",
+    "underutilisation_score", "access_score", "ease_score", "potential_score",
+    "scale_score", "low_hanging_fruit",
+    "permits_latest", "permits_mean3", "predicted", "gap_log", "unrealised_flow",
+    "student_permits",
+    "f_consular", "f_visa_success", "f_pathways",
+    "f_language", "f_agreement", "f_salary_threshold", "f_cultural",
+    "f_recognition", "f_processing", "f_connectivity", "f_admin", "f_proximity",
+    "p_income_gain", "p_skills_supply", "p_labour_supply", "p_dest_demand",
+    "p_diaspora_growth",
+    "dist", "diaspora", "diaspora_cagr", "air_passengers", "air_year",
+    "dest_embassy_in_orig", "neighbour_embassy", "vfs_present", "vfs_operator",
+    "consular_tier", "visa_refusal_rate", "visa_applications",
+    "shared_official_language", "origin_official_languages",
+    "dest_official_languages", "closest_language_pair", "language_proximity",
+    "n_agreements", "agreement_types", "eu_instruments", "has_any_agreement",
+    "pt_fast_track_scheme", "pt_talent_partnership",
+    "req_language_requirement", "req_recognition_regime", "req_key_requirements",
+    "median_income_gap", "income_multiple",
+    "o_inc_median_annual_ppp", "d_inc_median_annual_ppp",
+    "o_grad_health_welfare", "o_grad_ict", "o_grad_engineering_construction",
+    "o_nurses_midwives_per_10k", "d_nurses_midwives_per_10k",
+    "who_safeguard_origin", "who_status",
+    "majority_religion_orig", "majority_religion_dest", "cultural_basis",
+    "africa_orientation_penalty", "icmpd_restricted_n",
+]
+
+
+def write_mcp_payload(df: pd.DataFrame, meta: dict) -> None:
+    """Row-oriented data for the MCP server.
+
+    Written into api/ rather than web/data/ so the serverless function can
+    require() it directly - Vercel bundles statically-required files, which
+    avoids depending on runtime path resolution or a self-referential fetch.
+    """
+    api = ROOT / "api"
+    api.mkdir(exist_ok=True)
+    dp = {**CORRIDOR_FIELDS}
+    rows = []
+    for rec in df[[c for c in MCP_FIELDS if c in df.columns]].to_dict("records"):
+        # Null and empty-string keys are dropped rather than serialised. It
+        # roughly halves the file, and it means a tool result shows only what
+        # is actually known about a corridor instead of a wall of nulls that an
+        # agent then has to reason about.
+        row = {}
+        for k, v in rec.items():
+            c = clean(v, dp.get(k, 2))
+            if c is not None and c != "":
+                row[k] = c
+        rows.append(row)
+    payload = {"generated": meta.get("generated"), "corridors": rows,
+               "meta": {k: meta[k] for k in
+                        ("presets", "access_weights", "ease_weights",
+                         "potential_weights", "sectors", "shortage", "gravity",
+                         "totals", "n_origins", "n_destinations", "sources")
+                        if k in meta}}
+    path = api / "corridors.json"
+    path.write_text(json.dumps(payload, separators=(",", ":")), encoding="utf-8")
+    print(f"    api/corridors.json    {path.stat().st_size / 1024:>8.0f} KB "
+          f"({len(rows)} corridors, {len(MCP_FIELDS)} fields)")
 
 
 def clean(v, dp: int):
@@ -286,6 +353,9 @@ def main() -> None:
     }
     (WEBDATA / "meta.json").write_text(
         json.dumps(meta, separators=(",", ":")), encoding="utf-8")
+
+    step("api/corridors.json (MCP server payload)")
+    write_mcp_payload(df, meta)
 
     for f in ("corridors.json", "series.json", "sectors.json", "meta.json"):
         kb = (WEBDATA / f).stat().st_size / 1024
