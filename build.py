@@ -36,6 +36,7 @@ FETCHERS = [
     ("conflict_refugees", "UNHCR bilateral stocks (+ UCDP where reachable)"),
     ("schengen_visas", "visa refusal rates and consulate presence"),
     ("pip_income", "median income"),
+    ("eures_shortages", "EURES widespread shortage occupations"),
     ("geometry", "country outlines for the map"),
 ]
 STAGES = [

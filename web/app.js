@@ -4,11 +4,22 @@
    here. Weights are shown 0–10 and normalised by their own sum, so only the
    ratios between them matter. */
 
+/* Sub-Saharan Africa on the World Bank convention - all African origins except
+   the five North African states. Sudan counts as Sub-Saharan here, which is
+   World Bank practice; UN M49 would instead file it under Northern Africa. */
+const SSA = '__ssa__';
+
+/* One place for the opening state, so the Home button and first render cannot
+   drift apart from each other the way two hardcoded preset names did. */
+const DEFAULT_PRESET = 'ajf';
+const DEFAULT_SCALE_WEIGHT = 0.5;
+const NORTH_AFRICA = new Set(['DZA', 'EGY', 'LBY', 'MAR', 'TUN']);
+
 const S = {
   corridors: [], meta: null, series: null, sectors: null, geo: null,
-  view: 'map', preset: 'cgd', combine: 0, scaleWeight: 0,
+  view: 'map', preset: DEFAULT_PRESET, combine: 0, scaleWeight: DEFAULT_SCALE_WEIGHT,
   top: {}, access: {}, ease: {}, pot: {},
-  filters: { origRegion: '', orig: '', destRegion: '', dest: '', flow: '0',
+  filters: { origRegion: SSA, orig: '', destRegion: '', dest: '', flow: '0',
              consular: false, agreement: false, lhf: false, hideWho: false },
   sort: { key: 'score', dir: -1 },
   detail: null, sector: 'O-Q', matrixMetric: 'score',
@@ -25,15 +36,21 @@ const ACCESS_LABELS = {
 };
 const EASE_LABELS = {
   f_language: 'Language access', f_agreement: 'Legal channel',
-  f_salary_threshold: 'Salary threshold',
-  f_recognition: 'Qualification recognition', f_cultural: 'Cultural proximity',
+  f_salary_threshold: 'Salary threshold', f_cultural: 'Cultural proximity',
+  f_recognition: 'Qualification recognition', f_processing: 'Permit processing time',
   f_connectivity: 'Air connectivity', f_admin: 'Origin admin capacity',
-  f_proximity: 'Proximity',
 };
 const POT_LABELS = {
   p_income_gain: 'Income gain', p_skills_supply: 'Skills supply at origin',
   p_labour_supply: 'Labour supply at origin', p_dest_demand: 'Destination demand',
+  p_diaspora_growth: 'Diaspora momentum',
 };
+
+/* Computed and shown in the corridor detail, but deliberately not scored:
+   distance is already a regressor in the gravity model that sets the
+   underutilisation benchmark, so scoring it again in ease double-counted it. */
+const CONTEXT_LABELS = { f_proximity: 'Proximity (context only, not scored)' };
+
 
 // NACE sector -> the origin-side supply measure that speaks to it. UNESCO's
 // ISCED fields of study line up with the occupation families closely enough to
@@ -149,10 +166,18 @@ function rescore() {
       : base;
   }
 }
+/* Sub-Saharan Africa is a group of subregions rather than one of them, so the
+   origin-region filter takes either a literal subregion or the SSA sentinel. */
+function inOriginRegion(row, region) {
+  if (!region) return true;
+  if (region === SSA) return !NORTH_AFRICA.has(row.orig);
+  return row.orig_subregion === region;
+}
+
 function filtered() {
   const f = S.filters;
   return S.corridors.filter(r => {
-    if (f.origRegion && r.orig_subregion !== f.origRegion) return false;
+    if (!inOriginRegion(r, f.origRegion)) return false;
     if (f.orig && r.orig !== f.orig) return false;
     if (f.destRegion && r.dest_subregion !== f.destRegion) return false;
     if (f.dest && r.dest !== f.dest) return false;
@@ -322,27 +347,31 @@ function buildSidebar() {
     .sort((a, b) => a.orig_name.localeCompare(b.orig_name));
   const dests = [...new Map(S.corridors.map(r => [r.dest, r])).values()]
     .sort((a, b) => a.dest_name.localeCompare(b.dest_name));
+  $('#fOrigRegion').appendChild(el('option', { value: SSA }, 'All Sub-Saharan Africa'));
   for (const r of [...new Set(origs.map(o => o.orig_subregion))].filter(Boolean).sort())
     $('#fOrigRegion').appendChild(el('option', { value: r }, r));
+  $('#fOrigRegion').value = S.filters.origRegion;
   for (const r of [...new Set(dests.map(d => d.dest_subregion))].filter(Boolean).sort())
     $('#fDestRegion').appendChild(el('option', { value: r }, r));
 
   const fillCountries = () => {
     const oR = S.filters.origRegion, dR = S.filters.destRegion;
-    const rebuild = (sel, list, key, nameKey, subKey, region, label) => {
+    const rebuild = (sel, list, key, nameKey, subKey, region, label, keep) => {
+      const inRegion = keep || ((r) => !region || r[subKey] === region);
       const cur = S.filters[key];
       sel.innerHTML = '';
       sel.appendChild(el('option', { value: '' }, label));
       for (const r of list) {
-        if (region && r[subKey] !== region) continue;
+        if (!inRegion(r)) continue;
         sel.appendChild(el('option', { value: r[key], selected: cur === r[key] ? '' : null },
           r[nameKey]));
       }
-      if (cur && !list.some(r => r[key] === cur && (!region || r[subKey] === region))) {
+      if (cur && !list.some(r => r[key] === cur && inRegion(r))) {
         S.filters[key] = ''; sel.value = '';
       }
     };
-    rebuild($('#fOrig'), origs, 'orig', 'orig_name', 'orig_subregion', oR, 'All origin countries');
+    rebuild($('#fOrig'), origs, 'orig', 'orig_name', 'orig_subregion', oR,
+            'All origin countries', (r) => inOriginRegion(r, oR));
     rebuild($('#fDest'), dests, 'dest', 'dest_name', 'dest_subregion', dR, 'All destinations');
   };
   fillCountries();
@@ -361,9 +390,10 @@ function buildSidebar() {
   bind('#fLHF', 'lhf', true); bind('#fWho', 'hideWho', true);
 
   const goHome = () => {
-    Object.assign(S.filters, { origRegion: '', orig: '', destRegion: '', dest: '',
+    Object.assign(S.filters, { origRegion: SSA, orig: '', destRegion: '', dest: '',
       flow: '0', consular: false, agreement: false, lhf: false, hideWho: false });
-    for (const id of ['#fOrigRegion', '#fOrig', '#fDestRegion', '#fDest']) $(id).value = '';
+    for (const id of ['#fOrig', '#fDestRegion', '#fDest']) $(id).value = '';
+    $('#fOrigRegion').value = SSA;
     for (const id of ['#fConsular', '#fAgreement', '#fLHF', '#fWho']) $(id).checked = false;
     $('#fFlow').value = '0';
     S.combine = 0; S.scaleWeight = 0;
@@ -373,15 +403,17 @@ function buildSidebar() {
     [...$('#combineBtns').children].forEach((b, i) =>
       b.classList.toggle('on', COMBINE_MODES[i].p === S.combine));
     $('#combineNote').textContent = COMBINE_MODES.find(m => m.p === S.combine).note;
-    applyPreset('cgd');   // applyPreset renders
+    S.scaleWeight = DEFAULT_SCALE_WEIGHT; paintScale();
+    applyPreset(DEFAULT_PRESET);   // applyPreset renders
     scrollTo({ top: 0, behavior: 'smooth' });
   };
   $('#homeBtn').addEventListener('click', goHome);
 
   $('#resetBtn').addEventListener('click', () => {
-    Object.assign(S.filters, { origRegion: '', orig: '', destRegion: '', dest: '',
+    Object.assign(S.filters, { origRegion: SSA, orig: '', destRegion: '', dest: '',
       flow: '0', consular: false, agreement: false, lhf: false, hideWho: false });
-    for (const id of ['#fOrigRegion', '#fOrig', '#fDestRegion', '#fDest', '#fFlow']) $(id).value = '';
+    for (const id of ['#fOrig', '#fDestRegion', '#fDest', '#fFlow']) $(id).value = '';
+    $('#fOrigRegion').value = SSA;
     for (const id of ['#fConsular', '#fAgreement', '#fLHF', '#fWho']) $(id).checked = false;
     $('#fFlow').value = '0';
     fillCountries(); S.mapSel = null; S.detail = null; render();
@@ -433,7 +465,7 @@ function buildSidebar() {
       cur === 'dark' ? 'light' : cur === 'light' ? 'dark' : (dark ? 'light' : 'dark'));
     render();
   });
-  applyPreset('cgd');
+  applyPreset(DEFAULT_PRESET);
 }
 function syncTabs() {
   const order = ['map', 'ranking', 'matrix', 'sectors', 'method'];
@@ -777,7 +809,31 @@ function viewSectors(rows) {
     el('td', {}, el('div', { class: 'bar' }, el('i', { style: `width:${r.under}%` }),
       el('b', {}, r.under.toFixed(0)))))));
 
+  /* Official EURES shortage designations for this occupation family. EU-wide,
+     because the per-country answers are locked inside a PowerBI embed; the
+     per-country dimension is the vacancy-rate column in the table below. */
+  const sh = S.meta.shortage?.[S.sector];
+
   return el('div', {},
+    el('div', { class: 'shortage' },
+      sh
+        ? el('div', {},
+            el('div', { class: 'shead' },
+              el('strong', {}, 'EURES widespread shortage occupations'),
+              el('span', { class: 'badge medium' }, sh.n_occupations + ' in this family')),
+            el('div', { class: 'sgrid' }, sh.occupations.map(o => el('div', { class: 'sitem' },
+              el('span', { class: 'sname' }, o.name),
+              el('span', { class: 'smeta' },
+                o.countries + '/28 countries · ' + o.pct_high + '% high severity')))),
+            el('div', { class: 'note', style: 'margin-top:9px' },
+              'Occupations that more than half of reporting countries call a shortage '
+              + '(European Labour Authority, 2025). These are the designations that open '
+              + 'shortage-list routes and labour-market-test exemptions.'))
+        : el('div', { class: 'note', style: 'padding:2px 0' },
+            el('strong', {}, 'No widespread shortage occupation in this family. '),
+            'That is not evidence of no shortage — the EURES threshold is "more than half '
+            + 'of reporting countries", so concentrated shortages (ICT is the clearest case) '
+            + 'do not appear. Use the per-country vacancy rate below.')),
     isHealth ? el('div', { class: 'note', style: 'margin:0 0 12px;padding:6px 0 6px 10px' },
       `SSL marks an origin on the WHO health workforce safeguards list `
       + `(${S.meta.totals.who_origins} of ${S.meta.n_origins} origins), where active `
@@ -870,9 +926,39 @@ function viewDetail(r) {
   if (r.who_ssl_2023) checks.push([
     'info', false, 'WHO health workforce safeguards list',
     r.who_expected_removal ? 'listed 2023, expected off in 2026' : 'listed 2023 and 2026']);
-  const comps = [...Object.keys(ACCESS_LABELS).map(k => [ACCESS_LABELS[k], r[k]]),
-    ...Object.keys(EASE_LABELS).map(k => [EASE_LABELS[k], r[k]]),
-    ...Object.keys(POT_LABELS).map(k => [POT_LABELS[k], r[k]])];
+  /* The decomposition is grouped, and every factor carries its real share of
+     the headline score. Showing 15 factors as one flat list made a 1%-weight
+     term render exactly as prominently as a 30% one, which is how distance
+     came to look like a major driver when it was 0.15% of the score. */
+  const shareOf = (w) => {
+    const t = Object.values(w).reduce((a, b) => a + b, 0) || 1;
+    return k => (w[k] || 0) / t;
+  };
+  const topShare = shareOf(S.top);
+  const GROUPS = [
+    { key: 'underutilisation', label: 'Underutilisation', value: r.under,
+      note: 'How far below the gravity benchmark this corridor actually runs.',
+      rows: [['Actual permits', null, fmt(r.permits_mean3, 1) + '/yr'],
+             ['Predicted by the model', null, fmt(r.predicted, 1) + '/yr'],
+             ['Shortfall', null, r.gap_log == null ? '—'
+               : (r.gap_log < 0 ? (100 * (1 - Math.exp(r.gap_log))).toFixed(0) + '% below'
+                                : (100 * (Math.exp(r.gap_log) - 1)).toFixed(0) + '% above')]] },
+    { key: 'access', label: 'Access (can it happen)', value: r.access,
+      note: 'Combined harmonically — a floor here drags the whole corridor down.',
+      labels: ACCESS_LABELS, weights: S.access },
+    { key: 'ease', label: 'Ease (how hard)', value: r.ease,
+      labels: EASE_LABELS, weights: S.ease },
+    { key: 'potential', label: 'Potential', value: r.potential,
+      labels: POT_LABELS, weights: S.pot },
+  ].map(g => {
+    if (g.rows) return g;
+    const sub = shareOf(g.weights);
+    g.rows = Object.keys(g.labels).map(k => [
+      g.labels[k], r[k],
+      r[k] == null ? 'no data'
+        : (100 * topShare(g.key) * sub(k)).toFixed(1) + '% of score']);
+    return g;
+  });
 
   return el('div', {},
     el('button', { class: 'backlink', onclick: () => { S.detail = null; render(); } },
@@ -964,19 +1050,34 @@ function viewDetail(r) {
       el('div', { class: 'card' },
         el('header', {}, el('h2', {}, 'Score decomposition')),
         el('div', { class: 'pad' },
-          el('div', { class: 'decomp' },
-            [['Underutilisation', r.under], ['Access', r.access],
-             ['Ease', r.ease], ['Potential', r.potential]]
-              .map(([l, v]) => el('div', { class: 'row' },
-                el('div', { class: 'lbl', style: 'font-weight:700' }, l),
-                el('div', { class: 'bar' }, el('i', { style: `width:${v ?? 0}%` })),
-                el('div', { class: 'v' }, fmt(v, 0)))),
-            el('div', { style: 'height:6px' }),
-            comps.map(([l, v]) => el('div', { class: 'row' },
-              el('div', { class: 'lbl' }, l),
-              el('div', { class: 'bar', style: 'height:11px' },
-                el('i', { style: `width:${v ?? 0}%;opacity:.6` })),
-              el('div', { class: 'v' }, fmt(v, 0)))))))));
+          GROUPS.map(g => el('section', { class: 'dgroup' },
+            el('div', { class: 'decomp' },
+              el('div', { class: 'row head' },
+                el('div', { class: 'lbl' }, g.label),
+                el('div', { class: 'bar' }, el('i', { style: `width:${g.value ?? 0}%` })),
+                el('div', { class: 'v' }, fmt(g.value, 0))),
+              el('div', { class: 'gshare' },
+                (100 * topShare(g.key)).toFixed(0) + '% of the headline score'
+                + (g.note ? ' · ' + g.note : '')),
+              g.rows.map(([l, v, meta]) => el('div', { class: 'row sub' },
+                el('div', { class: 'lbl' }, l,
+                  g.weights ? el('span', { class: 'wshare' }, meta) : null),
+                v == null
+                  ? el('div', { class: 'flat' }, meta)
+                  : el('div', { class: 'bar', style: 'height:11px' },
+                      el('i', { style: `width:${v}%;opacity:.6` })),
+                el('div', { class: 'v' }, v == null ? '' : fmt(v, 0))))))),
+          el('section', { class: 'dgroup context' },
+            el('div', { class: 'gshare' },
+              'Shown for context, not scored — distance is already a regressor '
+              + 'in the gravity model behind Underutilisation, so scoring it '
+              + 'again here would count it twice.'),
+            el('div', { class: 'decomp' },
+              Object.keys(CONTEXT_LABELS).map(k => el('div', { class: 'row sub' },
+                el('div', { class: 'lbl' }, CONTEXT_LABELS[k]),
+                el('div', { class: 'bar', style: 'height:11px' },
+                  el('i', { style: `width:${r[k] ?? 0}%;opacity:.35` })),
+                el('div', { class: 'v' }, fmt(r[k], 0))))))))));
 }
 
 
@@ -995,10 +1096,13 @@ const FACTOR_NOTES = {
   f_recognition: 'Whether a third-country qualification can realistically be recognised, and the language sitting on top of it.',
   f_connectivity: 'Direct air routes between the two countries.',
   f_admin: 'Origin government effectiveness and internet penetration — can the state issue documents.',
-  f_proximity: 'Great-circle distance.',
-  p_income_gain: 'Log of the annual gap in median income, World Bank PIP, 2021 PPP.',
+  f_processing: 'How long a permit decision takes: the 90-day deadline in the recast Single Permit Directive, the 45-day track for EU Talent Partnership applicants, and national fast-track schemes.',
+  f_proximity: 'Great-circle distance. Shown for context only — it is already a regressor in the gravity model, so it is not scored again here.',
+  p_income_gain: 'Log of the annual gap in median income, World Bank PIP, 2021 PPP. Winsorised at the 2nd/98th percentile so two outlier countries cannot set the whole scale.',
+  p_skills_supply: 'Tertiary graduates by field (UNESCO) and health workforce density (WHO) at origin.',
   p_labour_supply: 'Working-age population times youth unemployment at origin.',
   p_dest_demand: 'Destination job-vacancy rate, old-age dependency, inverse unemployment.',
+  p_diaspora_growth: 'Compound annual growth of the origin citizenship stock in the destination (Eurostat). Direction of travel, not a flow — naturalisation removes people from a citizenship stock. Left blank where the base was too small to measure.',
 };
 
 const TERM_NOTES = {

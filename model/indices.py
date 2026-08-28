@@ -52,15 +52,25 @@ ACCESS_WEIGHTS = {
 # EASE is what remains once access is carved out: real frictions, but ones a
 # determined applicant or a well-designed programme can work around.
 EASE_WEIGHTS = {
-    "f_language": 0.26,           # can you work in the destination's language
+    "f_language": 0.25,           # can you work in the destination's language
     "f_agreement": 0.22,          # is a legal channel already pointed at you
-    "f_salary_threshold": 0.18,   # is the wage floor reachable
-    "f_recognition": 0.09,        # coarse: language requirement only, see note
+    "f_salary_threshold": 0.17,   # is the wage floor reachable
     "f_cultural": 0.12,           # religion and Hofstede, evenly balanced
-    "f_connectivity": 0.07,       # can you get there
-    "f_admin": 0.04,              # can the origin issue you documents
-    "f_proximity": 0.01,
+    "f_recognition": 0.09,        # coarse: language requirement only, see note
+    "f_processing": 0.08,         # how long a decision takes
+    "f_connectivity": 0.05,       # can you get there
+    "f_admin": 0.02,              # can the origin issue you documents
 }
+
+# f_proximity is deliberately NOT in the weights above. Great-circle distance is
+# already a regressor in the PPML gravity model, so it is priced into the
+# underutilisation benchmark; scoring it a second time in ease double-counted
+# it. It carried a 0.01 weight - about 0.15% of the headline score - so it was
+# never actually moving rankings, but it rendered at full height in the score
+# decomposition next to factors 100x its weight, which read as far more
+# important than it was. The value is still computed and still shown in the
+# corridor detail as context, just not scored.
+UNSCORED_CONTEXT = ("f_proximity",)
 
 # Inside f_cultural. The concept note specifies Hofstede; religion is our own
 # addition. They are weighted evenly, and where Hofstede is unavailable the
@@ -69,10 +79,11 @@ EASE_WEIGHTS = {
 CULTURAL_MIX = {"religion": 0.5, "hofstede": 0.5}
 
 POTENTIAL_WEIGHTS = {
-    "p_income_gain": 0.40,
-    "p_skills_supply": 0.20,   # can the origin actually produce these workers
-    "p_labour_supply": 0.20,   # and how many idle working-age people are there
-    "p_dest_demand": 0.20,
+    "p_income_gain": 0.35,
+    "p_skills_supply": 0.18,      # can the origin actually produce these workers
+    "p_labour_supply": 0.17,      # and how many idle working-age people are there
+    "p_dest_demand": 0.15,
+    "p_diaspora_growth": 0.15,    # is the corridor already opening
 }
 
 
@@ -166,6 +177,17 @@ def main() -> None:
                     invert=True)) / 3.0
     df["p_dest_demand"] = demand
 
+    # Diaspora momentum. Corridors already growing are the ones where employers,
+    # recruiters and informal networks are in place, which is a different signal
+    # from a large static stock (that is already a gravity regressor).
+    #
+    # Left NaN, not 50, wherever the base stock was too small to give a
+    # meaningful rate - that is 540 corridors with no measurable diaspora, and
+    # asserting average momentum for them would be an invention. wmean() below
+    # renormalises around whatever is actually present.
+    cagr = df.get("diaspora_cagr", pd.Series(np.nan, index=df.index))
+    df["p_diaspora_growth"] = pct(cagr).where(cagr.notna())
+
     # ------------------------------------------------------------------ ease --
     step("ease of unlocking")
     # Consular access, tiered. The biometric appointment is the binding step, so a
@@ -243,6 +265,28 @@ def main() -> None:
 
     df["f_connectivity"] = pct(np.log1p(df["routes"]))
     df["f_proximity"] = pct(np.log(df["dist"].clip(lower=1)), invert=True)
+
+    # How long a decision takes. Built only from things that are written down:
+    #   50  the 90-day deadline in the recast Single Permit Directive
+    #       (EU) 2024/1233 Art 5, which binds 25 of the 27 destinations
+    #  +25  the corridor qualifies for that Directive's 45-day track, given to
+    #       applicants selected through an EU Talent Partnership - the only
+    #       part of processing time that varies by corridor rather than
+    #       destination
+    #  +20  the destination runs a published statutory fast-track scheme
+    #       (Germany's accelerated procedure, the Dutch recognised sponsor,
+    #       Denmark's Fast-track Scheme, Ireland's Trusted Partner)
+    #
+    # Denmark and Ireland are outside the Directive on Protocols 22 and 21, so
+    # no EU deadline binds them; both publish their own decision targets, so
+    # they keep the 50 baseline rather than being scored as unknown.
+    #
+    # This is mostly a destination constant, which is why it carries only 0.08
+    # of ease. Statutory deadlines are near-uniform by design; what actually
+    # varies is who gets a fast lane.
+    df["f_processing"] = (50.0
+                          + 25.0 * df.get("pt_talent_partnership", 0)
+                          + 20.0 * df.get("pt_has_fast_track", 0)).clip(0, 100)
     # Can the origin state actually issue documents and can applicants transact
     df["f_admin"] = (pct(df["o_wgi_govt_effectiveness"])
                      + pct(df["o_internet_users"])) / 2.0
@@ -362,7 +406,10 @@ def main() -> None:
 
     df["access_score"] = wmean(ACCESS_WEIGHTS, harmonic=True)
     df["ease_score"] = wmean(EASE_WEIGHTS)
-    df["potential_score"] = sum(df[k] * w for k, w in POTENTIAL_WEIGHTS.items())
+    # wmean, not a plain weighted sum: p_diaspora_growth is NaN wherever the
+    # base stock was too small to give a meaningful rate, and a plain sum
+    # propagates that NaN straight through to the headline score.
+    df["potential_score"] = wmean(POTENTIAL_WEIGHTS)
     df["underutilisation_score"] = df["u_gap"]
 
     for name, w in PRESETS.items():

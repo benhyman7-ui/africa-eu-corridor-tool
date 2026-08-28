@@ -367,3 +367,25 @@ svg.map .lbl { font-size: 7.5px; fill: var(--ink-2); pointer-events: none; font-
 }
 .seg:hover { border-color: var(--gold); color: var(--ink); }
 .seg.on { background: var(--navy); border-color: var(--navy); color: #fff; }
+
+/* ---------- grouped score decomposition ---------- */
+.dgroup { padding: 11px 0 13px; border-bottom: 1px solid var(--line); }
+.dgroup:last-child { border-bottom: none; padding-bottom: 0; }
+.dgroup .row.head .lbl { font-weight: 700; color: var(--ink); font-size: 12.5px; }
+.dgroup .row.head .bar { height: 15px; }
+.dgroup .row.head .v { font-size: 12.5px; color: var(--ink); font-weight: 700; }
+.dgroup .row.sub .lbl { padding-left: 13px; }
+.dgroup .row.sub .flat { font-size: 11px; color: var(--ink-3); font-style: italic; }
+.dgroup .gshare { font-size: 10.5px; color: var(--ink-3); margin: 3px 0 8px; line-height: 1.5; }
+.dgroup .gshare.sub { margin: 7px 0 0; padding-left: 13px; opacity: .8; }
+.dgroup.context { opacity: .72; }
+
+/* ---------- EURES shortage panel ---------- */
+.shortage { border: 1px solid var(--line); border-radius: 7px; padding: 12px 14px; margin: 0 0 14px; background: var(--panel); }
+.shortage .shead { display: flex; align-items: center; gap: 9px; margin-bottom: 9px; font-size: 12.5px; }
+.shortage .sgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 6px 16px; }
+.shortage .sitem { display: flex; flex-direction: column; font-size: 12px; padding: 3px 0; border-bottom: 1px solid var(--line); }
+.shortage .sname { color: var(--ink); }
+.shortage .smeta { font-size: 10.5px; color: var(--ink-3); font-family: var(--mono); }
+.dgroup .row.sub .lbl { display: flex; flex-direction: column; line-height: 1.35; }
+.dgroup .wshare { font-size: 9.5px; color: var(--ink-3); font-family: var(--mono); }

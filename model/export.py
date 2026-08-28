@@ -49,6 +49,7 @@ CORRIDOR_FIELDS = {
     # components
     "u_gap": 1, "u_gap_absolute": 1, "u_gap_structural": 1,
     "p_income_gain": 1, "p_labour_supply": 1, "p_dest_demand": 1, "p_skills_supply": 1,
+    "p_diaspora_growth": 1, "diaspora_cagr": 4,
     "skills_inputs_present": 0, "health_workforce_ratio": 1,
     "o_nurses_midwives_per_10k": 1, "d_nurses_midwives_per_10k": 1,
     "o_grad_health_welfare": 1, "o_grad_ict": 1, "o_grad_engineering_construction": 1,
@@ -58,6 +59,7 @@ CORRIDOR_FIELDS = {
     "f_consular": 1, "f_language": 1, "f_agreement": 1, "f_connectivity": 1,
     "f_proximity": 1, "f_admin": 1, "f_cultural": 1,
     "f_pathways": 1, "f_salary_threshold": 1, "f_recognition": 1,
+    "f_processing": 1, "pt_fast_track_scheme": 0, "pt_talent_partnership": 0,
     "vfs_present": 0, "vfs_operator": 0, "vfs_note": 0,
     "student_permits": 1, "student_to_work_ratio": 2, "p_student_feeder": 1,
     "salary_threshold_ratio": 2,
@@ -176,6 +178,30 @@ def main() -> None:
     # --------------------------------------------------- destination sectors --
     step("sectors.json")
     sectors: dict[str, dict] = {}
+
+    # EURES widespread shortage occupations, rolled up to the tool's sector
+    # families. EU-wide rather than per country: the per-country answers exist
+    # only inside a PowerBI embed with no documented query interface, so the
+    # published table is what can be cited. The per-country dimension is
+    # already carried by the Eurostat vacancy rate sitting next to it.
+    shortage: dict[str, dict] = {}
+    try:
+        occ = load("eures_shortage_occupations")
+        fam = load("eures_shortage_sectors").set_index("sector")
+        for code in SECTORS:
+            if code not in fam.index:
+                continue
+            rows = occ[occ.sector == code].sort_values("n_countries", ascending=False)
+            shortage[code] = {
+                "intensity": clean(fam.loc[code].shortage_intensity, 1),
+                "n_occupations": int(fam.loc[code].n_occupations),
+                "occupations": [
+                    {"name": r.occupation, "countries": int(r.n_countries),
+                     "pct_high": int(r.pct_high)} for r in rows.itertuples()],
+            }
+    except Exception as exc:  # noqa: BLE001
+        print(f"      EURES shortage table unavailable: {exc}")
+
     try:
         vac = load("eurostat_vacancy")
         wag = load("eurostat_sector_wages")
@@ -223,6 +249,9 @@ def main() -> None:
         "ease_weights": EASE_WEIGHTS,
         "potential_weights": POTENTIAL_WEIGHTS,
         "sectors": SECTORS,
+        # EU-wide and identical for every destination, so it ships once here
+        # rather than being repeated on all 27 sector tables.
+        "shortage": shortage,
         "countries": [
             {"iso3": r.iso3, "name": r.name, "side": r.side,
              "subregion": r.subregion, "lat": clean(r.lat, 3), "lon": clean(r.lon, 3)}

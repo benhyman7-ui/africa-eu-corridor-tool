@@ -91,6 +91,34 @@ def main() -> None:
     else:
         dia = pd.DataFrame(columns=["orig", "dest", "year", "diaspora"])
 
+    # Diaspora momentum: compound annual growth of the citizenship stock.
+    #
+    # This is NOT net migration, and the difference matters. Naturalisation
+    # removes people from a citizenship stock, so a corridor that integrates
+    # its arrivals quickly can look flat while still receiving plenty of them,
+    # and deaths and return migration pull the same way. Read it as direction
+    # of travel, not as a flow.
+    #
+    # A growth rate off a tiny base is noise - going from 3 residents to 9 is
+    # not a corridor opening - so anything under MIN_BASE is left NaN rather
+    # than scored, and the panel needs a real span behind it.
+    MIN_BASE, MIN_SPAN = 50, 3
+    if len(dia):
+        dg = dia.dropna(subset=["diaspora"]).sort_values("year")
+        agg = (dg.groupby(["orig", "dest"])
+                 .agg(first=("diaspora", "first"), last=("diaspora", "last"),
+                      y0=("year", "min"), y1=("year", "max")).reset_index())
+        span = agg.y1 - agg.y0
+        ok = (agg["first"] >= MIN_BASE) & (span >= MIN_SPAN) & (agg.last > 0)
+        agg["diaspora_cagr"] = np.where(
+            ok, (agg.last / agg["first"]).where(ok, np.nan) ** (1.0 / span.where(span > 0)) - 1.0,
+            np.nan)
+        dgrowth = agg[["orig", "dest", "diaspora_cagr"]]
+        print(f"    diaspora growth on {int(ok.sum())} corridors "
+              f"(base >= {MIN_BASE}, span >= {MIN_SPAN}y)")
+    else:
+        dgrowth = pd.DataFrame(columns=["orig", "dest", "diaspora_cagr"])
+
     # --------------------------------------------------------- dyadic terms --
     step("dyadic covariates")
     geo = load("cepii_geodist")[["orig", "dest", "dist", "contig", "comlang_off",
@@ -179,6 +207,7 @@ def main() -> None:
     C = C.merge(routes, on=["orig", "dest"], how="left")
     C = C.merge(dia[dia.year == dia.year.max()][["orig", "dest", "diaspora"]]
                 if len(dia) else dia, on=["orig", "dest"], how="left")
+    C = C.merge(dgrowth, on=["orig", "dest"], how="left")
     C = C.merge(load("consular_presence"), on=["orig", "dest"], how="left")
 
     # distance fallback for pairs CEPII predates
@@ -470,6 +499,27 @@ def main() -> None:
     C["n_eu_instruments"] = C["n_eu_instruments"].fillna(0).astype(int)
     C["eu_instruments"] = C["eu_instruments"].fillna("")
     C["has_any_agreement"] = ((C.n_agreements > 0) | (C.n_eu_instruments > 0)).astype(int)
+
+    # ---- permit processing time -------------------------------------------- #
+    step("permit processing deadlines")
+    pt = pd.read_csv(REF / "processing_times.csv", encoding="utf-8",
+                     keep_default_na=False, na_values=[""])
+    C = C.merge(pt.drop(columns=["country", "notes"]).add_prefix("pt_")
+                  .rename(columns={"pt_iso3": "dest"}), on="dest", how="left")
+    C["pt_has_fast_track"] = C.pt_fast_track_scheme.fillna("").ne("").astype(int)
+
+    # The recast Single Permit Directive cuts the deadline from 90 to 45 days
+    # for applicants selected through an EU Talent Partnership. That is the one
+    # part of processing time that varies by CORRIDOR rather than destination,
+    # and Talent Partnerships are exactly the Africa-EU instruments already in
+    # the agreements register - Morocco, Tunisia, Egypt, Nigeria, Senegal.
+    C["pt_talent_partnership"] = C.eu_instruments.fillna("").str.contains(
+        "Talent Partnership").astype(int)
+    # Denmark and Ireland sit outside the Directive on Protocols 22 and 21, so
+    # they carry no EU deadline; both run their own regime with a fast-track.
+    C["pt_eu_deadline"] = C.pt_regime.eq("eu_directive").astype(int)
+    print(f"    {int(C.pt_has_fast_track.sum() / 54)} destinations with a fast-track scheme; "
+          f"{int(C.pt_talent_partnership.sum())} corridors on the 45-day Talent Partnership track")
 
     # ------------------------------------------------------------- labels ----
     C = C.merge(cc[["iso3", "name", "subregion"]].rename(
