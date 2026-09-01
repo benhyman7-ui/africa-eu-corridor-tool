@@ -24,7 +24,10 @@ from _common import INTERIM, load, save, step  # noqa: E402
 # to fixing that are unexpectedly small. Potential matters but is not the lead.
 PRESETS = {
     "cgd": {"underutilisation": 0.40, "access": 0.30, "ease": 0.15, "potential": 0.15},
-    "ajf": {"underutilisation": 0.20, "access": 0.25, "ease": 0.15, "potential": 0.40},
+    # AJF: catalyse the largest log income gains. Potential (led by doublings)
+    # is the lead; access outweighs ease because a pathway the fund cannot
+    # reach is not a pathway it can build.
+    "ajf": {"underutilisation": 0.20, "access": 0.30, "ease": 0.10, "potential": 0.40},
     "balanced": {"underutilisation": 0.25, "access": 0.25, "ease": 0.25, "potential": 0.25},
 }
 
@@ -79,9 +82,9 @@ UNSCORED_CONTEXT = ("f_proximity",)
 CULTURAL_MIX = {"religion": 0.5, "hofstede": 0.5}
 
 POTENTIAL_WEIGHTS = {
-    "p_income_gain": 0.35,
-    "p_skills_supply": 0.18,      # can the origin actually produce these workers
-    "p_labour_supply": 0.17,      # and how many idle working-age people are there
+    "p_income_gain": 0.40,        # doublings per mover - the fund's own unit
+    "p_skills_supply": 0.15,      # can the origin actually produce these workers
+    "p_labour_supply": 0.15,      # and how many idle working-age people are there
     "p_dest_demand": 0.15,
     "p_diaspora_growth": 0.15,    # is the corridor already opening
 }
@@ -120,19 +123,29 @@ def main() -> None:
     # distribution, so it overstates what a typical mover would actually earn on
     # either side. PIP medians are much closer to the person who would move.
     #
-    # The headline is the log of the ABSOLUTE annual gap - what a mover banks in
-    # a year - which is what the AJF framing asks for. The ratio is kept
-    # alongside it because a 10x gain on a small base and a 10x gain on a large
-    # one are very different propositions.
+    # The scored measure is INCOME DOUBLINGS per mover: log2 of the ratio of
+    # median incomes. This is the fund's own unit - AJF counts impact in
+    # income-doubling years - and it is what "largest log income gains" means:
+    # a mover's log gain is log(dest) - log(orig), which is the ratio, not the
+    # absolute gap.
+    #
+    # The absolute gap is kept and displayed, but a review showed that scoring
+    # it made the factor a destination-income ranking in disguise: because
+    # African medians are small next to EU ones, log(dest - orig) tracks
+    # log(dest) at r = +0.96, so the "income" factor was answering "which
+    # destination is rich" instead of "who gains most". Under the ratio, a
+    # Malian mover's near-four-doubling gain outranks a comfortable origin
+    # moving next door - which is the fund's actual aim.
     df["median_income_gap"] = df.get("median_income_gap", pd.Series(np.nan, index=df.index))
     df["log_income_gap"] = np.log(df["median_income_gap"].clip(lower=1))
+    df["income_doublings"] = np.log2(
+        (df["d_inc_median_annual_ppp"] / df["o_inc_median_annual_ppp"])
+        .replace([np.inf, -np.inf], np.nan).clip(lower=1.0))
 
     # NOT a percentile rank, unlike every other component here, and that is
-    # deliberate. Percentile ranking is a monotone transform, so ranking the log
-    # gives byte-identical results to ranking the raw gap - the log would have
-    # been purely decorative. Min-max scaling the log keeps the compression the
-    # log is there to provide: the step from a $2k gap to $12k counts for far
-    # more than the step from $22k to $32k.
+    # deliberate: min-max keeps the CARDINAL spacing of doublings, so the step
+    # from 2x to 4x counts the same as from 4x to 8x - one doubling each -
+    # instead of being stretched by wherever corridors happen to bunch.
     # Winsorised at the 2nd/98th percentile before scaling. Raw min-max let two
     # outliers set both endpoints - Seychelles, a rich origin, pinned the floor
     # and Luxembourg the ceiling - which squeezed the middle half of all
@@ -140,7 +153,7 @@ def main() -> None:
     # cannot move a ranking. Clipping the tails doubles the spread and costs
     # only the ordering WITHIN the extreme 2% tails, which is not information
     # anyone should be acting on anyway.
-    lg = df["log_income_gap"]
+    lg = df["income_doublings"]
     lo, hi = lg.quantile(0.02), lg.quantile(0.98)
     df["p_income_gain"] = (100 * (lg.clip(lo, hi) - lo) / (hi - lo)) if hi > lo \
         else pd.Series(np.nan, index=df.index)
@@ -490,6 +503,14 @@ def main() -> None:
     # can carry, which is what "how big is this opportunity" means.
     df["unrealised_flow"] = (df["predicted"] - df["actual_mean3"]).clip(lower=0)
     df["scale_score"] = pct(np.log1p(df["predicted"].clip(lower=0)))
+
+    # The AJF objective as one number with real units: unrealised annual flow
+    # times income doublings per mover = catalysable income-doubling years per
+    # year. Unrealised rather than predicted, because catalysis is about
+    # additionality - Morocco-Spain already runs above its gravity prediction
+    # and needs no catalyst, however large it is.
+    df["dcy_catalysable"] = (df["unrealised_flow"]
+                             * df["income_doublings"].fillna(0)).round(0)
     print(f"    unrealised annual flow: total {df.unrealised_flow.sum():,.0f}; "
           f"median {df.unrealised_flow.median():.0f}; "
           f"top corridor {df.unrealised_flow.max():,.0f}")

@@ -78,7 +78,7 @@ const COMBINE_MODES = [
 
 const PRESET_NOTES = {
   cgd: 'Corridors where flows are unexpectedly low and the barriers to fixing that are unexpectedly small — the framing in the CGD/TMO concept note.',
-  ajf: 'Leads on income gain: the log of the annual gap in median income between the two countries.',
+  ajf: 'The fund aim: catalyse the largest log income gains. Leads on income doublings per mover (log₂ of the ratio of median incomes — the DCY unit), gated by access.',
   balanced: 'Equal weight on all three dimensions.',
 };
 
@@ -640,9 +640,10 @@ const COLS = [
   { k: 'potential', l: 'Potential', bar: true },
   { k: 'permits_mean3', l: 'Actual/yr', num: 0 },
   { k: 'predicted', l: 'Predicted', num: 0 },
-  { k: 'median_income_gap', l: 'Income gap', num: 0, prefix: '$' },
+  { k: 'income_doublings', l: 'Doublings', num: 1 },
   { k: 'scale_score', l: 'Scale', bar: true },
   { k: 'unrealised_flow', l: 'Unrealised/yr', num: 0 },
+  { k: 'dcy_catalysable', l: 'DCY/yr', num: 0 },
   { k: 'visa_refusal_rate', l: 'Visa refusal', rate: true },
   { k: 'consular_tier', l: 'Can apply?', pill: r => r.visa_consulate_present || r.dest_embassy_in_orig },
   { k: 'low_hanging_fruit', l: 'Flags', render: r => el('span', {},
@@ -1106,7 +1107,7 @@ const FACTOR_NOTES = {
   f_admin: 'Origin government effectiveness and internet penetration — can the state issue documents.',
   f_processing: 'How long a permit decision takes: the 90-day deadline in the recast Single Permit Directive, the 45-day track for EU Talent Partnership applicants, and national fast-track schemes.',
   f_proximity: 'Great-circle distance. Shown for context only — it is already a regressor in the gravity model, so it is not scored again here.',
-  p_income_gain: 'Log of the annual gap in median income, World Bank PIP, 2021 PPP. Winsorised at the 2nd/98th percentile so two outlier countries cannot set the whole scale.',
+  p_income_gain: 'Income doublings per mover: log₂ of the ratio of median incomes (World Bank PIP, 2021 PPP), winsorised at the 2nd/98th percentile. The AJF unit — a Malian moving to France multiplies income ~15x (≈3.9 doublings). The absolute $ gap is shown on the corridor card but deliberately not scored: it tracks destination income at r=+0.96 and would rank rich destinations, not large gains.',
   p_skills_supply: 'Tertiary graduates by field (UNESCO) and health workforce density (WHO) at origin.',
   p_labour_supply: 'Working-age population times youth unemployment at origin.',
   p_dest_demand: 'Destination job-vacancy rate, old-age dependency, inverse unemployment.',

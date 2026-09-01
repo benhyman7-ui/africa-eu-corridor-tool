@@ -91,12 +91,12 @@ const TOOLS = [
         destination_subregion: { type: 'string', description: 'e.g. "Southern Europe".' },
         preset: {
           type: 'string', enum: ['cgd', 'ajf', 'balanced'],
-          description: 'Weighting. cgd leads on underutilisation, ajf on potential, balanced is even. Default ajf.',
+          description: 'Weighting. ajf (default) targets the fund aim - catalysing the largest log income gains, led by income doublings per mover; cgd leads on underutilisation; balanced is even.',
         },
         sort_by: {
           type: 'string',
-          enum: ['score', 'underutilisation', 'access', 'ease', 'potential', 'scale', 'permits', 'shortfall'],
-          description: 'Default score.',
+          enum: ['score', 'underutilisation', 'access', 'ease', 'potential', 'scale', 'permits', 'shortfall', 'dcy'],
+          description: 'Default score. "dcy" ranks by catalysable income-doubling years per year (unrealised flow x doublings per mover) - the AJF objective as a raw quantity.',
         },
         low_hanging_fruit_only: {
           type: 'boolean',
@@ -213,6 +213,7 @@ function toolSearch(a) {
     scale: r => r.scale_score,
     permits: r => r.permits_mean3 || 0,
     shortfall: r => r.unrealised_flow || 0,
+    dcy: r => r.dcy_catalysable || 0,
   };
   const key = keys[a.sort_by || 'score'] || keys.score;
   rows.sort((x, y) => (key(y) || 0) - (key(x) || 0));
@@ -234,6 +235,8 @@ function toolSearch(a) {
       scale: r.scale_score,
       permits_per_year: r.permits_mean3 || 0,
       predicted_by_model: r.predicted,
+      income_doublings_per_mover: r.income_doublings,
+      dcy_catalysable_per_year: r.dcy_catalysable,
       low_hanging_fruit: !!r.low_hanging_fruit,
       who_safeguard_origin: !!r.who_safeguard_origin,
     })),
@@ -286,7 +289,8 @@ function toolGetCorridor(a) {
       'req_language_requirement', 'req_recognition_regime', 'req_key_requirements',
       'air_passengers', 'air_year'),
     potential: pick('p_income_gain', 'p_skills_supply', 'p_labour_supply',
-      'p_dest_demand', 'p_diaspora_growth', 'median_income_gap', 'income_multiple',
+      'p_dest_demand', 'p_diaspora_growth', 'income_doublings', 'dcy_catalysable',
+      'median_income_gap', 'income_multiple',
       'o_inc_median_annual_ppp', 'd_inc_median_annual_ppp', 'diaspora',
       'diaspora_cagr', 'o_grad_health_welfare', 'o_grad_ict',
       'o_grad_engineering_construction', 'o_nurses_midwives_per_10k',
@@ -298,6 +302,7 @@ function toolGetCorridor(a) {
       'f_proximity is shown but NOT scored: distance is already a regressor in the gravity model behind underutilisation.',
       'The WHO safeguards flag is never scored, only surfaced.',
       'Components with no data are dropped and the remaining weights renormalise, rather than being scored as average.',
+      'income_doublings is log2 of the median-income ratio - the AJF DCY unit. dcy_catalysable = unrealised flow x doublings: catalysable income-doubling years per year.',
     ],
   };
 }
