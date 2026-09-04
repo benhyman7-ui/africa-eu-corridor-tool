@@ -1008,7 +1008,9 @@ function viewDetail(r) {
               + fmt(Math.pow(2, r.income_doublings || 0), 1) + '× income)')),
             el('dt', {}, 'Median gap'), el('dd', {}, '$' + fmt(r.median_income_gap) + '/yr'),
             el('dt', {}, 'Basis'), el('dd', {},
-              `${r.o_inc_welfare_type || '?'} / ${r.d_inc_welfare_type || '?'}`)),
+              `${r.o_inc_welfare_type || '?'} / ${r.d_inc_welfare_type || '?'}`
+              + (r.o_gdp_src ? ` · GDP pc: ${r.o_gdp_src}` : '')
+              + (r.d_gdp_src ? ` · dest GDP pc: ${r.d_gdp_src}` : ''))),
           el('div', { class: 'note', style: 'margin-top:12px' },
             'The scored blend averages two World Bank measures that err in opposite directions: '
             + 'the PIP median (consumption-based for most African origins, so it understates '

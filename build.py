@@ -26,6 +26,7 @@ FETCHERS = [
     ("eurostat_permits", "bilateral permit flows"),
     ("eurostat_context", "diaspora and destination labour demand"),
     ("worldbank", "income, demography, governance"),
+    ("imf_weo_gdp", "IMF WEO PPP GDP pc, fallback for WDI gaps"),
     ("cepii", "distance, language, colonial ties"),
     ("openflights", "air connectivity (legacy scheduled routes, fallback)"),
     ("eurostat_air", "air passengers by country pair, incl. charter"),

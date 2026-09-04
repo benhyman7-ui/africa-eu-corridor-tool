@@ -291,6 +291,7 @@ function toolGetCorridor(a) {
     potential: pick('p_income_gain', 'p_skills_supply', 'p_labour_supply',
       'p_dest_demand', 'p_diaspora_growth', 'income_doublings', 'dcy_catalysable',
       'o_income_blend', 'd_income_blend', 'o_gdp_pc_ppp', 'd_gdp_pc_ppp',
+      'o_gdp_src', 'd_gdp_src',
       'median_income_gap', 'income_multiple',
       'o_inc_median_annual_ppp', 'd_inc_median_annual_ppp', 'diaspora',
       'diaspora_cagr', 'o_grad_health_welfare', 'o_grad_ict',

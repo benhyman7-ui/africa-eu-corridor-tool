@@ -335,6 +335,28 @@ def main() -> None:
     C = C.merge(wb[["iso3"] + keep].add_prefix("d_").rename(columns={"d_iso3": "dest"}),
                 on="dest", how="left")
 
+    # WDI has no PPP GDP series for Eritrea (unreported since 2011) or South
+    # Sudan, so their income blend was leaning on the PIP median alone. IMF WEO
+    # covers both; its values fill only where WDI is silent, and every filled
+    # row carries the source so the corridor card can say where the number came
+    # from. Unit mismatch acknowledged: WEO PPPPC is current international
+    # dollars against WDI's constant 2021 - acceptable for one half of a blend,
+    # and named in ref/sources.csv rather than ignored.
+    imf = _opt("imf_weo_gdp")
+    if imf is not None:
+        for side, key in (("o_", "orig"), ("d_", "dest")):
+            m = C.merge(imf.rename(columns={"iso3": key}), on=key, how="left")
+            gap = C[side + "gdp_pc_ppp"].isna() & m.gdp_pc_ppp_imf.notna()
+            C.loc[gap, side + "gdp_pc_ppp"] = m.loc[gap, "gdp_pc_ppp_imf"]
+            C[side + "gdp_src"] = np.where(
+                gap, "IMF WEO " + m.imf_year.fillna(0).astype(int).astype(str), "")
+            if gap.any():
+                filled = C.loc[gap, key].unique()
+                print(f"    IMF WEO fills {side}gdp_pc_ppp for {sorted(filled)}")
+    else:
+        C["o_gdp_src"] = ""
+        C["d_gdp_src"] = ""
+
     # ov_* mirrors the estimation panel's naming so gravity.py can score the
     # absolute spec on these corridors with the same design matrix code.
     wbg = load("worldbank_wide_global")
