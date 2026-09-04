@@ -138,8 +138,25 @@ def main() -> None:
     # moving next door - which is the fund's actual aim.
     df["median_income_gap"] = df.get("median_income_gap", pd.Series(np.nan, index=df.index))
     df["log_income_gap"] = np.log(df["median_income_gap"].clip(lower=1))
+
+    # Each side of the ratio is the AVERAGE of two World Bank measures that err
+    # in opposite directions. The PIP median is consumption-based for 53 of 54
+    # origins and misses the informal cash economy, so it understates what a
+    # worker actually commands; GDP per capita is a mean that includes the
+    # capital share, so it overstates what a typical person earns. Averaging
+    # them splits the difference, and it also hedges the survey problem: where
+    # a PIP median leans on an old or difficult survey (Zimbabwe's
+    # post-hyperinflation round is the live example) the national-accounts side
+    # anchors the blend. Where one half is missing - Eritrea and South Sudan
+    # have no PPP GDP series - the other carries the value alone rather than a
+    # number being invented. Both figures are reported side by side on the
+    # corridor card.
+    df["o_income_blend"] = pd.concat(
+        [df["o_inc_median_annual_ppp"], df["o_gdp_pc_ppp"]], axis=1).mean(axis=1)
+    df["d_income_blend"] = pd.concat(
+        [df["d_inc_median_annual_ppp"], df["d_gdp_pc_ppp"]], axis=1).mean(axis=1)
     df["income_doublings"] = np.log2(
-        (df["d_inc_median_annual_ppp"] / df["o_inc_median_annual_ppp"])
+        (df["d_income_blend"] / df["o_income_blend"])
         .replace([np.inf, -np.inf], np.nan).clip(lower=1.0))
 
     # NOT a percentile rank, unlike every other component here, and that is

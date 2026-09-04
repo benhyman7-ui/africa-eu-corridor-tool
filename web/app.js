@@ -78,7 +78,7 @@ const COMBINE_MODES = [
 
 const PRESET_NOTES = {
   cgd: 'Corridors where flows are unexpectedly low and the barriers to fixing that are unexpectedly small — the framing in the CGD/TMO concept note.',
-  ajf: 'The fund aim: catalyse the largest log income gains. Leads on income doublings per mover (log₂ of the ratio of median incomes — the DCY unit), gated by access.',
+  ajf: 'The fund aim: catalyse the largest log income gains. Leads on income doublings per mover (log₂ of the ratio of blended incomes — the DCY unit), gated by access.',
   balanced: 'Equal weight on all three dimensions.',
 };
 
@@ -997,17 +997,23 @@ function viewDetail(r) {
         el('header', {}, el('h2', {}, 'Income')),
         el('div', { class: 'pad' },
           el('dl', { class: 'kv' },
-            el('dt', {}, `${r.orig_name} median`), el('dd', {},
-              '$' + fmt(r.o_inc_median_annual_ppp) + '/yr'),
-            el('dt', {}, `${r.dest_name} median`), el('dd', {},
-              '$' + fmt(r.d_inc_median_annual_ppp) + '/yr'),
-            el('dt', {}, 'Annual gap'), el('dd', {},
-              el('strong', {}, '$' + fmt(r.median_income_gap) + '/yr')),
-            el('dt', {}, 'Ratio'), el('dd', {}, fmt(r.median_income_ratio, 1) + '×'),
+            el('dt', {}, `${r.orig_name} median / GDP pc`), el('dd', {},
+              '$' + fmt(r.o_inc_median_annual_ppp) + ' / $' + fmt(r.o_gdp_pc_ppp)),
+            el('dt', {}, `${r.dest_name} median / GDP pc`), el('dd', {},
+              '$' + fmt(r.d_inc_median_annual_ppp) + ' / $' + fmt(r.d_gdp_pc_ppp)),
+            el('dt', {}, 'Blend (scored)'), el('dd', {}, el('strong', {},
+              '$' + fmt(r.o_income_blend) + ' → $' + fmt(r.d_income_blend))),
+            el('dt', {}, 'Doublings'), el('dd', {}, el('strong', {},
+              fmt(r.income_doublings, 1) + ' doublings ('
+              + fmt(Math.pow(2, r.income_doublings || 0), 1) + '× income)')),
+            el('dt', {}, 'Median gap'), el('dd', {}, '$' + fmt(r.median_income_gap) + '/yr'),
             el('dt', {}, 'Basis'), el('dd', {},
               `${r.o_inc_welfare_type || '?'} / ${r.d_inc_welfare_type || '?'}`)),
           el('div', { class: 'note', style: 'margin-top:12px' },
-            'Median annual welfare, 2021 PPP, from the World Bank Poverty and Inequality '
+            'The scored blend averages two World Bank measures that err in opposite directions: '
+            + 'the PIP median (consumption-based for most African origins, so it understates '
+            + 'earnings) and PPP GDP per capita (a mean including the capital share, so it '
+            + 'overstates them). Median annual welfare, 2021 PPP, from the World Bank Poverty and Inequality '
             + 'Platform. The AJF preset ranks on the log of the gap. Note the basis line: '
             + 'PIP measures consumption for most African countries and income for most '
             + 'European ones, because that is what the underlying surveys collect.'))),
@@ -1107,7 +1113,7 @@ const FACTOR_NOTES = {
   f_admin: 'Origin government effectiveness and internet penetration — can the state issue documents.',
   f_processing: 'How long a permit decision takes: the 90-day deadline in the recast Single Permit Directive, the 45-day track for EU Talent Partnership applicants, and national fast-track schemes.',
   f_proximity: 'Great-circle distance. Shown for context only — it is already a regressor in the gravity model, so it is not scored again here.',
-  p_income_gain: 'Income doublings per mover: log₂ of the ratio of median incomes (World Bank PIP, 2021 PPP), winsorised at the 2nd/98th percentile. The AJF unit — a Malian moving to France multiplies income ~15x (≈3.9 doublings). The absolute $ gap is shown on the corridor card but deliberately not scored: it tracks destination income at r=+0.96 and would rank rich destinations, not large gains.',
+  p_income_gain: 'Income doublings per mover: log₂ of the ratio of blended incomes, where each side averages the PIP median (understates — consumption-based) and PPP GDP per capita (overstates — a mean with the capital share). Both figures are reported on the corridor card. Winsorised at the 2nd/98th percentile. The absolute $ gap is shown but deliberately not scored: it tracks destination income at r=+0.96 and would rank rich destinations, not large gains.',
   p_skills_supply: 'Tertiary graduates by field (UNESCO) and health workforce density (WHO) at origin.',
   p_labour_supply: 'Working-age population times youth unemployment at origin.',
   p_dest_demand: 'Destination job-vacancy rate, old-age dependency, inverse unemployment.',
@@ -1321,11 +1327,13 @@ visible component, and the whole thing can be set to zero. It is <strong>not</st
 recommendation to select workers on religion.</p>
 
 <h3>4. Potential</h3>
-<p>Income gain is the <strong>log of the annual increase in median income</strong> from origin to
-destination, using the World Bank Poverty and Inequality Platform (2021 PPP). Median rather than
-GNI per capita: GNI pc is a mean over the whole economy, dragged upward by the top of the
-distribution, and overstates what a typical mover would earn on either side. The median gap
-across corridors is <strong>$${fmt(t.median_income_gap)}/yr</strong>.</p>
+<p>Income gain is scored as <strong>income doublings per mover</strong>: log₂ of the ratio of
+incomes, where each side is the <strong>average of two World Bank measures that err in opposite
+directions</strong> — the PIP median (consumption-based for most African origins, missing much of
+the informal cash economy, so it understates earnings) and PPP GDP per capita (a mean that
+includes the capital share, so it overstates them). The blend splits the difference and hedges
+old-survey origins, and both figures are reported on every corridor card. The median gap across
+corridors is <strong>$${fmt(t.median_income_gap)}/yr</strong>.</p>
 <p>Unlike every other component here, this one is <strong>min–max scaled, not percentile
 ranked</strong>, and that is deliberate. Percentile ranking is a monotone transform, so ranking
 the log would have produced results identical to ranking the raw gap and the log would have been

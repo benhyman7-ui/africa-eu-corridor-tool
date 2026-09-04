@@ -290,6 +290,7 @@ function toolGetCorridor(a) {
       'air_passengers', 'air_year'),
     potential: pick('p_income_gain', 'p_skills_supply', 'p_labour_supply',
       'p_dest_demand', 'p_diaspora_growth', 'income_doublings', 'dcy_catalysable',
+      'o_income_blend', 'd_income_blend', 'o_gdp_pc_ppp', 'd_gdp_pc_ppp',
       'median_income_gap', 'income_multiple',
       'o_inc_median_annual_ppp', 'd_inc_median_annual_ppp', 'diaspora',
       'diaspora_cagr', 'o_grad_health_welfare', 'o_grad_ict',
@@ -302,7 +303,7 @@ function toolGetCorridor(a) {
       'f_proximity is shown but NOT scored: distance is already a regressor in the gravity model behind underutilisation.',
       'The WHO safeguards flag is never scored, only surfaced.',
       'Components with no data are dropped and the remaining weights renormalise, rather than being scored as average.',
-      'income_doublings is log2 of the median-income ratio - the AJF DCY unit. dcy_catalysable = unrealised flow x doublings: catalysable income-doubling years per year.',
+      'income_doublings is log2 of the ratio of blended incomes, each side averaging the PIP median (understates) and PPP GDP per capita (overstates) - the AJF DCY unit. dcy_catalysable = unrealised flow x doublings: catalysable income-doubling years per year.',
     ],
   };
 }
