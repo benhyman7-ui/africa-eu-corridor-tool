@@ -22,15 +22,15 @@ correlations flatter destination-constant factors.
 | visa_consulate_present | P | 1458 | +0.66 | +0.58 | +0.52 | +0.61 |
 | diaspora | N | 1458 | +0.47 | +0.28 | +0.30 | +0.59 |
 | vfs_present | P | 1458 | +0.62 | +0.46 | +0.51 | +0.56 |
-| f_consular | derived | 1458 | +0.63 | +0.55 | +0.56 | +0.54 |
 | f_connectivity | derived | 1458 | +0.59 | +0.44 | +0.51 | +0.54 |
 | f_agreement | derived | 1458 | +0.54 | +0.40 | +0.45 | +0.54 |
-| dest_missions_in_orig | P | 1458 | +0.62 | +0.59 | +0.52 | +0.54 |
 | dest_embassy_in_orig | P | 1458 | +0.62 | +0.59 | +0.52 | +0.54 |
+| dest_missions_in_orig | P | 1458 | +0.62 | +0.59 | +0.52 | +0.54 |
 | n_eu_instruments | P | 1458 | +0.46 | +0.35 |  | +0.52 |
-| f_processing | derived | 1458 | +0.42 | +0.39 | +0.19 | +0.52 |
 | pt_talent_partnership | P | 1458 | +0.46 | +0.38 |  | +0.52 |
-| p_labour_supply | derived | 1458 | +0.44 | +0.47 | -0.00 | +0.51 |
+| f_processing | derived | 1458 | +0.42 | +0.39 | +0.19 | +0.52 |
+| p_labour_supply | derived | 1458 | +0.45 | +0.51 | -0.00 | +0.52 |
+| f_consular | derived | 1458 | +0.51 | +0.55 | +0.51 | +0.39 |
 | has_any_agreement | P | 1458 | +0.48 | +0.39 | +0.37 | +0.51 |
 | o_working_age_pop | O | 1458 | +0.44 | +0.51 | +0.00 | +0.50 |
 | routes | N | 1458 | +0.53 | +0.41 | +0.49 | +0.47 |
@@ -184,3 +184,24 @@ keep the rest — that is the 0.66-R² set.
   in a corridor's prediction is the share of its shortfall attributable to
   missing consular/legal infrastructure — the *fixable* share — versus
   unexplained residual. That turns "underserved" from a flag into an agenda.
+
+## Decisions taken (September 2026)
+
+The recommendations above were reviewed and applied with two deliberate
+overrides:
+
+- **`f_cultural` stays at 0.12.** Decision: it scores expected quality of
+  integration, not a forecast of flow volume, so its nil predictive power is
+  not disqualifying.
+- **Policy levers went INTO the CGD benchmark**, not out of it. Decision: the
+  underserved corridor worth surfacing is one that already has visa capacity
+  and a legal channel yet still runs below what those predict. The pure
+  allocation gap is retained alongside as `*_alloc`.
+
+Applied as recommended: labour supply rebuilt on working-age population alone;
+destination demand cut 0.15 -> 0.05; student pipeline added at 0.10 of
+potential; ease redistributed toward agreement and language; f_admin and
+literacy dropped from scoring (duplication and nil signal respectively);
+comcol excluded from the policy spec; the neighbouring-embassy consular tier
+raised 40 -> 75 on the PPML estimate (~0.9 of the in-country effect,
+discounted for endogeneity).
