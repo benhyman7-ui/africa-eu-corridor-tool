@@ -5,3 +5,4 @@ pyarrow>=15.0
 statsmodels>=0.14   # only needed for `python model/gravity.py --validate`
 openpyxl>=3.1       # CEPII GeoDist ships as .xls/.xlsx inside its zip
 xlrd>=2.0
+scikit-learn
