@@ -278,23 +278,32 @@ def main() -> None:
     # that takes biometrics and forwards the file. Slightly below a mission,
     # because the decision still happens elsewhere and fees are higher, but far
     # above having to cross a border.
-    # Tier values re-calibrated against the data (PPML, origin FE + dest FE +
-    # structural controls, baseline = no access at all):
-    #   in-country presence   4.0x flows vs none  (z = +5.1)
-    #   neighbouring embassy  3.5x flows vs none  (z = +3.0)
-    # A neighbouring embassy carries ~0.9 of the in-country log effect - people
-    # demonstrably do cross a border to apply - against the 0.40 this tier used
-    # to assume. Scored 75 rather than the literal 90: embassies are also
-    # PLACED where flows already run, so the coefficient is an upper bound, and
-    # the second visa, flight and time off work are real costs the estimate
-    # cannot see. VFS-only stays at 82 on judgement: only 4 corridors have a
-    # VFS centre without a consulate, so the data cannot separate them.
+    # Neighbour tier = 42, and the route to that number matters because a first
+    # pass got it badly wrong. A PPML with origin and destination effects put a
+    # neighbouring embassy at 3.5x flows against 4.0x for in-country presence -
+    # near parity, which would have justified scoring it 75. That estimate was
+    # an artifact of Poisson count-weighting: dropping just 10 of the 445
+    # neighbour corridors collapsed the ratio from 91% to 27%, because a
+    # handful of employer-sponsored pipelines (Zimbabwe-Poland's truck drivers,
+    # Gambia-Spain) carry most of the neighbour-tier volume, and in those the
+    # company handles the paperwork so consular geography is not binding.
+    #
+    # OLS on log flow with the same fixed effects - every corridor weighted
+    # equally - gives in-country +0.66 against neighbour +0.18, a ratio of 27%
+    # that agrees exactly with the trimmed Poisson. Within origins that have
+    # both, in-country corridors run 1.47 log points ahead, and in-country wins
+    # in 41 of 43. So: 20 (the mid of the no-access reach band) + 0.27 x 80 =
+    # 42, which is where judgement had this tier before the exercise began.
+    #
+    # VFS-only stays at 82 on judgement: only 4 corridors have a VFS centre and
+    # no consulate, and the coefficient on that handful is indistinguishable
+    # from zero (t = 0.5). The data cannot speak to it either way.
     df["f_consular"] = np.select(
         [in_country,
          vfs,
          df["dest_missions_in_orig"] > 0,
          df["neighbour_embassy"] == 1],
-        [100.0, 82.0, 65.0, np.maximum(75.0, reach)],
+        [100.0, 82.0, 65.0, np.maximum(42.0, reach)],
         default=reach)
 
     df["consular_tier"] = np.select(

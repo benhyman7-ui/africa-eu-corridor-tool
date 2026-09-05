@@ -1107,7 +1107,7 @@ function viewDetail(r) {
    so it cannot drift from what the tool actually computes. */
 const FACTOR_NOTES = {
   underutilisation: 'Shortfall against the PPML gravity benchmark — how far below expected flows actually are.',
-  f_consular: 'Whether an application can be lodged in the origin country, next door, or only across the region. Tiers calibrated against the data: a neighbouring embassy carries ~0.9 of the in-country effect on flows (people do cross a border to apply), so it scores 75, up from an assumed 40.',
+  f_consular: 'Whether an application can be lodged in the origin country, next door, or only across the region. Tiers tested against the data: a neighbouring embassy carries 27% of the in-country effect on flows, so it scores 42. KNOWN GAP — Schengen representation arrangements and the small states’ VFS centres are not modelled, so access is understated for Luxembourg, Malta and eight other small destinations.',
   f_visa_success: 'Schengen short-stay refusal rate, as a proxy for whether the consulate says yes.',
   f_language: 'Shared official language, or the destination working language present at origin. Where neither holds, partial credit for how closely related the nearest pair of languages is — a Lusophone origin starts closer to Spanish than a Swahili-speaking one.',
   f_agreement: 'Bilateral labour agreement, EU Talent or Mobility Partnership, CPLP, Decreto Flussi quota.',
@@ -1303,10 +1303,13 @@ require in-person biometrics, so elsewhere the applicant must travel abroad firs
 binding constraint, and absent from every standard migration dataset. Presence comes primarily
 from the DG HOME consulate statistics (a post that actually processed applications last year),
 with Wikidata as fallback for Ireland and Cyprus, which sit outside Schengen visa reporting.
-Where there is no post in country, a corridor scores 75 if a land neighbour has one — a PPML
-estimate with origin and destination effects puts a neighbouring embassy at ~0.9 of the
-in-country effect on flows (3.5× vs 4.0× against no access at all), discounted from the literal
-90 because embassies are also placed where flows already run — and 5–35
+Where there is no post in country, a corridor scores 42 if a land neighbour has one. That
+number was tested rather than assumed: OLS on log flow with origin and destination effects puts
+a neighbouring embassy at 27% of the in-country effect (+0.18 against +0.66), and within origins
+that have both, in-country corridors run 1.47 log points ahead and win in 41 of 43 cases. A
+Poisson estimate initially suggested near-parity, but dropping ten of 445 neighbour corridors
+collapsed it from 91% to 27% — a few employer-sponsored pipelines where the company handles the
+paperwork were carrying the whole coefficient. Otherwise 5–35
 scaled by distance otherwise. The fallback search is restricted to African countries: an
 applicant who would have to reach Europe to apply for a European visa is not a fallback.</li>
 <li><strong>Visa success rate</strong>, from DG HOME Schengen short-stay statistics
