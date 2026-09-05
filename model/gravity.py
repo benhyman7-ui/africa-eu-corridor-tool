@@ -69,6 +69,23 @@ SPEC_ABSOLUTE_DYADIC = ["log_dist", "comlang_off", "comlang_ethno", "colony",
 SPEC_ALLOCATION = list(DYADIC)
 SPEC_STRUCTURAL = [c for c in DYADIC if c != "log_diaspora"]
 
+# The policy-augmented benchmark, and the deliberate choice behind it. The
+# predictiveness analysis showed consular presence and legal channels predict
+# flows strongly (consulate z=+3.1, agreements z=+11 with destination FE), and
+# the decision taken was to put them IN the benchmark: a corridor that already
+# has the visa capacity and the legal channel, and still runs below what those
+# predict, is the underserved corridor worth surfacing. The alternative -
+# keeping levers out so missing infrastructure reads as friction - is served by
+# the allocation gap, which is retained alongside.
+#
+# Fit on the Africa-EU panel only, because the policy variables (consular
+# registers, the agreements file, ICMPD) exist only for these 1,458 dyads.
+# comcol is excluded: nil predictive power in every view.
+POLICY_VARS = ["visa_consulate_present", "vfs_present", "dest_embassy_in_orig",
+               "neighbour_embassy", "has_any_agreement", "n_eu_instruments"]
+SPEC_POLICY = ([c for c in DYADIC if c != "comcol"]
+               + ["language_proximity"] + POLICY_VARS)
+
 
 # --------------------------------------------------------------------------- #
 # fixed-effect absorption
@@ -279,6 +296,15 @@ def main() -> None:
     print()
     struct = fit(panel, SPEC_STRUCTURAL, [["orig", "year"], ["dest", "year"]],
                  "allocation, no diaspora")
+    print()
+    # Africa-EU corridor-years with the policy columns joined on. The policy
+    # variables are time-invariant, so they merge cleanly onto the panel and
+    # stay identified because they vary within an origin across destinations.
+    pol_cols = ["orig", "dest", "language_proximity"] + POLICY_VARS
+    africa = (panel[panel.orig.isin(corr.orig)]
+              .merge(corr[pol_cols], on=["orig", "dest"], how="inner"))
+    policy = fit(africa, SPEC_POLICY, [["orig", "year"], ["dest", "year"]],
+                 "policy-augmented, Africa-EU only")
 
     step("predicting expected flows for all 1,458 corridors")
     out = corr[["orig", "dest"]].copy()
@@ -292,10 +318,18 @@ def main() -> None:
     # corridors. Extrapolating that volume to Chad or South Sudan produces
     # predictions of well over a thousand permits a year that no policy could
     # deliver, and they would swamp the ranking.
-    for res, tag in ((alloc, ""), (absol, "_absolute"), (struct, "_structural")):
+    for res, tag in ((alloc, ""), (absol, "_absolute"), (struct, "_structural"),
+                     (policy, "_policy")):
         pred = _predict(res, corr, years)
         out[f"predicted{tag}"] = pred
         out[f"gap_log{tag}"] = np.log((actual + 0.5) / (pred + 0.5))
+
+    # Origins the policy fit dropped (zero flows to every EU state) have no
+    # policy-spec fixed effect; their "prediction" would be built on a silent
+    # zero. NaN them so the scoring layer falls back to the allocation gap.
+    live_policy = set(policy["fitted"].orig.unique())
+    dead = ~out.orig.isin(live_policy)
+    out.loc[dead, ["predicted_policy", "gap_log_policy"]] = np.nan
 
     # Origins dropped from the allocation fit send no recorded employment
     # migration to ANY EU state, so that spec has nothing to say about them. Flag

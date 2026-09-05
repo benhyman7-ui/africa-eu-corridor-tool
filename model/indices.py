@@ -55,15 +55,20 @@ ACCESS_WEIGHTS = {
 # EASE is what remains once access is carved out: real frictions, but ones a
 # determined applicant or a well-designed programme can work around.
 EASE_WEIGHTS = {
-    "f_language": 0.25,           # can you work in the destination's language
-    "f_agreement": 0.22,          # is a legal channel already pointed at you
-    "f_salary_threshold": 0.17,   # is the wage floor reachable
-    "f_cultural": 0.12,           # religion and Hofstede, evenly balanced
-    "f_recognition": 0.09,        # coarse: language requirement only, see note
+    "f_language": 0.26,           # can you work in the destination's language
+    "f_agreement": 0.25,          # strongest policy predictor on file (z=+11)
+    "f_salary_threshold": 0.16,   # is the wage floor reachable
+    "f_cultural": 0.12,           # kept BY DECISION: predicts no flow, but it
+                                  # scores expected quality of integration,
+                                  # not a forecast of migration volume
+    "f_recognition": 0.08,        # coarse: language requirement only, see note
     "f_processing": 0.08,         # how long a decision takes
     "f_connectivity": 0.05,       # can you get there
-    "f_admin": 0.02,              # can the origin issue you documents
 }
+
+# f_admin was removed from the weights: it duplicates skills supply (r = +0.66
+# - both are really "origin state capacity") and the potential index already
+# carries that signal. Still computed and shown as context.
 
 # f_proximity is deliberately NOT in the weights above. Great-circle distance is
 # already a regressor in the PPML gravity model, so it is priced into the
@@ -73,7 +78,7 @@ EASE_WEIGHTS = {
 # decomposition next to factors 100x its weight, which read as far more
 # important than it was. The value is still computed and still shown in the
 # corridor detail as context, just not scored.
-UNSCORED_CONTEXT = ("f_proximity",)
+UNSCORED_CONTEXT = ("f_proximity", "f_admin")
 
 # Inside f_cultural. The concept note specifies Hofstede; religion is our own
 # addition. They are weighted evenly, and where Hofstede is unavailable the
@@ -84,9 +89,10 @@ CULTURAL_MIX = {"religion": 0.5, "hofstede": 0.5}
 POTENTIAL_WEIGHTS = {
     "p_income_gain": 0.40,        # doublings per mover - the fund's own unit
     "p_skills_supply": 0.15,      # can the origin actually produce these workers
-    "p_labour_supply": 0.15,      # and how many idle working-age people are there
-    "p_dest_demand": 0.15,
+    "p_labour_supply": 0.15,      # working-age population (see note at the calc)
+    "p_dest_demand": 0.05,        # cut from 0.15: vacancy rate predicts nothing
     "p_diaspora_growth": 0.15,    # is the corridor already opening
+    "p_student_pipeline": 0.10,   # best leading indicator on file (+0.82)
 }
 
 
@@ -103,6 +109,20 @@ def main() -> None:
     C = load("corridors_base", INTERIM)
     G = load("gravity_predictions", INTERIM)
     df = C.merge(G, on=["orig", "dest"], how="left")
+
+    # The HEADLINE benchmark now includes the policy levers - consular
+    # presence, VFS, agreements, EU instruments - per the decision that a
+    # corridor which already has the visa capacity and legal channel yet still
+    # runs below what those predict is exactly the underserved corridor worth
+    # surfacing. The pure allocation benchmark is kept alongside as *_alloc:
+    # its gap reads "low even before counting infrastructure", which is the
+    # complementary question. Origins the Africa-only policy fit could not
+    # identify fall back to the allocation benchmark.
+    df["predicted_alloc"] = df["predicted"]
+    df["gap_log_alloc"] = df["gap_log"]
+    pol = df["gap_log_policy"].notna()
+    df["predicted"] = df["predicted_policy"].where(pol, df["predicted"])
+    df["gap_log"] = df["gap_log_policy"].where(pol, df["gap_log"])
 
     # ------------------------------------------------------ underutilisation --
     step("underutilisation")
@@ -178,17 +198,22 @@ def main() -> None:
     df["income_multiple"] = (df["d_gni_pc_ppp"] / df["o_gni_pc_ppp"]).replace(
         [np.inf, -np.inf], np.nan)
 
-    # Quantity: how many working-age people are available and idle.
-    df["labour_supply"] = (df["o_working_age_pop"].fillna(0)
-                           * df["o_youth_unemployment"].fillna(0) / 100.0)
+    # Quantity: working-age population, and nothing else. The youth-
+    # unemployment multiplier this used to carry predicts nothing (-0.01
+    # against actual flows in every view) and only injected survey noise;
+    # population itself is one of the strongest origin predictors (+0.50
+    # within destination, z = +3.4 in count space).
+    df["labour_supply"] = df["o_working_age_pop"].fillna(0)
     df["p_labour_supply"] = pct(np.log1p(df["labour_supply"]))
 
     # Quality: whether the origin trains anyone. Until now the panel carried
     # literacy, tertiary enrolment and secondary attainment and used none of
     # them in any score, so a country with twenty million idle young people and
     # no training system ranked identically to one with a large college sector.
+    # o_literacy was dropped from this mix: +0.14 against actual flows, the
+    # weakest origin-capability signal on file, while tertiary enrolment
+    # carries +0.47. Literacy still displays on the corridor card.
     skills = {
-        "o_literacy": 1.0,
         "o_tertiary_enrolment": 1.0,
         "o_upper_secondary_attain": 0.8,
         "o_vocational_enrolment_share": 1.0,     # UIS TVET
@@ -206,6 +231,14 @@ def main() -> None:
               + pct(df.get("d_es_unemployment", pd.Series(np.nan, index=df.index)),
                     invert=True)) / 3.0
     df["p_dest_demand"] = demand
+
+    # Student pipeline: bilateral first permits for study. The single best
+    # predictor of future work flows on file (+0.82 within destination) and
+    # previously unused in any score. Like diaspora momentum it is a network
+    # signal - it forecasts, it is not a lever - so it reads as "this corridor
+    # is already warming up".
+    df["p_student_pipeline"] = pct(np.log1p(
+        df.get("student_permits", pd.Series(np.nan, index=df.index)).fillna(0)))
 
     # Diaspora momentum. Corridors already growing are the ones where employers,
     # recruiters and informal networks are in place, which is a different signal
@@ -245,12 +278,23 @@ def main() -> None:
     # that takes biometrics and forwards the file. Slightly below a mission,
     # because the decision still happens elsewhere and fees are higher, but far
     # above having to cross a border.
+    # Tier values re-calibrated against the data (PPML, origin FE + dest FE +
+    # structural controls, baseline = no access at all):
+    #   in-country presence   4.0x flows vs none  (z = +5.1)
+    #   neighbouring embassy  3.5x flows vs none  (z = +3.0)
+    # A neighbouring embassy carries ~0.9 of the in-country log effect - people
+    # demonstrably do cross a border to apply - against the 0.40 this tier used
+    # to assume. Scored 75 rather than the literal 90: embassies are also
+    # PLACED where flows already run, so the coefficient is an upper bound, and
+    # the second visa, flight and time off work are real costs the estimate
+    # cannot see. VFS-only stays at 82 on judgement: only 4 corridors have a
+    # VFS centre without a consulate, so the data cannot separate them.
     df["f_consular"] = np.select(
         [in_country,
          vfs,
          df["dest_missions_in_orig"] > 0,
          df["neighbour_embassy"] == 1],
-        [100.0, 82.0, 65.0, np.maximum(40.0, reach)],
+        [100.0, 82.0, 65.0, np.maximum(75.0, reach)],
         default=reach)
 
     df["consular_tier"] = np.select(

@@ -38,18 +38,21 @@ const EASE_LABELS = {
   f_language: 'Language access', f_agreement: 'Legal channel',
   f_salary_threshold: 'Salary threshold', f_cultural: 'Cultural proximity',
   f_recognition: 'Qualification recognition', f_processing: 'Permit processing time',
-  f_connectivity: 'Air connectivity', f_admin: 'Origin admin capacity',
+  f_connectivity: 'Air connectivity',
 };
 const POT_LABELS = {
   p_income_gain: 'Income gain', p_skills_supply: 'Skills supply at origin',
   p_labour_supply: 'Labour supply at origin', p_dest_demand: 'Destination demand',
-  p_diaspora_growth: 'Diaspora momentum',
+  p_diaspora_growth: 'Diaspora momentum', p_student_pipeline: 'Student pipeline',
 };
 
 /* Computed and shown in the corridor detail, but deliberately not scored:
    distance is already a regressor in the gravity model that sets the
    underutilisation benchmark, so scoring it again in ease double-counted it. */
-const CONTEXT_LABELS = { f_proximity: 'Proximity (context only, not scored)' };
+const CONTEXT_LABELS = {
+  f_proximity: 'Proximity (context only, not scored)',
+  f_admin: 'Origin admin capacity (context only, not scored)',
+};
 
 
 // NACE sector -> the origin-side supply measure that speaks to it. UNESCO's
@@ -1086,9 +1089,10 @@ function viewDetail(r) {
                 el('div', { class: 'v' }, v == null ? '' : fmt(v, 0))))))),
           el('section', { class: 'dgroup context' },
             el('div', { class: 'gshare' },
-              'Shown for context, not scored — distance is already a regressor '
-              + 'in the gravity model behind Underutilisation, so scoring it '
-              + 'again here would count it twice.'),
+              'Shown for context, not scored. Distance is already a regressor '
+              + 'in the gravity model behind Underutilisation, and origin admin '
+              + 'capacity duplicates the skills-supply signal (r = +0.66) — '
+              + 'scoring either again would count it twice.'),
             el('div', { class: 'decomp' },
               Object.keys(CONTEXT_LABELS).map(k => el('div', { class: 'row sub' },
                 el('div', { class: 'lbl' }, CONTEXT_LABELS[k]),
@@ -1103,7 +1107,7 @@ function viewDetail(r) {
    so it cannot drift from what the tool actually computes. */
 const FACTOR_NOTES = {
   underutilisation: 'Shortfall against the PPML gravity benchmark — how far below expected flows actually are.',
-  f_consular: 'Whether an application can be lodged in the origin country, next door, or only across the region.',
+  f_consular: 'Whether an application can be lodged in the origin country, next door, or only across the region. Tiers calibrated against the data: a neighbouring embassy carries ~0.9 of the in-country effect on flows (people do cross a border to apply), so it scores 75, up from an assumed 40.',
   f_visa_success: 'Schengen short-stay refusal rate, as a proxy for whether the consulate says yes.',
   f_language: 'Shared official language, or the destination working language present at origin. Where neither holds, partial credit for how closely related the nearest pair of languages is — a Lusophone origin starts closer to Spanish than a Swahili-speaking one.',
   f_agreement: 'Bilateral labour agreement, EU Talent or Mobility Partnership, CPLP, Decreto Flussi quota.',
@@ -1112,14 +1116,15 @@ const FACTOR_NOTES = {
   f_salary_threshold: 'Statutory wage floor relative to what a median worker in that destination earns.',
   f_recognition: 'Whether a third-country qualification can realistically be recognised, and the language sitting on top of it.',
   f_connectivity: 'Passengers carried on direct airport pairs (Eurostat), best year since 2019, including non-scheduled charter traffic.',
-  f_admin: 'Origin government effectiveness and internet penetration — can the state issue documents.',
+  f_admin: 'Origin government effectiveness and internet penetration. Context only — it duplicates the skills-supply signal (r = +0.66), so it is shown but not scored.',
   f_processing: 'How long a permit decision takes: the 90-day deadline in the recast Single Permit Directive, the 45-day track for EU Talent Partnership applicants, and national fast-track schemes.',
   f_proximity: 'Great-circle distance. Shown for context only — it is already a regressor in the gravity model, so it is not scored again here.',
   p_income_gain: 'Income doublings per mover: log₂ of the ratio of blended incomes, where each side averages the PIP median (understates — consumption-based) and PPP GDP per capita (overstates — a mean with the capital share). Both figures are reported on the corridor card. Winsorised at the 2nd/98th percentile. The absolute $ gap is shown but deliberately not scored: it tracks destination income at r=+0.96 and would rank rich destinations, not large gains.',
   p_skills_supply: 'Tertiary graduates by field (UNESCO) and health workforce density (WHO) at origin.',
-  p_labour_supply: 'Working-age population times youth unemployment at origin.',
-  p_dest_demand: 'Destination job-vacancy rate, old-age dependency, inverse unemployment.',
-  p_diaspora_growth: 'Compound annual growth of the origin citizenship stock in the destination (Eurostat). Direction of travel, not a flow — naturalisation removes people from a citizenship stock. Left blank where the base was too small to measure.',
+  p_labour_supply: 'Working-age population at origin. The youth-unemployment multiplier it once carried predicted nothing (−0.01 against actual flows) and was dropped; population itself is one of the strongest origin predictors (+0.50).',
+  p_dest_demand: 'Destination job-vacancy rate, old-age dependency, inverse unemployment. Weight cut to 0.05: the vacancy rate predicts corridor formation at exactly 0.00 — demand expresses itself through routes and shortage lists, not this rate.',
+  p_diaspora_growth: 'Compound annual growth of the bilateral migrant stock (UN DESA). Direction of travel, not a flow. Left blank where the base was too small to measure.',
+  p_student_pipeline: 'Bilateral first permits for study — the single best predictor of future work flows on file (+0.82 within destination) and previously unused. A network signal like diaspora momentum: it forecasts, it is not a lever.',
 };
 
 const TERM_NOTES = {
@@ -1216,6 +1221,13 @@ power mean:</p>
 lands very low but still finite rather than being annihilated to nothing.</p>
 
 <h3>1. Underutilisation — what actually goes into it</h3>
+<p><strong>The headline benchmark includes the policy levers.</strong> Consular presence, VFS
+centres, agreements and EU instruments predict flows strongly, and they sit inside the
+prediction by decision: a corridor that already has the visa capacity and the legal channel,
+and still runs below what those predict, is precisely the underserved corridor worth
+surfacing. This policy-augmented model is fitted on the Africa–EU panel (the policy registers
+exist only there); the pure allocation gap is retained alongside as the complementary
+question — "low even before counting infrastructure".</p>
 <p>A PPML gravity model is fitted to the <em>global</em> panel of first work permits — every
 reported citizenship into every EU state, 2018–${m.latest_year} — then used to predict each
 Africa–EU corridor. Fitting on Africa alone would have folded the anomaly we are hunting into
@@ -1291,7 +1303,10 @@ require in-person biometrics, so elsewhere the applicant must travel abroad firs
 binding constraint, and absent from every standard migration dataset. Presence comes primarily
 from the DG HOME consulate statistics (a post that actually processed applications last year),
 with Wikidata as fallback for Ireland and Cyprus, which sit outside Schengen visa reporting.
-Where there is no post in country, a corridor scores 40 if a land neighbour has one and 5–35
+Where there is no post in country, a corridor scores 75 if a land neighbour has one — a PPML
+estimate with origin and destination effects puts a neighbouring embassy at ~0.9 of the
+in-country effect on flows (3.5× vs 4.0× against no access at all), discounted from the literal
+90 because embassies are also placed where flows already run — and 5–35
 scaled by distance otherwise. The fallback search is restricted to African countries: an
 applicant who would have to reach Europe to apply for a European visa is not a fallback.</li>
 <li><strong>Visa success rate</strong>, from DG HOME Schengen short-stay statistics

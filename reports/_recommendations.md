@@ -84,3 +84,24 @@ keep the rest — that is the 0.66-R² set.
   in a corridor's prediction is the share of its shortfall attributable to
   missing consular/legal infrastructure — the *fixable* share — versus
   unexplained residual. That turns "underserved" from a flag into an agenda.
+
+## Decisions taken (September 2026)
+
+The recommendations above were reviewed and applied with two deliberate
+overrides:
+
+- **`f_cultural` stays at 0.12.** Decision: it scores expected quality of
+  integration, not a forecast of flow volume, so its nil predictive power is
+  not disqualifying.
+- **Policy levers went INTO the CGD benchmark**, not out of it. Decision: the
+  underserved corridor worth surfacing is one that already has visa capacity
+  and a legal channel yet still runs below what those predict. The pure
+  allocation gap is retained alongside as `*_alloc`.
+
+Applied as recommended: labour supply rebuilt on working-age population alone;
+destination demand cut 0.15 -> 0.05; student pipeline added at 0.10 of
+potential; ease redistributed toward agreement and language; f_admin and
+literacy dropped from scoring (duplication and nil signal respectively);
+comcol excluded from the policy spec; the neighbouring-embassy consular tier
+raised 40 -> 75 on the PPML estimate (~0.9 of the in-country effect,
+discounted for endogeneity).

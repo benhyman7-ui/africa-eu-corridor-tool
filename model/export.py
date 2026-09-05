@@ -40,6 +40,9 @@ CORRIDOR_FIELDS = {
     # flows and the model
     "permits_latest": 0, "permits_mean3": 1, "permits_total": 0,
     "predicted": 1, "gap_log": 2, "predicted_absolute": 1, "gap_log_absolute": 2,
+    "predicted_policy": 1, "gap_log_policy": 2,
+    "predicted_alloc": 1, "gap_log_alloc": 2,
+    "p_student_pipeline": 1,
     "predicted_structural": 1, "gap_log_structural": 2,
     "permits_blue_card": 1, "permits_high_skilled": 1, "permits_researcher": 1,
     "permits_seasonal": 1, "permits_other_emp": 1,
@@ -123,7 +126,7 @@ MCP_FIELDS = [
     "f_language", "f_agreement", "f_salary_threshold", "f_cultural",
     "f_recognition", "f_processing", "f_connectivity", "f_admin", "f_proximity",
     "p_income_gain", "p_skills_supply", "p_labour_supply", "p_dest_demand",
-    "p_diaspora_growth",
+    "p_diaspora_growth", "p_student_pipeline",
     "dist", "diaspora", "diaspora_cagr", "air_passengers", "air_year",
     "dest_embassy_in_orig", "neighbour_embassy", "vfs_present", "vfs_operator",
     "consular_tier", "visa_refusal_rate", "visa_applications",
