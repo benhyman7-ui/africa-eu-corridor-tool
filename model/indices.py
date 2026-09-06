@@ -298,12 +298,37 @@ def main() -> None:
     # VFS-only stays at 82 on judgement: only 4 corridors have a VFS centre and
     # no consulate, and the coefficient on that handful is indistinguishable
     # from zero (t = 0.5). The data cannot speak to it either way.
+    # Scored from the route register rather than from embassy presence alone.
+    # Values follow the ordering the data shows - OLS on log flow with origin
+    # and destination effects, baseline = travelling to a regional post:
+    #
+    #   own_post_vfs   +1.56 (t 11.6)   own post plus an outsourced centre
+    #   own_post       +0.61 (t  6.7)   own post alone
+    #   vfs_only       +0.61 (t  1.4)   outsourced only; n=4, no significance
+    #   represented_c  +0.28 (t  2.0)   another state receives, short-stay only
+    #   neighbour_post +0.20 (t  2.7)   travel to a land neighbour
+    #   represented_d  -0.05 (t -0.2)   long-stay representation; no advantage
+    #
+    # The gaps are compressed relative to those estimates rather than mapped
+    # onto them literally. VFS placement is endogenous - operators are
+    # contracted where volumes already justify one - so the own_post_vfs
+    # premium is an upper bound, and scoring a bare embassy at the ~51 the
+    # coefficients imply would punish corridors for the absence of a commercial
+    # decision taken elsewhere.
+    #
+    # represented_d scoring no higher than represented_c is a finding, not an
+    # oversight: the expected long-stay advantage did not appear (27 corridors,
+    # all Luxembourg, CI spanning zero), so the two are scored alike and the
+    # note says the data cannot separate them.
+    route = df.get("visa_route", pd.Series("", index=df.index)).fillna("")
     df["f_consular"] = np.select(
-        [in_country,
-         vfs,
-         df["dest_missions_in_orig"] > 0,
-         df["neighbour_embassy"] == 1],
-        [100.0, 82.0, 65.0, np.maximum(42.0, reach)],
+        [route == "own_post_vfs",
+         route == "own_post",
+         route == "vfs_only",
+         route.isin(["represented_d", "represented_c"]),
+         route == "neighbour_post",
+         df["dest_missions_in_orig"] > 0],
+        [100.0, 88.0, 82.0, np.maximum(48.0, reach), np.maximum(42.0, reach), 65.0],
         default=reach)
 
     df["consular_tier"] = np.select(

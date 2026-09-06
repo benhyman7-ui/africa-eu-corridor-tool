@@ -1,0 +1,1459 @@
+orig,dest,orig_name,dest_name,route,covers_long_stay,represented_by,operator,nearest_post_km,permits_mean3,f_consular
+DZA,AUT,Algeria,Austria,own_post,1,,,643.0,14.0,88.0
+DZA,BEL,Algeria,Belgium,own_post_vfs,1,,TLScontact,643.0,89.0,100.0
+DZA,BGR,Algeria,Bulgaria,own_post,1,,,643.0,14.333333333333334,88.0
+DZA,CYP,Algeria,Cyprus,regional_post,0,,,2719.0,2.3333333333333335,17.009375
+DZA,CZE,Algeria,Czechia,own_post,1,,,643.0,16.0,88.0
+DZA,DEU,Algeria,Germany,own_post_vfs,1,,VFS Global,643.0,286.3333333333333,100.0
+DZA,DNK,Algeria,Denmark,regional_post,0,,,3195.0,15.333333333333334,12.546875
+DZA,EST,Algeria,Estonia,regional_post,0,,,2719.0,0.6666666666666666,17.009375
+DZA,GRC,Algeria,Greece,own_post,1,,,643.0,51.666666666666664,88.0
+DZA,ESP,Algeria,Spain,own_post_vfs,1,,BLS International,643.0,918.6666666666666,100.0
+DZA,FIN,Algeria,Finland,own_post,1,,,643.0,22.333333333333332,88.0
+DZA,FRA,Algeria,France,own_post_vfs,1,,VFS Global,643.0,2376.6666666666665,100.0
+DZA,HRV,Algeria,Croatia,own_post,1,,,945.0,28.333333333333332,88.0
+DZA,HUN,Algeria,Hungary,own_post,1,,,643.0,40.333333333333336,88.0
+DZA,IRL,Algeria,Ireland,regional_post,0,,,2719.0,27.666666666666668,17.009375
+DZA,ITA,Algeria,Italy,own_post,1,,,643.0,402.0,88.0
+DZA,LTU,Algeria,Lithuania,represented_c,0,FRA,,2719.0,7.333333333333333,48.0
+DZA,LUX,Algeria,Luxembourg,represented_d,1,BEL,,3195.0,30.333333333333332,48.0
+DZA,LVA,Algeria,Latvia,represented_c,0,FRA,,2719.0,0.6666666666666666,48.0
+DZA,MLT,Algeria,Malta,own_post,1,,,643.0,45.0,88.0
+DZA,NLD,Algeria,Netherlands,own_post_vfs,1,,VFS Global,643.0,31.0,100.0
+DZA,POL,Algeria,Poland,own_post,1,,,643.0,152.0,88.0
+DZA,PRT,Algeria,Portugal,own_post,1,,,643.0,597.6666666666666,88.0
+DZA,ROU,Algeria,Romania,own_post,1,,,643.0,34.333333333333336,88.0
+DZA,SWE,Algeria,Sweden,own_post,1,,,643.0,15.333333333333334,88.0
+DZA,SVN,Algeria,Slovenia,own_post,1,,,2719.0,3.0,88.0
+DZA,SVK,Algeria,Slovakia,regional_post,0,,,2719.0,7.0,17.009375
+AGO,AUT,Angola,Austria,represented_c,0,BEL,,2115.0,0.3333333333333333,48.0
+AGO,BEL,Angola,Belgium,own_post,1,,,553.0,2.0,88.0
+AGO,BGR,Angola,Bulgaria,regional_post,0,,,2115.0,0.0,22.671875
+AGO,CYP,Angola,Cyprus,regional_post,0,,,4737.0,0.6666666666666666,5.0
+AGO,CZE,Angola,Czechia,neighbour_post,0,,,1792.0,2.3333333333333335,42.0
+AGO,DEU,Angola,Germany,own_post_vfs,1,,VFS Global,553.0,9.666666666666666,100.0
+AGO,DNK,Angola,Denmark,regional_post,0,,,2014.0,4.0,23.61875
+AGO,EST,Angola,Estonia,regional_post,0,,,4737.0,0.0,5.0
+AGO,GRC,Angola,Greece,neighbour_post,0,,,553.0,1.3333333333333333,42.0
+AGO,ESP,Angola,Spain,own_post,1,,,553.0,39.333333333333336,88.0
+AGO,FIN,Angola,Finland,neighbour_post,0,,,1583.0,2.3333333333333335,42.0
+AGO,FRA,Angola,France,own_post,1,,,553.0,60.0,88.0
+AGO,HRV,Angola,Croatia,regional_post,0,,,2458.0,1.0,19.45625
+AGO,HUN,Angola,Hungary,own_post,1,,,2115.0,5.0,88.0
+AGO,IRL,Angola,Ireland,neighbour_post,0,,,1792.0,4.666666666666667,42.0
+AGO,ITA,Angola,Italy,own_post,1,,,553.0,4.333333333333333,88.0
+AGO,LTU,Angola,Lithuania,represented_c,0,FRA,,2458.0,0.6666666666666666,48.0
+AGO,LUX,Angola,Luxembourg,represented_d,1,BEL,,3465.0,1.3333333333333333,48.0
+AGO,LVA,Angola,Latvia,represented_c,0,FRA,,4737.0,0.0,48.0
+AGO,MLT,Angola,Malta,represented_c,0,FRA,,4626.0,0.0,48.0
+AGO,NLD,Angola,Netherlands,own_post,1,,,553.0,3.3333333333333335,88.0
+AGO,POL,Angola,Poland,own_post,1,,,2014.0,26.333333333333332,88.0
+AGO,PRT,Angola,Portugal,own_post_vfs,1,,VFS Global,553.0,2033.0,100.0
+AGO,ROU,Angola,Romania,own_post,1,,,2115.0,3.0,88.0
+AGO,SWE,Angola,Sweden,represented_c,0,BEL,,553.0,1.6666666666666667,48.0
+AGO,SVN,Angola,Slovenia,regional_post,0,,,3465.0,0.0,10.015625
+AGO,SVK,Angola,Slovakia,regional_post,0,,,2115.0,0.3333333333333333,22.671875
+BEN,AUT,Benin,Austria,represented_c,0,BEL,,568.0,1.3333333333333333,48.0
+BEN,BEL,Benin,Belgium,own_post,1,,,568.0,7.666666666666667,88.0
+BEN,BGR,Benin,Bulgaria,neighbour_post,0,,,568.0,0.6666666666666666,42.0
+BEN,CYP,Benin,Cyprus,regional_post,0,,,3966.0,0.3333333333333333,5.318750000000001
+BEN,CZE,Benin,Czechia,neighbour_post,0,,,352.0,0.0,42.0
+BEN,DEU,Benin,Germany,own_post,1,,,163.0,54.333333333333336,88.0
+BEN,DNK,Benin,Denmark,regional_post,0,,,2389.0,1.0,20.103125
+BEN,EST,Benin,Estonia,regional_post,0,,,3966.0,0.0,5.318750000000001
+BEN,GRC,Benin,Greece,neighbour_post,0,,,568.0,0.6666666666666666,42.0
+BEN,ESP,Benin,Spain,neighbour_post,0,,,352.0,13.0,42.0
+BEN,FIN,Benin,Finland,neighbour_post,0,,,568.0,6.666666666666667,42.0
+BEN,FRA,Benin,France,own_post_vfs,1,,VFS Global,163.0,189.33333333333334,100.0
+BEN,HRV,Benin,Croatia,regional_post,0,,,3110.0,2.3333333333333335,13.34375
+BEN,HUN,Benin,Hungary,neighbour_post,0,,,352.0,0.0,42.0
+BEN,IRL,Benin,Ireland,neighbour_post,0,,,568.0,3.3333333333333335,42.0
+BEN,ITA,Benin,Italy,neighbour_post,0,,,352.0,15.333333333333334,42.0
+BEN,LTU,Benin,Lithuania,represented_c,0,FRA,,3966.0,0.3333333333333333,48.0
+BEN,LUX,Benin,Luxembourg,represented_d,1,BEL,,2389.0,3.3333333333333335,48.0
+BEN,LVA,Benin,Latvia,represented_c,0,FRA,,3966.0,0.3333333333333333,48.0
+BEN,MLT,Benin,Malta,represented_c,0,FRA,,3110.0,0.3333333333333333,48.0
+BEN,NLD,Benin,Netherlands,own_post,1,,,352.0,6.666666666666667,88.0
+BEN,POL,Benin,Poland,neighbour_post,0,,,568.0,0.3333333333333333,42.0
+BEN,PRT,Benin,Portugal,neighbour_post,0,,,568.0,5.0,42.0
+BEN,ROU,Benin,Romania,neighbour_post,0,,,568.0,30.666666666666668,42.0
+BEN,SWE,Benin,Sweden,represented_c,0,BEL,,568.0,1.3333333333333333,48.0
+BEN,SVN,Benin,Slovenia,regional_post,0,,,3376.0,0.0,10.850000000000001
+BEN,SVK,Benin,Slovakia,neighbour_post,0,,,568.0,0.0,42.0
+BWA,AUT,Botswana,Austria,neighbour_post,0,,,256.0,0.0,42.0
+BWA,BEL,Botswana,Belgium,neighbour_post,0,,,256.0,1.0,42.0
+BWA,BGR,Botswana,Bulgaria,neighbour_post,0,,,256.0,0.0,42.0
+BWA,CYP,Botswana,Cyprus,regional_post,0,,,6126.0,0.0,5.0
+BWA,CZE,Botswana,Czechia,neighbour_post,0,,,256.0,0.3333333333333333,42.0
+BWA,DEU,Botswana,Germany,own_post,1,,,256.0,5.666666666666667,88.0
+BWA,DNK,Botswana,Denmark,regional_post,0,,,2578.0,0.0,18.33125
+BWA,EST,Botswana,Estonia,regional_post,0,,,6126.0,0.0,5.0
+BWA,GRC,Botswana,Greece,neighbour_post,0,,,256.0,0.0,42.0
+BWA,ESP,Botswana,Spain,neighbour_post,0,,,256.0,0.0,42.0
+BWA,FIN,Botswana,Finland,neighbour_post,0,,,256.0,1.3333333333333333,42.0
+BWA,FRA,Botswana,France,own_post,1,,,256.0,1.3333333333333333,88.0
+BWA,HRV,Botswana,Croatia,neighbour_post,0,,,256.0,0.0,42.0
+BWA,HUN,Botswana,Hungary,neighbour_post,0,,,256.0,0.3333333333333333,42.0
+BWA,IRL,Botswana,Ireland,neighbour_post,0,,,256.0,26.333333333333332,42.0
+BWA,ITA,Botswana,Italy,neighbour_post,0,,,256.0,0.6666666666666666,42.0
+BWA,LTU,Botswana,Lithuania,represented_c,0,FRA,,256.0,0.3333333333333333,48.0
+BWA,LUX,Botswana,Luxembourg,regional_post,0,,,4015.0,0.0,5.0
+BWA,LVA,Botswana,Latvia,represented_c,0,FRA,,6126.0,0.0,48.0
+BWA,MLT,Botswana,Malta,represented_c,0,FRA,,6126.0,8.333333333333334,48.0
+BWA,NLD,Botswana,Netherlands,neighbour_post,0,,,256.0,3.6666666666666665,42.0
+BWA,POL,Botswana,Poland,neighbour_post,0,,,256.0,2.6666666666666665,42.0
+BWA,PRT,Botswana,Portugal,neighbour_post,0,,,256.0,1.6666666666666667,42.0
+BWA,ROU,Botswana,Romania,neighbour_post,0,,,256.0,0.0,42.0
+BWA,SWE,Botswana,Sweden,neighbour_post,0,,,256.0,1.0,42.0
+BWA,SVN,Botswana,Slovenia,regional_post,0,,,4015.0,0.0,5.0
+BWA,SVK,Botswana,Slovakia,neighbour_post,0,,,256.0,0.6666666666666666,42.0
+BFA,AUT,Burkina Faso,Austria,represented_c,0,BEL,,1028.0,2.0,48.0
+BFA,BEL,Burkina Faso,Belgium,own_post,1,,,428.0,5.0,88.0
+BFA,BGR,Burkina Faso,Bulgaria,regional_post,0,,,1028.0,0.0,32.8625
+BFA,CYP,Burkina Faso,Cyprus,regional_post,0,,,3921.0,0.0,5.740625000000001
+BFA,CZE,Burkina Faso,Czechia,neighbour_post,0,,,687.0,0.0,42.0
+BFA,DEU,Burkina Faso,Germany,own_post,1,,,428.0,17.333333333333332,88.0
+BFA,DNK,Burkina Faso,Denmark,own_post,1,,,1727.0,2.3333333333333335,88.0
+BFA,EST,Burkina Faso,Estonia,regional_post,0,,,3921.0,0.0,5.740625000000001
+BFA,GRC,Burkina Faso,Greece,regional_post,0,,,1028.0,4.0,32.8625
+BFA,ESP,Burkina Faso,Spain,neighbour_post,0,,,428.0,69.0,42.0
+BFA,FIN,Burkina Faso,Finland,regional_post,0,,,1028.0,1.6666666666666667,32.8625
+BFA,FRA,Burkina Faso,France,own_post_vfs,1,,VFS Global,428.0,106.33333333333333,100.0
+BFA,HRV,Burkina Faso,Croatia,regional_post,0,,,2472.0,1.3333333333333333,19.325
+BFA,HUN,Burkina Faso,Hungary,neighbour_post,0,,,771.0,0.0,42.0
+BFA,IRL,Burkina Faso,Ireland,regional_post,0,,,1028.0,0.3333333333333333,32.8625
+BFA,ITA,Burkina Faso,Italy,own_post,1,,,428.0,43.333333333333336,88.0
+BFA,LTU,Burkina Faso,Lithuania,represented_c,0,FRA,,3921.0,0.0,48.0
+BFA,LUX,Burkina Faso,Luxembourg,represented_d,1,BEL,,1727.0,3.0,48.0
+BFA,LVA,Burkina Faso,Latvia,represented_c,0,FRA,,3921.0,0.0,48.0
+BFA,MLT,Burkina Faso,Malta,represented_c,0,FRA,,2725.0,1.0,48.0
+BFA,NLD,Burkina Faso,Netherlands,own_post,1,,,428.0,4.333333333333333,88.0
+BFA,POL,Burkina Faso,Poland,regional_post,0,,,1028.0,0.3333333333333333,32.8625
+BFA,PRT,Burkina Faso,Portugal,regional_post,0,,,1028.0,2.6666666666666665,32.8625
+BFA,ROU,Burkina Faso,Romania,regional_post,0,,,1028.0,3.0,32.8625
+BFA,SWE,Burkina Faso,Sweden,own_post,1,,,687.0,1.3333333333333333,88.0
+BFA,SVN,Burkina Faso,Slovenia,regional_post,0,,,2766.0,0.0,16.56875
+BFA,SVK,Burkina Faso,Slovakia,regional_post,0,,,1028.0,0.0,32.8625
+BDI,AUT,Burundi,Austria,represented_c,0,BEL,,867.0,1.0,48.0
+BDI,BEL,Burundi,Belgium,own_post_vfs,1,,VFS Global,549.0,0.3333333333333333,100.0
+BDI,BGR,Burundi,Bulgaria,regional_post,0,,,1739.0,0.0,26.196875
+BDI,CYP,Burundi,Cyprus,regional_post,0,,,3725.0,0.0,7.578125
+BDI,CZE,Burundi,Czechia,regional_post,0,,,867.0,0.0,34.371875
+BDI,DEU,Burundi,Germany,own_post,1,,,180.0,5.666666666666667,88.0
+BDI,DNK,Burundi,Denmark,neighbour_post,0,,,180.0,0.0,42.0
+BDI,EST,Burundi,Estonia,regional_post,0,,,3725.0,0.0,7.578125
+BDI,GRC,Burundi,Greece,neighbour_post,0,,,867.0,0.0,42.0
+BDI,ESP,Burundi,Spain,neighbour_post,0,,,778.0,11.0,42.0
+BDI,FIN,Burundi,Finland,neighbour_post,0,,,778.0,0.3333333333333333,42.0
+BDI,FRA,Burundi,France,own_post,1,,,180.0,9.0,88.0
+BDI,HRV,Burundi,Croatia,regional_post,0,,,2492.0,0.0,19.1375
+BDI,HUN,Burundi,Hungary,regional_post,0,,,867.0,0.6666666666666666,34.371875
+BDI,IRL,Burundi,Ireland,neighbour_post,0,,,549.0,1.6666666666666667,42.0
+BDI,ITA,Burundi,Italy,neighbour_post,0,,,549.0,3.3333333333333335,42.0
+BDI,LTU,Burundi,Lithuania,represented_c,0,FRA,,2492.0,0.0,48.0
+BDI,LUX,Burundi,Luxembourg,represented_d,1,BEL,,1739.0,0.0,48.0
+BDI,LVA,Burundi,Latvia,represented_c,0,FRA,,3725.0,0.0,48.0
+BDI,MLT,Burundi,Malta,represented_c,0,FRA,,3725.0,0.0,48.0
+BDI,NLD,Burundi,Netherlands,own_post,1,,,180.0,1.6666666666666667,88.0
+BDI,POL,Burundi,Poland,neighbour_post,0,,,180.0,22.666666666666668,42.0
+BDI,PRT,Burundi,Portugal,neighbour_post,0,,,867.0,0.3333333333333333,42.0
+BDI,ROU,Burundi,Romania,regional_post,0,,,867.0,0.6666666666666666,34.371875
+BDI,SWE,Burundi,Sweden,represented_c,0,BEL,,180.0,2.6666666666666665,48.0
+BDI,SVN,Burundi,Slovenia,regional_post,0,,,1739.0,0.0,26.196875
+BDI,SVK,Burundi,Slovakia,regional_post,0,,,867.0,0.0,34.371875
+CPV,AUT,Cabo Verde,Austria,regional_post,0,,,652.0,0.0,35.0
+CPV,BEL,Cabo Verde,Belgium,regional_post,0,,,652.0,2.3333333333333335,35.0
+CPV,BGR,Cabo Verde,Bulgaria,regional_post,0,,,2706.0,0.0,17.13125
+CPV,CYP,Cabo Verde,Cyprus,regional_post,0,,,5820.0,0.0,5.0
+CPV,CZE,Cabo Verde,Czechia,regional_post,0,,,652.0,0.6666666666666666,35.0
+CPV,DEU,Cabo Verde,Germany,regional_post,0,,,652.0,2.3333333333333335,35.0
+CPV,DNK,Cabo Verde,Denmark,regional_post,0,,,652.0,0.0,35.0
+CPV,EST,Cabo Verde,Estonia,regional_post,0,,,5820.0,0.0,5.0
+CPV,GRC,Cabo Verde,Greece,regional_post,0,,,652.0,0.0,35.0
+CPV,ESP,Cabo Verde,Spain,own_post,1,,,652.0,21.0,88.0
+CPV,FIN,Cabo Verde,Finland,regional_post,0,,,652.0,0.3333333333333333,35.0
+CPV,FRA,Cabo Verde,France,own_post,1,,,652.0,25.0,88.0
+CPV,HRV,Cabo Verde,Croatia,regional_post,0,,,2706.0,0.0,17.13125
+CPV,HUN,Cabo Verde,Hungary,regional_post,0,,,2706.0,0.3333333333333333,17.13125
+CPV,IRL,Cabo Verde,Ireland,regional_post,0,,,1322.0,0.0,30.10625
+CPV,ITA,Cabo Verde,Italy,regional_post,0,,,652.0,15.333333333333334,35.0
+CPV,LTU,Cabo Verde,Lithuania,represented_c,0,FRA,,5820.0,0.0,48.0
+CPV,LUX,Cabo Verde,Luxembourg,own_post,1,,,652.0,6.0,88.0
+CPV,LVA,Cabo Verde,Latvia,represented_c,0,FRA,,5820.0,0.0,48.0
+CPV,MLT,Cabo Verde,Malta,represented_c,0,FRA,,4129.0,0.0,48.0
+CPV,NLD,Cabo Verde,Netherlands,regional_post,0,,,652.0,2.0,35.0
+CPV,POL,Cabo Verde,Poland,regional_post,0,,,652.0,0.3333333333333333,35.0
+CPV,PRT,Cabo Verde,Portugal,own_post_vfs,1,,VFS Global,652.0,2617.0,100.0
+CPV,ROU,Cabo Verde,Romania,regional_post,0,,,652.0,0.3333333333333333,35.0
+CPV,SWE,Cabo Verde,Sweden,regional_post,0,,,1688.0,0.0,26.675
+CPV,SVN,Cabo Verde,Slovenia,regional_post,0,,,3581.0,0.0,8.928125000000001
+CPV,SVK,Cabo Verde,Slovakia,regional_post,0,,,1038.0,0.6666666666666666,32.76875
+CMR,AUT,Cameroon,Austria,represented_c,0,BEL,,763.0,6.666666666666667,48.0
+CMR,BEL,Cameroon,Belgium,own_post_vfs,1,,VFS Global,763.0,40.0,100.0
+CMR,BGR,Cameroon,Bulgaria,neighbour_post,0,,,763.0,8.333333333333334,42.0
+CMR,CYP,Cameroon,Cyprus,regional_post,0,,,3580.0,11.0,8.9375
+CMR,CZE,Cameroon,Czechia,neighbour_post,0,,,763.0,6.333333333333333,42.0
+CMR,DEU,Cameroon,Germany,own_post_vfs,1,,VFS Global,451.0,313.0,100.0
+CMR,DNK,Cameroon,Denmark,regional_post,0,,,2161.0,17.666666666666668,22.240625
+CMR,EST,Cameroon,Estonia,regional_post,0,,,3580.0,1.0,8.9375
+CMR,GRC,Cameroon,Greece,neighbour_post,0,,,763.0,16.333333333333332,42.0
+CMR,ESP,Cameroon,Spain,own_post,1,,,302.0,198.66666666666666,88.0
+CMR,FIN,Cameroon,Finland,neighbour_post,0,,,763.0,52.0,42.0
+CMR,FRA,Cameroon,France,own_post_vfs,1,,VFS Global,302.0,614.3333333333334,100.0
+CMR,HRV,Cameroon,Croatia,regional_post,0,,,3219.0,18.333333333333332,12.321874999999999
+CMR,HUN,Cameroon,Hungary,neighbour_post,0,,,763.0,8.666666666666666,42.0
+CMR,IRL,Cameroon,Ireland,neighbour_post,0,,,763.0,16.333333333333332,42.0
+CMR,ITA,Cameroon,Italy,own_post,1,,,451.0,33.333333333333336,88.0
+CMR,LTU,Cameroon,Lithuania,represented_c,0,FRA,,3580.0,10.333333333333334,48.0
+CMR,LUX,Cameroon,Luxembourg,represented_d,1,BEL,,3075.0,35.666666666666664,48.0
+CMR,LVA,Cameroon,Latvia,represented_c,0,FRA,,3580.0,1.6666666666666667,48.0
+CMR,MLT,Cameroon,Malta,represented_c,0,FRA,,3219.0,5.666666666666667,48.0
+CMR,NLD,Cameroon,Netherlands,neighbour_post,0,,,763.0,22.0,42.0
+CMR,POL,Cameroon,Poland,neighbour_post,0,,,763.0,47.0,42.0
+CMR,PRT,Cameroon,Portugal,neighbour_post,0,,,671.0,28.666666666666668,42.0
+CMR,ROU,Cameroon,Romania,neighbour_post,0,,,763.0,84.66666666666667,42.0
+CMR,SWE,Cameroon,Sweden,represented_c,0,BEL,,763.0,34.666666666666664,48.0
+CMR,SVN,Cameroon,Slovenia,regional_post,0,,,3075.0,0.0,13.671875
+CMR,SVK,Cameroon,Slovakia,neighbour_post,0,,,763.0,2.6666666666666665,42.0
+CAF,AUT,Central African Rep.,Austria,regional_post,0,,,1373.0,0.0,29.628125
+CAF,BEL,Central African Rep.,Belgium,neighbour_post,0,,,790.0,0.6666666666666666,42.0
+CAF,BGR,Central African Rep.,Bulgaria,regional_post,0,,,1373.0,0.0,29.628125
+CAF,CYP,Central African Rep.,Cyprus,regional_post,0,,,3150.0,0.0,12.96875
+CAF,CZE,Central African Rep.,Czechia,regional_post,0,,,1373.0,0.0,29.628125
+CAF,DEU,Central African Rep.,Germany,neighbour_post,0,,,790.0,1.6666666666666667,42.0
+CAF,DNK,Central African Rep.,Denmark,regional_post,0,,,1455.0,1.0,28.859375
+CAF,EST,Central African Rep.,Estonia,regional_post,0,,,3150.0,0.0,12.96875
+CAF,GRC,Central African Rep.,Greece,neighbour_post,0,,,1034.0,0.0,42.0
+CAF,ESP,Central African Rep.,Spain,neighbour_post,0,,,790.0,3.3333333333333335,42.0
+CAF,FIN,Central African Rep.,Finland,regional_post,0,,,1373.0,0.0,29.628125
+CAF,FRA,Central African Rep.,France,own_post,1,,,790.0,19.0,88.0
+CAF,HRV,Central African Rep.,Croatia,regional_post,0,,,3150.0,0.0,12.96875
+CAF,HUN,Central African Rep.,Hungary,neighbour_post,0,,,954.0,0.0,42.0
+CAF,IRL,Central African Rep.,Ireland,regional_post,0,,,1373.0,0.0,29.628125
+CAF,ITA,Central African Rep.,Italy,neighbour_post,0,,,790.0,0.0,42.0
+CAF,LTU,Central African Rep.,Lithuania,represented_c,0,FRA,,3150.0,0.0,48.0
+CAF,LUX,Central African Rep.,Luxembourg,regional_post,0,,,2293.0,0.3333333333333333,21.003125
+CAF,LVA,Central African Rep.,Latvia,represented_c,0,FRA,,3150.0,0.0,48.0
+CAF,MLT,Central African Rep.,Malta,represented_c,0,FRA,,3150.0,0.0,48.0
+CAF,NLD,Central African Rep.,Netherlands,neighbour_post,0,,,1034.0,0.0,42.0
+CAF,POL,Central African Rep.,Poland,regional_post,0,,,1373.0,0.6666666666666666,29.628125
+CAF,PRT,Central African Rep.,Portugal,neighbour_post,0,,,1034.0,0.3333333333333333,42.0
+CAF,ROU,Central African Rep.,Romania,neighbour_post,0,,,1373.0,0.6666666666666666,42.0
+CAF,SWE,Central African Rep.,Sweden,neighbour_post,0,,,1034.0,0.3333333333333333,42.0
+CAF,SVN,Central African Rep.,Slovenia,regional_post,0,,,2293.0,0.0,21.003125
+CAF,SVK,Central African Rep.,Slovakia,regional_post,0,,,1373.0,0.0,29.628125
+TCD,AUT,Chad,Austria,neighbour_post,0,,,917.0,0.0,42.0
+TCD,BEL,Chad,Belgium,neighbour_post,0,,,917.0,1.0,42.0
+TCD,BGR,Chad,Bulgaria,neighbour_post,0,,,917.0,0.3333333333333333,42.0
+TCD,CYP,Chad,Cyprus,regional_post,0,,,2603.0,0.3333333333333333,18.096875
+TCD,CZE,Chad,Czechia,neighbour_post,0,,,917.0,0.0,42.0
+TCD,DEU,Chad,Germany,own_post,1,,,917.0,3.0,88.0
+TCD,DNK,Chad,Denmark,regional_post,0,,,2290.0,0.0,21.03125
+TCD,EST,Chad,Estonia,regional_post,0,,,2603.0,0.0,18.096875
+TCD,GRC,Chad,Greece,neighbour_post,0,,,917.0,0.0,42.0
+TCD,ESP,Chad,Spain,own_post,1,,,917.0,1.6666666666666667,88.0
+TCD,FIN,Chad,Finland,neighbour_post,0,,,917.0,0.0,42.0
+TCD,FRA,Chad,France,own_post,1,,,917.0,38.333333333333336,88.0
+TCD,HRV,Chad,Croatia,neighbour_post,0,,,2297.0,0.0,42.0
+TCD,HUN,Chad,Hungary,own_post,1,,,917.0,0.0,88.0
+TCD,IRL,Chad,Ireland,neighbour_post,0,,,917.0,0.3333333333333333,42.0
+TCD,ITA,Chad,Italy,neighbour_post,0,,,917.0,0.3333333333333333,42.0
+TCD,LTU,Chad,Lithuania,represented_c,0,FRA,,2603.0,0.0,48.0
+TCD,LUX,Chad,Luxembourg,regional_post,0,,,2631.0,0.3333333333333333,17.834375
+TCD,LVA,Chad,Latvia,represented_c,0,FRA,,2603.0,0.0,48.0
+TCD,MLT,Chad,Malta,represented_c,0,FRA,,2297.0,0.0,48.0
+TCD,NLD,Chad,Netherlands,neighbour_post,0,,,917.0,1.3333333333333333,42.0
+TCD,POL,Chad,Poland,neighbour_post,0,,,917.0,0.3333333333333333,42.0
+TCD,PRT,Chad,Portugal,neighbour_post,0,,,917.0,0.0,42.0
+TCD,ROU,Chad,Romania,neighbour_post,0,,,917.0,0.0,42.0
+TCD,SWE,Chad,Sweden,neighbour_post,0,,,917.0,0.3333333333333333,42.0
+TCD,SVN,Chad,Slovenia,regional_post,0,,,2603.0,0.0,18.096875
+TCD,SVK,Chad,Slovakia,neighbour_post,0,,,917.0,0.0,42.0
+COM,AUT,Comoros,Austria,regional_post,0,,,1357.0,0.0,29.778125
+COM,BEL,Comoros,Belgium,regional_post,0,,,1029.0,0.6666666666666666,32.853125
+COM,BGR,Comoros,Bulgaria,regional_post,0,,,2224.0,0.0,21.65
+COM,CYP,Comoros,Cyprus,regional_post,0,,,4818.0,0.0,5.0
+COM,CZE,Comoros,Czechia,regional_post,0,,,1357.0,0.0,29.778125
+COM,DEU,Comoros,Germany,regional_post,0,,,921.0,0.6666666666666666,33.865625
+COM,DNK,Comoros,Denmark,regional_post,0,,,1542.0,0.0,28.04375
+COM,EST,Comoros,Estonia,regional_post,0,,,4818.0,0.0,5.0
+COM,GRC,Comoros,Greece,regional_post,0,,,1357.0,0.0,29.778125
+COM,ESP,Comoros,Spain,regional_post,0,,,1029.0,0.6666666666666666,32.853125
+COM,FIN,Comoros,Finland,regional_post,0,,,1029.0,0.3333333333333333,32.853125
+COM,FRA,Comoros,France,own_post,1,,,921.0,40.666666666666664,88.0
+COM,HRV,Comoros,Croatia,regional_post,0,,,2224.0,0.0,21.65
+COM,HUN,Comoros,Hungary,regional_post,0,,,1357.0,0.0,29.778125
+COM,IRL,Comoros,Ireland,regional_post,0,,,1029.0,0.0,32.853125
+COM,ITA,Comoros,Italy,regional_post,0,,,1029.0,2.6666666666666665,32.853125
+COM,LTU,Comoros,Lithuania,represented_c,0,FRA,,2224.0,0.0,48.0
+COM,LUX,Comoros,Luxembourg,regional_post,0,,,2357.0,0.0,20.403125
+COM,LVA,Comoros,Latvia,represented_c,0,FRA,,4818.0,0.0,48.0
+COM,MLT,Comoros,Malta,represented_c,0,FRA,,4818.0,0.0,48.0
+COM,NLD,Comoros,Netherlands,regional_post,0,,,1029.0,0.0,32.853125
+COM,POL,Comoros,Poland,regional_post,0,,,1029.0,1.6666666666666667,32.853125
+COM,PRT,Comoros,Portugal,regional_post,0,,,1357.0,0.6666666666666666,29.778125
+COM,ROU,Comoros,Romania,regional_post,0,,,1357.0,0.0,29.778125
+COM,SWE,Comoros,Sweden,own_post,1,,,1029.0,0.0,88.0
+COM,SVN,Comoros,Slovenia,regional_post,0,,,2357.0,0.0,20.403125
+COM,SVK,Comoros,Slovakia,regional_post,0,,,1357.0,0.0,29.778125
+COG,AUT,Congo-Brazzaville,Austria,represented_c,0,BEL,,1740.0,0.3333333333333333,48.0
+COG,BEL,Congo-Brazzaville,Belgium,own_post,1,,,10.0,3.0,88.0
+COG,BGR,Congo-Brazzaville,Bulgaria,regional_post,0,,,1740.0,2.3333333333333335,26.1875
+COG,CYP,Congo-Brazzaville,Cyprus,regional_post,0,,,4180.0,1.0,5.0
+COG,CZE,Congo-Brazzaville,Czechia,regional_post,0,,,1740.0,0.3333333333333333,26.1875
+COG,DEU,Congo-Brazzaville,Germany,own_post,1,,,10.0,6.666666666666667,88.0
+COG,DNK,Congo-Brazzaville,Denmark,regional_post,0,,,1668.0,0.0,26.8625
+COG,EST,Congo-Brazzaville,Estonia,regional_post,0,,,4180.0,0.0,5.0
+COG,GRC,Congo-Brazzaville,Greece,neighbour_post,0,,,10.0,0.6666666666666666,42.0
+COG,ESP,Congo-Brazzaville,Spain,neighbour_post,0,,,10.0,18.333333333333332,42.0
+COG,FIN,Congo-Brazzaville,Finland,regional_post,0,,,1740.0,0.6666666666666666,26.1875
+COG,FRA,Congo-Brazzaville,France,own_post_vfs,1,,VFS Global,10.0,119.66666666666667,100.0
+COG,HRV,Congo-Brazzaville,Croatia,regional_post,0,,,2765.0,0.0,16.578125
+COG,HUN,Congo-Brazzaville,Hungary,regional_post,0,,,557.0,2.0,35.0
+COG,IRL,Congo-Brazzaville,Ireland,regional_post,0,,,1740.0,13.666666666666666,26.1875
+COG,ITA,Congo-Brazzaville,Italy,own_post,1,,,10.0,4.666666666666667,88.0
+COG,LTU,Congo-Brazzaville,Lithuania,represented_c,0,FRA,,2765.0,0.0,48.0
+COG,LUX,Congo-Brazzaville,Luxembourg,represented_d,1,BEL,,3007.0,1.3333333333333333,48.0
+COG,LVA,Congo-Brazzaville,Latvia,represented_c,0,FRA,,4180.0,0.3333333333333333,48.0
+COG,MLT,Congo-Brazzaville,Malta,represented_c,0,FRA,,4120.0,1.0,48.0
+COG,NLD,Congo-Brazzaville,Netherlands,neighbour_post,0,,,10.0,1.6666666666666667,42.0
+COG,POL,Congo-Brazzaville,Poland,regional_post,0,,,557.0,19.0,35.0
+COG,PRT,Congo-Brazzaville,Portugal,neighbour_post,0,,,10.0,6.0,42.0
+COG,ROU,Congo-Brazzaville,Romania,regional_post,0,,,557.0,11.0,35.0
+COG,SWE,Congo-Brazzaville,Sweden,represented_c,0,BEL,,10.0,0.6666666666666666,48.0
+COG,SVN,Congo-Brazzaville,Slovenia,regional_post,0,,,3007.0,0.3333333333333333,14.309375
+COG,SVK,Congo-Brazzaville,Slovakia,regional_post,0,,,1740.0,0.0,26.1875
+COD,AUT,DR Congo,Austria,represented_c,0,BEL,,1751.0,2.6666666666666665,48.0
+COD,BEL,DR Congo,Belgium,own_post_vfs,1,,VFS Global,10.0,24.0,100.0
+COD,BGR,DR Congo,Bulgaria,regional_post,0,,,1751.0,0.3333333333333333,26.084375
+COD,CYP,DR Congo,Cyprus,regional_post,0,,,4184.0,1.0,5.0
+COD,CZE,DR Congo,Czechia,neighbour_post,0,,,1751.0,1.0,42.0
+COD,DEU,DR Congo,Germany,own_post,1,,,10.0,19.333333333333332,88.0
+COD,DNK,DR Congo,Denmark,neighbour_post,0,,,1662.0,2.0,42.0
+COD,EST,DR Congo,Estonia,regional_post,0,,,4184.0,0.0,5.0
+COD,GRC,DR Congo,Greece,own_post,1,,,1751.0,11.666666666666666,88.0
+COD,ESP,DR Congo,Spain,own_post,1,,,553.0,51.666666666666664,88.0
+COD,FIN,DR Congo,Finland,neighbour_post,0,,,1751.0,2.6666666666666665,42.0
+COD,FRA,DR Congo,France,own_post_vfs,1,,VFS Global,10.0,210.0,100.0
+COD,HRV,DR Congo,Croatia,regional_post,0,,,2755.0,1.6666666666666667,16.671875
+COD,HUN,DR Congo,Hungary,neighbour_post,0,,,553.0,2.0,42.0
+COD,IRL,DR Congo,Ireland,neighbour_post,0,,,1751.0,7.333333333333333,42.0
+COD,ITA,DR Congo,Italy,own_post,1,,,10.0,7.0,88.0
+COD,LTU,DR Congo,Lithuania,represented_c,0,FRA,,2755.0,1.3333333333333333,48.0
+COD,LUX,DR Congo,Luxembourg,represented_d,1,BEL,,3004.0,3.3333333333333335,48.0
+COD,LVA,DR Congo,Latvia,represented_c,0,FRA,,4184.0,0.6666666666666666,48.0
+COD,MLT,DR Congo,Malta,represented_c,0,FRA,,4128.0,1.6666666666666667,48.0
+COD,NLD,DR Congo,Netherlands,own_post,1,,,553.0,8.666666666666666,88.0
+COD,POL,DR Congo,Poland,neighbour_post,0,,,553.0,22.666666666666668,42.0
+COD,PRT,DR Congo,Portugal,own_post,1,,,553.0,5.666666666666667,88.0
+COD,ROU,DR Congo,Romania,neighbour_post,0,,,553.0,1.6666666666666667,42.0
+COD,SWE,DR Congo,Sweden,own_post,1,,,1662.0,3.3333333333333335,88.0
+COD,SVN,DR Congo,Slovenia,regional_post,0,,,3004.0,0.3333333333333333,14.337499999999999
+COD,SVK,DR Congo,Slovakia,regional_post,0,,,1751.0,0.3333333333333333,26.084375
+DJI,AUT,Djibouti,Austria,neighbour_post,0,,,551.0,0.0,42.0
+DJI,BEL,Djibouti,Belgium,neighbour_post,0,,,551.0,3.0,42.0
+DJI,BGR,Djibouti,Bulgaria,neighbour_post,0,,,551.0,0.0,42.0
+DJI,CYP,Djibouti,Cyprus,regional_post,0,,,2394.0,0.0,20.05625
+DJI,CZE,Djibouti,Czechia,neighbour_post,0,,,551.0,0.0,42.0
+DJI,DEU,Djibouti,Germany,own_post,1,,,551.0,0.3333333333333333,88.0
+DJI,DNK,Djibouti,Denmark,neighbour_post,0,,,1092.0,0.0,42.0
+DJI,EST,Djibouti,Estonia,regional_post,0,,,2394.0,0.0,20.05625
+DJI,GRC,Djibouti,Greece,neighbour_post,0,,,551.0,0.0,42.0
+DJI,ESP,Djibouti,Spain,neighbour_post,0,,,551.0,0.3333333333333333,42.0
+DJI,FIN,Djibouti,Finland,neighbour_post,0,,,551.0,0.0,42.0
+DJI,FRA,Djibouti,France,own_post,1,,,551.0,11.0,88.0
+DJI,HRV,Djibouti,Croatia,regional_post,0,,,2394.0,0.0,20.05625
+DJI,HUN,Djibouti,Hungary,regional_post,0,,,1595.0,0.0,27.546875
+DJI,IRL,Djibouti,Ireland,neighbour_post,0,,,551.0,0.3333333333333333,42.0
+DJI,ITA,Djibouti,Italy,neighbour_post,0,,,551.0,0.0,42.0
+DJI,LTU,Djibouti,Lithuania,represented_c,0,FRA,,2394.0,0.0,48.0
+DJI,LUX,Djibouti,Luxembourg,neighbour_post,0,,,551.0,0.0,42.0
+DJI,LVA,Djibouti,Latvia,represented_c,0,FRA,,2394.0,0.0,48.0
+DJI,MLT,Djibouti,Malta,represented_c,0,FRA,,2394.0,0.0,48.0
+DJI,NLD,Djibouti,Netherlands,neighbour_post,0,,,551.0,0.3333333333333333,42.0
+DJI,POL,Djibouti,Poland,neighbour_post,0,,,551.0,0.0,42.0
+DJI,PRT,Djibouti,Portugal,neighbour_post,0,,,551.0,0.0,42.0
+DJI,ROU,Djibouti,Romania,neighbour_post,0,,,551.0,0.0,42.0
+DJI,SWE,Djibouti,Sweden,neighbour_post,0,,,551.0,0.0,42.0
+DJI,SVN,Djibouti,Slovenia,neighbour_post,0,,,551.0,0.0,42.0
+DJI,SVK,Djibouti,Slovakia,neighbour_post,0,,,551.0,0.0,42.0
+EGY,AUT,"Egypt, Arab Rep.",Austria,own_post_vfs,1,,VFS Global,1746.0,78.33333333333333,100.0
+EGY,BEL,"Egypt, Arab Rep.",Belgium,own_post,1,,,2089.0,70.0,88.0
+EGY,BGR,"Egypt, Arab Rep.",Bulgaria,own_post,1,,,2089.0,45.0,88.0
+EGY,CYP,"Egypt, Arab Rep.",Cyprus,own_post,1,,,,1189.6666666666667,88.0
+EGY,CZE,"Egypt, Arab Rep.",Czechia,own_post_vfs,1,,VFS Global,2089.0,73.0,100.0
+EGY,DEU,"Egypt, Arab Rep.",Germany,own_post_vfs,1,,VFS Global,1619.0,1136.6666666666667,100.0
+EGY,DNK,"Egypt, Arab Rep.",Denmark,own_post_vfs,1,,VFS Global,3455.0,97.66666666666667,100.0
+EGY,EST,"Egypt, Arab Rep.",Estonia,own_post,1,,,,9.0,88.0
+EGY,GRC,"Egypt, Arab Rep.",Greece,own_post_vfs,1,,VFS Global,1746.0,557.3333333333334,100.0
+EGY,ESP,"Egypt, Arab Rep.",Spain,own_post_vfs,1,,BLS International,1619.0,182.66666666666666,100.0
+EGY,FIN,"Egypt, Arab Rep.",Finland,own_post_vfs,1,,VFS Global,2089.0,36.0,100.0
+EGY,FRA,"Egypt, Arab Rep.",France,own_post_vfs,1,,VFS Global,1619.0,391.3333333333333,100.0
+EGY,HRV,"Egypt, Arab Rep.",Croatia,own_post,1,,,1746.0,2707.0,88.0
+EGY,HUN,"Egypt, Arab Rep.",Hungary,own_post_vfs,1,,VFS Global,1746.0,153.0,100.0
+EGY,IRL,"Egypt, Arab Rep.",Ireland,own_post_vfs,1,,VFS Global,2467.0,185.33333333333334,100.0
+EGY,ITA,"Egypt, Arab Rep.",Italy,own_post_vfs,1,,VFS Global,1619.0,2106.3333333333335,100.0
+EGY,LTU,"Egypt, Arab Rep.",Lithuania,own_post,1,,,6217.0,32.666666666666664,88.0
+EGY,LUX,"Egypt, Arab Rep.",Luxembourg,represented_d,1,BEL,,2467.0,30.0,48.0
+EGY,LVA,"Egypt, Arab Rep.",Latvia,own_post,1,,,,12.333333333333334,88.0
+EGY,MLT,"Egypt, Arab Rep.",Malta,own_post_vfs,1,,VFS Global,1746.0,166.66666666666666,100.0
+EGY,NLD,"Egypt, Arab Rep.",Netherlands,own_post_vfs,1,,VFS Global,1619.0,308.0,100.0
+EGY,POL,"Egypt, Arab Rep.",Poland,own_post_vfs,1,,VFS Global,1746.0,388.0,100.0
+EGY,PRT,"Egypt, Arab Rep.",Portugal,own_post,1,,,2089.0,154.33333333333334,88.0
+EGY,ROU,"Egypt, Arab Rep.",Romania,own_post,1,,,1619.0,1020.6666666666666,88.0
+EGY,SWE,"Egypt, Arab Rep.",Sweden,own_post_vfs,1,,VFS Global,1619.0,197.33333333333334,100.0
+EGY,SVN,"Egypt, Arab Rep.",Slovenia,own_post,1,,,2467.0,60.333333333333336,88.0
+EGY,SVK,"Egypt, Arab Rep.",Slovakia,own_post,1,,,2467.0,25.333333333333332,88.0
+GNQ,AUT,Equatorial Guinea,Austria,regional_post,0,,,631.0,0.6666666666666666,35.0
+GNQ,BEL,Equatorial Guinea,Belgium,neighbour_post,0,,,302.0,0.3333333333333333,42.0
+GNQ,BGR,Equatorial Guinea,Bulgaria,regional_post,0,,,631.0,0.0,35.0
+GNQ,CYP,Equatorial Guinea,Cyprus,regional_post,0,,,3761.0,0.0,7.240625000000001
+GNQ,CZE,Equatorial Guinea,Czechia,regional_post,0,,,631.0,0.0,35.0
+GNQ,DEU,Equatorial Guinea,Germany,neighbour_post,0,,,302.0,0.3333333333333333,42.0
+GNQ,DNK,Equatorial Guinea,Denmark,regional_post,0,,,2449.0,0.0,19.540625
+GNQ,EST,Equatorial Guinea,Estonia,regional_post,0,,,3761.0,0.0,7.240625000000001
+GNQ,GRC,Equatorial Guinea,Greece,regional_post,0,,,631.0,0.0,35.0
+GNQ,ESP,Equatorial Guinea,Spain,own_post,1,,,302.0,271.6666666666667,88.0
+GNQ,FIN,Equatorial Guinea,Finland,regional_post,0,,,631.0,0.6666666666666666,35.0
+GNQ,FRA,Equatorial Guinea,France,own_post,1,,,302.0,1.0,88.0
+GNQ,HRV,Equatorial Guinea,Croatia,regional_post,0,,,3257.0,0.0,11.965625
+GNQ,HUN,Equatorial Guinea,Hungary,regional_post,0,,,631.0,0.0,35.0
+GNQ,IRL,Equatorial Guinea,Ireland,regional_post,0,,,631.0,1.0,35.0
+GNQ,ITA,Equatorial Guinea,Italy,neighbour_post,0,,,302.0,0.0,42.0
+GNQ,LTU,Equatorial Guinea,Lithuania,represented_c,0,FRA,,3761.0,0.0,48.0
+GNQ,LUX,Equatorial Guinea,Luxembourg,regional_post,0,,,3123.0,0.0,13.221875
+GNQ,LVA,Equatorial Guinea,Latvia,represented_c,0,FRA,,3761.0,0.0,48.0
+GNQ,MLT,Equatorial Guinea,Malta,represented_c,0,FRA,,3257.0,0.0,48.0
+GNQ,NLD,Equatorial Guinea,Netherlands,regional_post,0,,,631.0,0.0,35.0
+GNQ,POL,Equatorial Guinea,Poland,regional_post,0,,,631.0,0.3333333333333333,35.0
+GNQ,PRT,Equatorial Guinea,Portugal,regional_post,0,,,458.0,0.6666666666666666,35.0
+GNQ,ROU,Equatorial Guinea,Romania,regional_post,0,,,631.0,0.3333333333333333,35.0
+GNQ,SWE,Equatorial Guinea,Sweden,regional_post,0,,,631.0,0.0,35.0
+GNQ,SVN,Equatorial Guinea,Slovenia,regional_post,0,,,3372.0,0.0,10.8875
+GNQ,SVK,Equatorial Guinea,Slovakia,regional_post,0,,,631.0,0.0,35.0
+ERI,AUT,Eritrea,Austria,neighbour_post,0,,,699.0,0.0,42.0
+ERI,BEL,Eritrea,Belgium,neighbour_post,0,,,699.0,0.0,42.0
+ERI,BGR,Eritrea,Bulgaria,neighbour_post,0,,,699.0,0.0,42.0
+ERI,CYP,Eritrea,Cyprus,regional_post,0,,,1814.0,0.0,25.49375
+ERI,CZE,Eritrea,Czechia,neighbour_post,0,,,699.0,0.0,42.0
+ERI,DEU,Eritrea,Germany,own_post,1,,,621.0,4.0,88.0
+ERI,DNK,Eritrea,Denmark,regional_post,0,,,1642.0,0.0,27.10625
+ERI,EST,Eritrea,Estonia,regional_post,0,,,1814.0,0.0,25.49375
+ERI,GRC,Eritrea,Greece,neighbour_post,0,,,699.0,0.0,42.0
+ERI,ESP,Eritrea,Spain,neighbour_post,0,,,682.0,0.0,42.0
+ERI,FIN,Eritrea,Finland,neighbour_post,0,,,699.0,0.3333333333333333,42.0
+ERI,FRA,Eritrea,France,own_post,1,,,621.0,0.6666666666666666,88.0
+ERI,HRV,Eritrea,Croatia,regional_post,0,,,1814.0,0.0,25.49375
+ERI,HUN,Eritrea,Hungary,regional_post,0,,,1814.0,0.3333333333333333,25.49375
+ERI,IRL,Eritrea,Ireland,neighbour_post,0,,,699.0,1.3333333333333333,42.0
+ERI,ITA,Eritrea,Italy,own_post,1,,,682.0,4.0,88.0
+ERI,LTU,Eritrea,Lithuania,represented_c,0,FRA,,1814.0,0.0,48.0
+ERI,LUX,Eritrea,Luxembourg,neighbour_post,0,,,699.0,0.0,42.0
+ERI,LVA,Eritrea,Latvia,represented_c,0,FRA,,1814.0,0.0,48.0
+ERI,MLT,Eritrea,Malta,represented_c,0,FRA,,1814.0,0.3333333333333333,48.0
+ERI,NLD,Eritrea,Netherlands,neighbour_post,0,,,682.0,0.6666666666666666,42.0
+ERI,POL,Eritrea,Poland,neighbour_post,0,,,699.0,1.0,42.0
+ERI,PRT,Eritrea,Portugal,neighbour_post,0,,,699.0,0.3333333333333333,42.0
+ERI,ROU,Eritrea,Romania,neighbour_post,0,,,682.0,0.3333333333333333,42.0
+ERI,SWE,Eritrea,Sweden,neighbour_post,0,,,682.0,4.333333333333333,42.0
+ERI,SVN,Eritrea,Slovenia,neighbour_post,0,,,699.0,0.0,42.0
+ERI,SVK,Eritrea,Slovakia,neighbour_post,0,,,699.0,0.0,42.0
+SWZ,AUT,Eswatini,Austria,neighbour_post,0,,,299.0,0.0,42.0
+SWZ,BEL,Eswatini,Belgium,neighbour_post,0,,,299.0,0.0,42.0
+SWZ,BGR,Eswatini,Bulgaria,neighbour_post,0,,,299.0,0.0,42.0
+SWZ,CYP,Eswatini,Cyprus,regional_post,0,,,6275.0,0.0,5.0
+SWZ,CZE,Eswatini,Czechia,neighbour_post,0,,,299.0,0.0,42.0
+SWZ,DEU,Eswatini,Germany,neighbour_post,0,,,151.0,2.3333333333333335,42.0
+SWZ,DNK,Eswatini,Denmark,regional_post,0,,,2718.0,0.3333333333333333,17.01875
+SWZ,EST,Eswatini,Estonia,regional_post,0,,,6275.0,0.0,5.0
+SWZ,GRC,Eswatini,Greece,neighbour_post,0,,,299.0,0.0,42.0
+SWZ,ESP,Eswatini,Spain,neighbour_post,0,,,151.0,1.0,42.0
+SWZ,FIN,Eswatini,Finland,neighbour_post,0,,,151.0,0.3333333333333333,42.0
+SWZ,FRA,Eswatini,France,neighbour_post,0,,,151.0,0.3333333333333333,42.0
+SWZ,HRV,Eswatini,Croatia,neighbour_post,0,,,299.0,0.0,42.0
+SWZ,HUN,Eswatini,Hungary,neighbour_post,0,,,299.0,0.0,42.0
+SWZ,IRL,Eswatini,Ireland,neighbour_post,0,,,151.0,7.0,42.0
+SWZ,ITA,Eswatini,Italy,neighbour_post,0,,,151.0,0.0,42.0
+SWZ,LTU,Eswatini,Lithuania,neighbour_post,0,,,299.0,0.0,42.0
+SWZ,LUX,Eswatini,Luxembourg,regional_post,0,,,4025.0,0.0,5.0
+SWZ,LVA,Eswatini,Latvia,regional_post,0,,,6275.0,0.0,5.0
+SWZ,MLT,Eswatini,Malta,regional_post,0,,,6275.0,0.3333333333333333,5.0
+SWZ,NLD,Eswatini,Netherlands,neighbour_post,0,,,151.0,1.3333333333333333,42.0
+SWZ,POL,Eswatini,Poland,neighbour_post,0,,,299.0,1.6666666666666667,42.0
+SWZ,PRT,Eswatini,Portugal,neighbour_post,0,,,151.0,0.6666666666666666,42.0
+SWZ,ROU,Eswatini,Romania,neighbour_post,0,,,299.0,0.0,42.0
+SWZ,SWE,Eswatini,Sweden,own_post,1,,,151.0,1.6666666666666667,88.0
+SWZ,SVN,Eswatini,Slovenia,regional_post,0,,,4025.0,0.0,5.0
+SWZ,SVK,Eswatini,Slovakia,neighbour_post,0,,,299.0,0.0,42.0
+ETH,AUT,Ethiopia,Austria,own_post,1,,,1171.0,8.0,88.0
+ETH,BEL,Ethiopia,Belgium,own_post,1,,,1171.0,9.0,88.0
+ETH,BGR,Ethiopia,Bulgaria,own_post,1,,,2467.0,0.6666666666666666,88.0
+ETH,CYP,Ethiopia,Cyprus,regional_post,0,,,2467.0,7.333333333333333,19.371875
+ETH,CZE,Ethiopia,Czechia,own_post,1,,,1171.0,8.0,88.0
+ETH,DEU,Ethiopia,Germany,own_post_vfs,1,,VFS Global,551.0,87.0,100.0
+ETH,DNK,Ethiopia,Denmark,neighbour_post,0,,,1063.0,28.0,42.0
+ETH,EST,Ethiopia,Estonia,regional_post,0,,,2467.0,0.3333333333333333,19.371875
+ETH,GRC,Ethiopia,Greece,own_post,1,,,1171.0,5.0,88.0
+ETH,ESP,Ethiopia,Spain,own_post,1,,,996.0,14.0,88.0
+ETH,FIN,Ethiopia,Finland,own_post_vfs,1,,VFS Global,1171.0,138.66666666666666,100.0
+ETH,FRA,Ethiopia,France,own_post_vfs,1,,VFS Global,551.0,30.0,100.0
+ETH,HRV,Ethiopia,Croatia,regional_post,0,,,2467.0,1.3333333333333333,19.371875
+ETH,HUN,Ethiopia,Hungary,own_post,1,,,1171.0,9.0,88.0
+ETH,IRL,Ethiopia,Ireland,own_post,1,,,1171.0,14.0,88.0
+ETH,ITA,Ethiopia,Italy,own_post_vfs,1,,VFS Global,699.0,38.666666666666664,100.0
+ETH,LTU,Ethiopia,Lithuania,represented_c,0,FRA,,2467.0,0.3333333333333333,48.0
+ETH,LUX,Ethiopia,Luxembourg,own_post,1,,,6148.0,2.6666666666666665,88.0
+ETH,LVA,Ethiopia,Latvia,represented_c,0,FRA,,2467.0,0.0,48.0
+ETH,MLT,Ethiopia,Malta,represented_c,0,FRA,,2467.0,6.0,48.0
+ETH,NLD,Ethiopia,Netherlands,own_post_vfs,1,,VFS Global,915.0,47.666666666666664,100.0
+ETH,POL,Ethiopia,Poland,own_post,1,,,1171.0,151.66666666666666,88.0
+ETH,PRT,Ethiopia,Portugal,own_post,1,,,1171.0,4.333333333333333,88.0
+ETH,ROU,Ethiopia,Romania,own_post,1,,,996.0,417.6666666666667,88.0
+ETH,SWE,Ethiopia,Sweden,own_post_vfs,1,,VFS Global,996.0,29.666666666666668,100.0
+ETH,SVN,Ethiopia,Slovenia,own_post,1,,,2467.0,0.3333333333333333,88.0
+ETH,SVK,Ethiopia,Slovakia,own_post,1,,,1171.0,1.3333333333333333,88.0
+GAB,AUT,Gabon,Austria,regional_post,0,,,1010.0,1.0,33.03125
+GAB,BEL,Gabon,Belgium,neighbour_post,0,,,451.0,4.0,42.0
+GAB,BGR,Gabon,Bulgaria,regional_post,0,,,1010.0,0.3333333333333333,33.03125
+GAB,CYP,Gabon,Cyprus,regional_post,0,,,4030.0,1.0,5.0
+GAB,CZE,Gabon,Czechia,regional_post,0,,,1010.0,0.3333333333333333,33.03125
+GAB,DEU,Gabon,Germany,own_post,1,,,451.0,7.333333333333333,88.0
+GAB,DNK,Gabon,Denmark,regional_post,0,,,2312.0,0.6666666666666666,20.825
+GAB,EST,Gabon,Estonia,regional_post,0,,,4030.0,0.0,5.0
+GAB,GRC,Gabon,Greece,regional_post,0,,,837.0,0.3333333333333333,34.653125
+GAB,ESP,Gabon,Spain,own_post,1,,,381.0,5.0,88.0
+GAB,FIN,Gabon,Finland,regional_post,0,,,1010.0,0.3333333333333333,33.03125
+GAB,FRA,Gabon,France,own_post_vfs,1,,VFS Global,301.0,74.66666666666667,100.0
+GAB,HRV,Gabon,Croatia,regional_post,0,,,3540.0,0.0,9.3125
+GAB,HUN,Gabon,Hungary,regional_post,0,,,1010.0,0.3333333333333333,33.03125
+GAB,IRL,Gabon,Ireland,regional_post,0,,,1010.0,0.0,33.03125
+GAB,ITA,Gabon,Italy,own_post,1,,,451.0,1.6666666666666667,88.0
+GAB,LTU,Gabon,Lithuania,represented_c,0,FRA,,3540.0,0.0,48.0
+GAB,LUX,Gabon,Luxembourg,regional_post,0,,,3355.0,2.0,11.046875
+GAB,LVA,Gabon,Latvia,represented_c,0,FRA,,4030.0,0.0,48.0
+GAB,MLT,Gabon,Malta,represented_c,0,FRA,,3621.0,0.3333333333333333,48.0
+GAB,NLD,Gabon,Netherlands,regional_post,0,,,837.0,2.0,34.653125
+GAB,POL,Gabon,Poland,regional_post,0,,,1010.0,0.3333333333333333,33.03125
+GAB,PRT,Gabon,Portugal,regional_post,0,,,301.0,3.3333333333333335,35.0
+GAB,ROU,Gabon,Romania,regional_post,0,,,1010.0,0.3333333333333333,33.03125
+GAB,SWE,Gabon,Sweden,regional_post,0,,,837.0,0.6666666666666666,34.653125
+GAB,SVN,Gabon,Slovenia,regional_post,0,,,3399.0,0.3333333333333333,10.634374999999999
+GAB,SVK,Gabon,Slovakia,regional_post,0,,,1010.0,0.0,33.03125
+GMB,AUT,The Gambia,Austria,neighbour_post,0,,,156.0,0.6666666666666666,42.0
+GMB,BEL,The Gambia,Belgium,neighbour_post,0,,,156.0,2.0,42.0
+GMB,BGR,The Gambia,Bulgaria,regional_post,0,,,2494.0,0.6666666666666666,19.11875
+GMB,CYP,The Gambia,Cyprus,regional_post,0,,,5240.0,1.3333333333333333,5.0
+GMB,CZE,The Gambia,Czechia,neighbour_post,0,,,156.0,0.6666666666666666,42.0
+GMB,DEU,The Gambia,Germany,own_post,1,,,156.0,44.0,88.0
+GMB,DNK,The Gambia,Denmark,neighbour_post,0,,,156.0,5.666666666666667,42.0
+GMB,EST,The Gambia,Estonia,regional_post,0,,,5240.0,0.6666666666666666,5.0
+GMB,GRC,The Gambia,Greece,neighbour_post,0,,,156.0,5.0,42.0
+GMB,ESP,The Gambia,Spain,neighbour_post,0,,,156.0,809.6666666666666,42.0
+GMB,FIN,The Gambia,Finland,neighbour_post,0,,,156.0,11.333333333333334,42.0
+GMB,FRA,The Gambia,France,neighbour_post,0,,,156.0,161.0,42.0
+GMB,HRV,The Gambia,Croatia,regional_post,0,,,2494.0,6.333333333333333,19.11875
+GMB,HUN,The Gambia,Hungary,regional_post,0,,,2003.0,1.3333333333333333,23.721875
+GMB,IRL,The Gambia,Ireland,regional_post,0,,,664.0,2.3333333333333335,35.0
+GMB,ITA,The Gambia,Italy,neighbour_post,0,,,156.0,172.66666666666666,42.0
+GMB,LTU,The Gambia,Lithuania,regional_post,0,,,5240.0,0.0,5.0
+GMB,LUX,The Gambia,Luxembourg,neighbour_post,0,,,156.0,0.3333333333333333,42.0
+GMB,LVA,The Gambia,Latvia,regional_post,0,,,5240.0,0.0,5.0
+GMB,MLT,The Gambia,Malta,regional_post,0,,,3703.0,23.333333333333332,7.784375000000001
+GMB,NLD,The Gambia,Netherlands,neighbour_post,0,,,156.0,3.0,42.0
+GMB,POL,The Gambia,Poland,neighbour_post,0,,,156.0,5.333333333333333,42.0
+GMB,PRT,The Gambia,Portugal,neighbour_post,0,,,156.0,168.66666666666666,42.0
+GMB,ROU,The Gambia,Romania,neighbour_post,0,,,156.0,4.666666666666667,42.0
+GMB,SWE,The Gambia,Sweden,regional_post,0,,,944.0,39.0,33.65
+GMB,SVN,The Gambia,Slovenia,regional_post,0,,,3253.0,0.0,12.003125
+GMB,SVK,The Gambia,Slovakia,regional_post,0,,,451.0,3.6666666666666665,35.0
+GHA,AUT,Ghana,Austria,regional_post,0,,,913.0,15.333333333333334,33.940625
+GHA,BEL,Ghana,Belgium,neighbour_post,0,,,352.0,11.666666666666666,42.0
+GHA,BGR,Ghana,Bulgaria,regional_post,0,,,913.0,0.6666666666666666,33.940625
+GHA,CYP,Ghana,Cyprus,regional_post,0,,,4281.0,11.0,5.0
+GHA,CZE,Ghana,Czechia,own_post,1,,,913.0,29.0,88.0
+GHA,DEU,Ghana,Germany,own_post_vfs,1,,VFS Global,190.0,183.0,100.0
+GHA,DNK,Ghana,Denmark,own_post,1,,,2137.0,60.666666666666664,88.0
+GHA,EST,Ghana,Estonia,regional_post,0,,,4281.0,4.0,5.0
+GHA,GRC,Ghana,Greece,regional_post,0,,,913.0,26.666666666666668,33.940625
+GHA,ESP,Ghana,Spain,own_post,1,,,574.0,684.6666666666666,88.0
+GHA,FIN,Ghana,Finland,regional_post,0,,,913.0,58.333333333333336,33.940625
+GHA,FRA,Ghana,France,own_post_vfs,1,,VFS Global,190.0,113.66666666666667,100.0
+GHA,HRV,Ghana,Croatia,regional_post,0,,,3243.0,35.333333333333336,12.096875
+GHA,HUN,Ghana,Hungary,own_post,1,,,913.0,39.666666666666664,88.0
+GHA,IRL,Ghana,Ireland,vfs_only,1,,VFS Global,913.0,197.33333333333334,82.0
+GHA,ITA,Ghana,Italy,own_post_vfs,1,,VFS Global,574.0,282.6666666666667,100.0
+GHA,LTU,Ghana,Lithuania,represented_c,0,FRA,,4281.0,37.666666666666664,48.0
+GHA,LUX,Ghana,Luxembourg,represented_d,1,NLD,,2137.0,7.0,48.0
+GHA,LVA,Ghana,Latvia,represented_c,0,FRA,,4281.0,1.3333333333333333,48.0
+GHA,MLT,Ghana,Malta,own_post,1,,,3328.0,70.0,88.0
+GHA,NLD,Ghana,Netherlands,own_post_vfs,1,,VFS Global,352.0,75.33333333333333,100.0
+GHA,POL,Ghana,Poland,regional_post,0,,,913.0,63.0,33.940625
+GHA,PRT,Ghana,Portugal,regional_post,0,,,913.0,34.666666666666664,33.940625
+GHA,ROU,Ghana,Romania,regional_post,0,,,913.0,86.33333333333333,33.940625
+GHA,SWE,Ghana,Sweden,neighbour_post,0,,,771.0,74.0,42.0
+GHA,SVN,Ghana,Slovenia,regional_post,0,,,3498.0,2.6666666666666665,9.70625
+GHA,SVK,Ghana,Slovakia,regional_post,0,,,913.0,12.666666666666666,33.940625
+GIN,AUT,Guinea,Austria,represented_c,0,BEL,,600.0,0.3333333333333333,48.0
+GIN,BEL,Guinea,Belgium,own_post,1,,,600.0,4.333333333333333,88.0
+GIN,BGR,Guinea,Bulgaria,regional_post,0,,,2513.0,1.6666666666666667,18.940625
+GIN,CYP,Guinea,Cyprus,regional_post,0,,,5375.0,1.0,5.0
+GIN,CZE,Guinea,Czechia,own_post,1,,,600.0,0.0,88.0
+GIN,DEU,Guinea,Germany,own_post,1,,,290.0,36.0,88.0
+GIN,DNK,Guinea,Denmark,neighbour_post,0,,,600.0,2.3333333333333335,42.0
+GIN,EST,Guinea,Estonia,regional_post,0,,,5375.0,0.3333333333333333,5.0
+GIN,GRC,Guinea,Greece,neighbour_post,0,,,600.0,3.6666666666666665,42.0
+GIN,ESP,Guinea,Spain,own_post,1,,,262.0,439.3333333333333,88.0
+GIN,FIN,Guinea,Finland,neighbour_post,0,,,600.0,2.0,42.0
+GIN,FRA,Guinea,France,own_post_vfs,1,,VFS Global,262.0,1443.0,100.0
+GIN,HRV,Guinea,Croatia,regional_post,0,,,2875.0,2.0,15.546875
+GIN,HUN,Guinea,Hungary,regional_post,0,,,1762.0,0.3333333333333333,25.98125
+GIN,IRL,Guinea,Ireland,neighbour_post,0,,,290.0,2.0,42.0
+GIN,ITA,Guinea,Italy,own_post,1,,,600.0,45.0,88.0
+GIN,LTU,Guinea,Lithuania,represented_c,0,FRA,,5375.0,0.0,48.0
+GIN,LUX,Guinea,Luxembourg,represented_d,1,BEL,,600.0,3.6666666666666665,48.0
+GIN,LVA,Guinea,Latvia,represented_c,0,FRA,,5375.0,0.0,48.0
+GIN,MLT,Guinea,Malta,represented_c,0,FRA,,3929.0,0.3333333333333333,48.0
+GIN,NLD,Guinea,Netherlands,neighbour_post,0,,,600.0,0.3333333333333333,42.0
+GIN,POL,Guinea,Poland,neighbour_post,0,,,600.0,9.0,42.0
+GIN,PRT,Guinea,Portugal,neighbour_post,0,,,262.0,70.33333333333333,42.0
+GIN,ROU,Guinea,Romania,neighbour_post,0,,,600.0,21.0,42.0
+GIN,SWE,Guinea,Sweden,represented_c,0,BEL,,651.0,2.0,48.0
+GIN,SVN,Guinea,Slovenia,regional_post,0,,,3577.0,0.0,8.965625
+GIN,SVK,Guinea,Slovakia,own_post,1,,,2513.0,0.3333333333333333,88.0
+GNB,AUT,Guinea-Bissau,Austria,neighbour_post,0,,,364.0,0.3333333333333333,42.0
+GNB,BEL,Guinea-Bissau,Belgium,neighbour_post,0,,,262.0,2.0,42.0
+GNB,BGR,Guinea-Bissau,Bulgaria,regional_post,0,,,2514.0,0.0,18.93125
+GNB,CYP,Guinea-Bissau,Cyprus,regional_post,0,,,5233.0,0.0,5.0
+GNB,CZE,Guinea-Bissau,Czechia,neighbour_post,0,,,262.0,0.0,42.0
+GNB,DEU,Guinea-Bissau,Germany,neighbour_post,0,,,209.0,1.6666666666666667,42.0
+GNB,DNK,Guinea-Bissau,Denmark,neighbour_post,0,,,364.0,0.3333333333333333,42.0
+GNB,EST,Guinea-Bissau,Estonia,regional_post,0,,,5233.0,0.0,5.0
+GNB,GRC,Guinea-Bissau,Greece,neighbour_post,0,,,364.0,0.0,42.0
+GNB,ESP,Guinea-Bissau,Spain,own_post,1,,,262.0,163.0,88.0
+GNB,FIN,Guinea-Bissau,Finland,neighbour_post,0,,,364.0,0.3333333333333333,42.0
+GNB,FRA,Guinea-Bissau,France,own_post,1,,,262.0,19.333333333333332,88.0
+GNB,HRV,Guinea-Bissau,Croatia,regional_post,0,,,2624.0,0.0,17.9
+GNB,HUN,Guinea-Bissau,Hungary,regional_post,0,,,1833.0,0.0,25.315625
+GNB,IRL,Guinea-Bissau,Ireland,regional_post,0,,,456.0,0.0,35.0
+GNB,ITA,Guinea-Bissau,Italy,neighbour_post,0,,,262.0,25.0,42.0
+GNB,LTU,Guinea-Bissau,Lithuania,represented_c,0,FRA,,5233.0,0.0,48.0
+GNB,LUX,Guinea-Bissau,Luxembourg,neighbour_post,0,,,364.0,0.3333333333333333,42.0
+GNB,LVA,Guinea-Bissau,Latvia,represented_c,0,FRA,,5233.0,0.0,48.0
+GNB,MLT,Guinea-Bissau,Malta,represented_c,0,FRA,,3741.0,0.6666666666666666,48.0
+GNB,NLD,Guinea-Bissau,Netherlands,neighbour_post,0,,,364.0,0.0,42.0
+GNB,POL,Guinea-Bissau,Poland,neighbour_post,0,,,364.0,0.0,42.0
+GNB,PRT,Guinea-Bissau,Portugal,own_post_vfs,1,,VFS Global,364.0,1685.0,100.0
+GNB,ROU,Guinea-Bissau,Romania,neighbour_post,0,,,364.0,0.3333333333333333,42.0
+GNB,SWE,Guinea-Bissau,Sweden,regional_post,0,,,817.0,0.6666666666666666,34.840625
+GNB,SVN,Guinea-Bissau,Slovenia,regional_post,0,,,3347.0,0.0,11.121875
+GNB,SVK,Guinea-Bissau,Slovakia,neighbour_post,0,,,262.0,0.0,42.0
+CIV,AUT,Côte d'Ivoire,Austria,represented_c,0,BEL,,1397.0,4.333333333333333,48.0
+CIV,BEL,Côte d'Ivoire,Belgium,own_post,1,,,715.0,11.666666666666666,88.0
+CIV,BGR,Côte d'Ivoire,Bulgaria,regional_post,0,,,1397.0,3.0,29.403125
+CIV,CYP,Côte d'Ivoire,Cyprus,regional_post,0,,,4608.0,1.3333333333333333,5.0
+CIV,CZE,Côte d'Ivoire,Czechia,neighbour_post,0,,,574.0,0.3333333333333333,42.0
+CIV,DEU,Côte d'Ivoire,Germany,own_post_vfs,1,,VFS Global,574.0,44.333333333333336,100.0
+CIV,DNK,Côte d'Ivoire,Denmark,regional_post,0,,,1589.0,4.333333333333333,27.603125
+CIV,EST,Côte d'Ivoire,Estonia,regional_post,0,,,4608.0,0.6666666666666666,5.0
+CIV,GRC,Côte d'Ivoire,Greece,regional_post,0,,,1397.0,5.0,29.403125
+CIV,ESP,Côte d'Ivoire,Spain,own_post_vfs,1,,BLS International,574.0,289.3333333333333,100.0
+CIV,FIN,Côte d'Ivoire,Finland,regional_post,0,,,1397.0,5.0,29.403125
+CIV,FRA,Côte d'Ivoire,France,own_post_vfs,1,,VFS Global,574.0,1417.6666666666667,100.0
+CIV,HRV,Côte d'Ivoire,Croatia,regional_post,0,,,3033.0,2.0,14.065625
+CIV,HUN,Côte d'Ivoire,Hungary,neighbour_post,0,,,574.0,7.0,42.0
+CIV,IRL,Côte d'Ivoire,Ireland,neighbour_post,0,,,609.0,2.0,42.0
+CIV,ITA,Côte d'Ivoire,Italy,own_post_vfs,1,,VFS Global,574.0,119.33333333333333,100.0
+CIV,LTU,Côte d'Ivoire,Lithuania,represented_c,0,FRA,,4608.0,2.0,48.0
+CIV,LUX,Côte d'Ivoire,Luxembourg,represented_d,1,BEL,,1589.0,14.333333333333334,48.0
+CIV,LVA,Côte d'Ivoire,Latvia,represented_c,0,FRA,,4608.0,2.3333333333333335,48.0
+CIV,MLT,Côte d'Ivoire,Malta,represented_c,0,FRA,,3455.0,7.0,48.0
+CIV,NLD,Côte d'Ivoire,Netherlands,own_post,1,,,574.0,5.333333333333333,88.0
+CIV,POL,Côte d'Ivoire,Poland,regional_post,0,,,1397.0,9.333333333333334,29.403125
+CIV,PRT,Côte d'Ivoire,Portugal,own_post,1,,,1269.0,15.333333333333334,88.0
+CIV,ROU,Côte d'Ivoire,Romania,regional_post,0,,,1397.0,14.333333333333334,29.403125
+CIV,SWE,Côte d'Ivoire,Sweden,represented_c,0,BEL,,609.0,6.333333333333333,48.0
+CIV,SVN,Côte d'Ivoire,Slovenia,regional_post,0,,,3445.0,0.6666666666666666,10.203125
+CIV,SVK,Côte d'Ivoire,Slovakia,neighbour_post,0,,,1188.0,1.3333333333333333,42.0
+KEN,AUT,Kenya,Austria,own_post,1,,,1171.0,36.0,88.0
+KEN,BEL,Kenya,Belgium,own_post,1,,,506.0,15.0,88.0
+KEN,BGR,Kenya,Bulgaria,neighbour_post,0,,,1171.0,2.0,42.0
+KEN,CYP,Kenya,Cyprus,regional_post,0,,,3537.0,14.666666666666666,9.340625
+KEN,CZE,Kenya,Czechia,own_post,1,,,1171.0,16.0,88.0
+KEN,DEU,Kenya,Germany,own_post_vfs,1,,VFS Global,506.0,194.33333333333334,100.0
+KEN,DNK,Kenya,Denmark,own_post_vfs,1,,VFS Global,756.0,84.0,100.0
+KEN,EST,Kenya,Estonia,regional_post,0,,,3537.0,1.3333333333333333,9.340625
+KEN,GRC,Kenya,Greece,own_post,1,,,1171.0,5.666666666666667,88.0
+KEN,ESP,Kenya,Spain,own_post,1,,,557.0,66.33333333333333,88.0
+KEN,FIN,Kenya,Finland,own_post_vfs,1,,VFS Global,557.0,95.0,100.0
+KEN,FRA,Kenya,France,own_post_vfs,1,,TLScontact,506.0,137.0,100.0
+KEN,HRV,Kenya,Croatia,regional_post,0,,,2873.0,13.333333333333334,15.565625
+KEN,HUN,Kenya,Hungary,own_post,1,,,2744.0,61.666666666666664,88.0
+KEN,IRL,Kenya,Ireland,own_post_vfs,1,,VFS Global,506.0,89.0,100.0
+KEN,ITA,Kenya,Italy,own_post_vfs,1,,VFS Global,506.0,28.333333333333332,100.0
+KEN,LTU,Kenya,Lithuania,represented_c,0,FRA,,2873.0,5.666666666666667,48.0
+KEN,LUX,Kenya,Luxembourg,represented_d,1,BEL,,1171.0,6.0,48.0
+KEN,LVA,Kenya,Latvia,represented_c,0,FRA,,3537.0,0.0,48.0
+KEN,MLT,Kenya,Malta,represented_c,0,FRA,,3537.0,59.333333333333336,48.0
+KEN,NLD,Kenya,Netherlands,own_post_vfs,1,,VFS Global,506.0,67.0,100.0
+KEN,POL,Kenya,Poland,own_post_vfs,1,,VFS Global,557.0,279.3333333333333,100.0
+KEN,PRT,Kenya,Portugal,own_post,1,,,1171.0,17.0,88.0
+KEN,ROU,Kenya,Romania,own_post,1,,,1171.0,70.66666666666667,88.0
+KEN,SWE,Kenya,Sweden,own_post_vfs,1,,VFS Global,506.0,26.333333333333332,100.0
+KEN,SVN,Kenya,Slovenia,neighbour_post,0,,,1171.0,0.6666666666666666,42.0
+KEN,SVK,Kenya,Slovakia,own_post,1,,,1171.0,2.0,88.0
+LSO,AUT,Lesotho,Austria,neighbour_post,0,,,406.0,0.3333333333333333,42.0
+LSO,BEL,Lesotho,Belgium,neighbour_post,0,,,406.0,0.3333333333333333,42.0
+LSO,BGR,Lesotho,Bulgaria,neighbour_post,0,,,406.0,0.0,42.0
+LSO,CYP,Lesotho,Cyprus,regional_post,0,,,6620.0,0.3333333333333333,5.0
+LSO,CZE,Lesotho,Czechia,neighbour_post,0,,,406.0,0.0,42.0
+LSO,DEU,Lesotho,Germany,neighbour_post,0,,,406.0,1.3333333333333333,42.0
+LSO,DNK,Lesotho,Denmark,regional_post,0,,,3060.0,0.0,13.8125
+LSO,EST,Lesotho,Estonia,regional_post,0,,,6620.0,0.0,5.0
+LSO,GRC,Lesotho,Greece,neighbour_post,0,,,406.0,0.0,42.0
+LSO,ESP,Lesotho,Spain,neighbour_post,0,,,406.0,0.0,42.0
+LSO,FIN,Lesotho,Finland,neighbour_post,0,,,406.0,0.0,42.0
+LSO,FRA,Lesotho,France,neighbour_post,0,,,406.0,0.0,42.0
+LSO,HRV,Lesotho,Croatia,neighbour_post,0,,,406.0,0.0,42.0
+LSO,HUN,Lesotho,Hungary,neighbour_post,0,,,406.0,0.0,42.0
+LSO,IRL,Lesotho,Ireland,neighbour_post,0,,,406.0,7.333333333333333,42.0
+LSO,ITA,Lesotho,Italy,neighbour_post,0,,,406.0,0.3333333333333333,42.0
+LSO,LTU,Lesotho,Lithuania,neighbour_post,0,,,406.0,0.0,42.0
+LSO,LUX,Lesotho,Luxembourg,regional_post,0,,,4440.0,0.0,5.0
+LSO,LVA,Lesotho,Latvia,regional_post,0,,,6620.0,0.0,5.0
+LSO,MLT,Lesotho,Malta,regional_post,0,,,6620.0,0.0,5.0
+LSO,NLD,Lesotho,Netherlands,neighbour_post,0,,,406.0,1.6666666666666667,42.0
+LSO,POL,Lesotho,Poland,neighbour_post,0,,,406.0,1.6666666666666667,42.0
+LSO,PRT,Lesotho,Portugal,neighbour_post,0,,,406.0,0.0,42.0
+LSO,ROU,Lesotho,Romania,neighbour_post,0,,,406.0,0.0,42.0
+LSO,SWE,Lesotho,Sweden,neighbour_post,0,,,406.0,0.0,42.0
+LSO,SVN,Lesotho,Slovenia,regional_post,0,,,4440.0,0.0,5.0
+LSO,SVK,Lesotho,Slovakia,neighbour_post,0,,,406.0,0.0,42.0
+LBR,AUT,Liberia,Austria,regional_post,0,,,1178.0,0.0,31.45625
+LBR,BEL,Liberia,Belgium,neighbour_post,0,,,609.0,0.0,42.0
+LBR,BGR,Liberia,Bulgaria,regional_post,0,,,2003.0,0.0,23.721875
+LBR,CYP,Liberia,Cyprus,regional_post,0,,,5122.0,0.3333333333333333,5.0
+LBR,CZE,Liberia,Czechia,neighbour_post,0,,,651.0,0.0,42.0
+LBR,DEU,Liberia,Germany,own_post,1,,,368.0,2.0,88.0
+LBR,DNK,Liberia,Denmark,regional_post,0,,,1178.0,1.3333333333333333,31.45625
+LBR,EST,Liberia,Estonia,regional_post,0,,,5122.0,0.3333333333333333,5.0
+LBR,GRC,Liberia,Greece,regional_post,0,,,1178.0,0.0,31.45625
+LBR,ESP,Liberia,Spain,neighbour_post,0,,,609.0,10.666666666666666,42.0
+LBR,FIN,Liberia,Finland,regional_post,0,,,1178.0,0.6666666666666666,31.45625
+LBR,FRA,Liberia,France,own_post,1,,,368.0,10.0,88.0
+LBR,HRV,Liberia,Croatia,regional_post,0,,,3109.0,0.0,13.353124999999999
+LBR,HUN,Liberia,Hungary,regional_post,0,,,1167.0,1.0,31.559375
+LBR,IRL,Liberia,Ireland,own_post,1,,,368.0,0.3333333333333333,88.0
+LBR,ITA,Liberia,Italy,neighbour_post,0,,,609.0,4.666666666666667,42.0
+LBR,LTU,Liberia,Lithuania,represented_c,0,FRA,,5122.0,0.0,48.0
+LBR,LUX,Liberia,Luxembourg,regional_post,0,,,1178.0,0.0,31.45625
+LBR,LVA,Liberia,Latvia,represented_c,0,FRA,,5122.0,0.0,48.0
+LBR,MLT,Liberia,Malta,represented_c,0,FRA,,3840.0,1.0,48.0
+LBR,NLD,Liberia,Netherlands,neighbour_post,0,,,609.0,1.3333333333333333,42.0
+LBR,POL,Liberia,Poland,regional_post,0,,,1178.0,0.3333333333333333,31.45625
+LBR,PRT,Liberia,Portugal,regional_post,0,,,817.0,0.6666666666666666,34.840625
+LBR,ROU,Liberia,Romania,regional_post,0,,,1178.0,1.3333333333333333,31.45625
+LBR,SWE,Liberia,Sweden,own_post,1,,,768.0,2.0,88.0
+LBR,SVN,Liberia,Slovenia,regional_post,0,,,3672.0,0.0,8.075
+LBR,SVK,Liberia,Slovakia,neighbour_post,0,,,651.0,0.0,42.0
+LBY,AUT,Libya,Austria,own_post,1,,,528.0,3.0,88.0
+LBY,BEL,Libya,Belgium,neighbour_post,0,,,528.0,2.6666666666666665,42.0
+LBY,BGR,Libya,Bulgaria,neighbour_post,0,,,528.0,1.0,42.0
+LBY,CYP,Libya,Cyprus,neighbour_post,0,,,1746.0,6.333333333333333,42.0
+LBY,CZE,Libya,Czechia,neighbour_post,0,,,528.0,0.0,42.0
+LBY,DEU,Libya,Germany,neighbour_post,0,,,528.0,72.0,42.0
+LBY,DNK,Libya,Denmark,regional_post,0,,,3688.0,0.6666666666666666,7.925000000000001
+LBY,EST,Libya,Estonia,neighbour_post,0,,,1746.0,0.0,42.0
+LBY,GRC,Libya,Greece,own_post,1,,,528.0,0.3333333333333333,88.0
+LBY,ESP,Libya,Spain,own_post,1,,,528.0,15.666666666666666,88.0
+LBY,FIN,Libya,Finland,neighbour_post,0,,,528.0,1.0,42.0
+LBY,FRA,Libya,France,own_post,1,,,528.0,5.333333333333333,88.0
+LBY,HRV,Libya,Croatia,own_post,1,,,1030.0,0.3333333333333333,88.0
+LBY,HUN,Libya,Hungary,own_post,1,,,528.0,4.666666666666667,88.0
+LBY,IRL,Libya,Ireland,neighbour_post,0,,,1746.0,8.333333333333334,42.0
+LBY,ITA,Libya,Italy,own_post,1,,,528.0,17.0,88.0
+LBY,LTU,Libya,Lithuania,represented_c,0,FRA,,1746.0,0.0,48.0
+LBY,LUX,Libya,Luxembourg,represented_d,1,NLD,,3688.0,1.0,48.0
+LBY,LVA,Libya,Latvia,represented_c,0,FRA,,1746.0,0.0,48.0
+LBY,MLT,Libya,Malta,own_post_vfs,1,,VFS Global,528.0,69.66666666666667,100.0
+LBY,NLD,Libya,Netherlands,own_post,1,,,528.0,5.666666666666667,88.0
+LBY,POL,Libya,Poland,own_post,1,,,528.0,13.0,88.0
+LBY,PRT,Libya,Portugal,neighbour_post,0,,,528.0,3.3333333333333335,42.0
+LBY,ROU,Libya,Romania,own_post,1,,,528.0,3.0,88.0
+LBY,SWE,Libya,Sweden,neighbour_post,0,,,528.0,2.3333333333333335,42.0
+LBY,SVN,Libya,Slovenia,neighbour_post,0,,,1030.0,0.6666666666666666,42.0
+LBY,SVK,Libya,Slovakia,neighbour_post,0,,,1746.0,1.0,42.0
+MDG,AUT,Madagascar,Austria,regional_post,0,,,2124.0,40.0,22.5875
+MDG,BEL,Madagascar,Belgium,regional_post,0,,,1903.0,79.0,24.659375
+MDG,BGR,Madagascar,Bulgaria,regional_post,0,,,2124.0,1.6666666666666667,22.5875
+MDG,CYP,Madagascar,Cyprus,regional_post,0,,,5716.0,0.6666666666666666,5.0
+MDG,CZE,Madagascar,Czechia,regional_post,0,,,2079.0,0.6666666666666666,23.009375
+MDG,DEU,Madagascar,Germany,own_post,1,,,1559.0,364.3333333333333,88.0
+MDG,DNK,Madagascar,Denmark,regional_post,0,,,2338.0,1.0,20.58125
+MDG,EST,Madagascar,Estonia,regional_post,0,,,5716.0,0.0,5.0
+MDG,GRC,Madagascar,Greece,regional_post,0,,,1741.0,0.0,26.178125
+MDG,ESP,Madagascar,Spain,regional_post,0,,,1724.0,5.0,26.3375
+MDG,FIN,Madagascar,Finland,regional_post,0,,,1724.0,0.0,26.3375
+MDG,FRA,Madagascar,France,own_post_vfs,1,,VFS Global,921.0,279.6666666666667,100.0
+MDG,HRV,Madagascar,Croatia,regional_post,0,,,2124.0,1.6666666666666667,22.5875
+MDG,HUN,Madagascar,Hungary,regional_post,0,,,2124.0,0.3333333333333333,22.5875
+MDG,IRL,Madagascar,Ireland,regional_post,0,,,1559.0,0.0,27.884375
+MDG,ITA,Madagascar,Italy,regional_post,0,,,1724.0,8.666666666666666,26.3375
+MDG,LTU,Madagascar,Lithuania,represented_c,0,FRA,,2124.0,0.6666666666666666,48.0
+MDG,LUX,Madagascar,Luxembourg,regional_post,0,,,3249.0,2.6666666666666665,12.040624999999999
+MDG,LVA,Madagascar,Latvia,represented_c,0,FRA,,5716.0,0.0,48.0
+MDG,MLT,Madagascar,Malta,represented_c,0,FRA,,5716.0,0.3333333333333333,48.0
+MDG,NLD,Madagascar,Netherlands,regional_post,0,,,1724.0,2.3333333333333335,26.3375
+MDG,POL,Madagascar,Poland,regional_post,0,,,1903.0,1.3333333333333333,24.659375
+MDG,PRT,Madagascar,Portugal,regional_post,0,,,1724.0,2.0,26.3375
+MDG,ROU,Madagascar,Romania,regional_post,0,,,1741.0,0.3333333333333333,26.178125
+MDG,SWE,Madagascar,Sweden,regional_post,0,,,921.0,1.0,33.865625
+MDG,SVN,Madagascar,Slovenia,regional_post,0,,,3249.0,1.0,12.040624999999999
+MDG,SVK,Madagascar,Slovakia,regional_post,0,,,2124.0,0.0,22.5875
+MWI,AUT,Malawi,Austria,regional_post,0,,,1434.0,0.0,29.05625
+MWI,BEL,Malawi,Belgium,neighbour_post,0,,,893.0,0.0,42.0
+MWI,BGR,Malawi,Bulgaria,regional_post,0,,,1434.0,0.0,29.05625
+MWI,CYP,Malawi,Cyprus,regional_post,0,,,4907.0,0.0,5.0
+MWI,CZE,Malawi,Czechia,neighbour_post,0,,,620.0,0.3333333333333333,42.0
+MWI,DEU,Malawi,Germany,own_post,1,,,522.0,8.0,88.0
+MWI,DNK,Malawi,Denmark,regional_post,0,,,1401.0,0.6666666666666666,29.365625
+MWI,EST,Malawi,Estonia,regional_post,0,,,4907.0,0.0,5.0
+MWI,GRC,Malawi,Greece,regional_post,0,,,522.0,0.0,35.0
+MWI,ESP,Malawi,Spain,neighbour_post,0,,,522.0,2.6666666666666665,42.0
+MWI,FIN,Malawi,Finland,neighbour_post,0,,,620.0,1.0,42.0
+MWI,FRA,Malawi,France,neighbour_post,0,,,522.0,3.0,42.0
+MWI,HRV,Malawi,Croatia,regional_post,0,,,1434.0,0.0,29.05625
+MWI,HUN,Malawi,Hungary,regional_post,0,,,1434.0,0.3333333333333333,29.05625
+MWI,IRL,Malawi,Ireland,own_post,1,,,620.0,29.333333333333332,88.0
+MWI,ITA,Malawi,Italy,neighbour_post,0,,,522.0,1.3333333333333333,42.0
+MWI,LTU,Malawi,Lithuania,regional_post,0,,,1434.0,1.0,29.05625
+MWI,LUX,Malawi,Luxembourg,regional_post,0,,,2621.0,0.3333333333333333,17.928125
+MWI,LVA,Malawi,Latvia,regional_post,0,,,4907.0,0.0,5.0
+MWI,MLT,Malawi,Malta,regional_post,0,,,4907.0,1.3333333333333333,5.0
+MWI,NLD,Malawi,Netherlands,neighbour_post,0,,,522.0,3.6666666666666665,42.0
+MWI,POL,Malawi,Poland,neighbour_post,0,,,893.0,7.0,42.0
+MWI,PRT,Malawi,Portugal,neighbour_post,0,,,522.0,0.3333333333333333,42.0
+MWI,ROU,Malawi,Romania,regional_post,0,,,522.0,0.3333333333333333,35.0
+MWI,SWE,Malawi,Sweden,neighbour_post,0,,,522.0,1.6666666666666667,42.0
+MWI,SVN,Malawi,Slovenia,regional_post,0,,,2621.0,0.0,17.928125
+MWI,SVK,Malawi,Slovakia,regional_post,0,,,1434.0,0.0,29.05625
+MLI,AUT,Mali,Austria,represented_c,0,BEL,,1047.0,3.6666666666666665,48.0
+MLI,BEL,Mali,Belgium,own_post,1,,,687.0,6.0,88.0
+MLI,BGR,Mali,Bulgaria,neighbour_post,0,,,1700.0,1.3333333333333333,42.0
+MLI,CYP,Mali,Cyprus,regional_post,0,,,4473.0,0.0,5.0
+MLI,CZE,Mali,Czechia,own_post,1,,,914.0,0.0,88.0
+MLI,DEU,Mali,Germany,own_post,1,,,687.0,17.666666666666668,88.0
+MLI,DNK,Mali,Denmark,neighbour_post,0,,,1047.0,2.0,42.0
+MLI,EST,Mali,Estonia,regional_post,0,,,4473.0,1.0,5.0
+MLI,GRC,Mali,Greece,neighbour_post,0,,,1047.0,2.0,42.0
+MLI,ESP,Mali,Spain,own_post,1,,,715.0,796.0,88.0
+MLI,FIN,Mali,Finland,neighbour_post,0,,,1047.0,0.6666666666666666,42.0
+MLI,FRA,Mali,France,own_post_vfs,1,,TLScontact,687.0,1493.0,100.0
+MLI,HRV,Mali,Croatia,neighbour_post,0,,,2381.0,1.6666666666666667,42.0
+MLI,HUN,Mali,Hungary,neighbour_post,0,,,1161.0,1.3333333333333333,42.0
+MLI,IRL,Mali,Ireland,regional_post,0,,,742.0,0.3333333333333333,35.0
+MLI,ITA,Mali,Italy,neighbour_post,0,,,687.0,90.33333333333333,42.0
+MLI,LTU,Mali,Lithuania,represented_c,0,FRA,,4473.0,0.3333333333333333,48.0
+MLI,LUX,Mali,Luxembourg,represented_d,1,BEL,,1047.0,1.0,48.0
+MLI,LVA,Mali,Latvia,represented_c,0,FRA,,4473.0,0.3333333333333333,48.0
+MLI,MLT,Mali,Malta,represented_c,0,FRA,,3098.0,3.3333333333333335,48.0
+MLI,NLD,Mali,Netherlands,own_post,1,,,687.0,1.0,88.0
+MLI,POL,Mali,Poland,neighbour_post,0,,,1047.0,6.0,42.0
+MLI,PRT,Mali,Portugal,neighbour_post,0,,,839.0,10.666666666666666,42.0
+MLI,ROU,Mali,Romania,neighbour_post,0,,,1047.0,0.6666666666666666,42.0
+MLI,SWE,Mali,Sweden,own_post,1,,,687.0,2.0,88.0
+MLI,SVN,Mali,Slovenia,neighbour_post,0,,,2905.0,0.3333333333333333,42.0
+MLI,SVK,Mali,Slovakia,neighbour_post,0,,,914.0,0.3333333333333333,42.0
+MRT,AUT,Mauritania,Austria,neighbour_post,0,,,422.0,0.0,42.0
+MRT,BEL,Mauritania,Belgium,neighbour_post,0,,,422.0,3.0,42.0
+MRT,BGR,Mauritania,Bulgaria,neighbour_post,0,,,1986.0,0.3333333333333333,42.0
+MRT,CYP,Mauritania,Cyprus,regional_post,0,,,4940.0,0.0,5.0
+MRT,CZE,Mauritania,Czechia,neighbour_post,0,,,422.0,0.0,42.0
+MRT,DEU,Mauritania,Germany,own_post,1,,,422.0,4.333333333333333,88.0
+MRT,DNK,Mauritania,Denmark,neighbour_post,0,,,422.0,0.0,42.0
+MRT,EST,Mauritania,Estonia,regional_post,0,,,4940.0,0.0,5.0
+MRT,GRC,Mauritania,Greece,neighbour_post,0,,,422.0,0.0,42.0
+MRT,ESP,Mauritania,Spain,own_post,1,,,422.0,241.33333333333334,88.0
+MRT,FIN,Mauritania,Finland,neighbour_post,0,,,422.0,0.3333333333333333,42.0
+MRT,FRA,Mauritania,France,own_post_vfs,1,,VFS Global,422.0,109.0,100.0
+MRT,HRV,Mauritania,Croatia,neighbour_post,0,,,1986.0,0.6666666666666666,42.0
+MRT,HUN,Mauritania,Hungary,neighbour_post,0,,,1986.0,1.0,42.0
+MRT,IRL,Mauritania,Ireland,regional_post,0,,,1113.0,1.6666666666666667,32.065625
+MRT,ITA,Mauritania,Italy,neighbour_post,0,,,422.0,5.666666666666667,42.0
+MRT,LTU,Mauritania,Lithuania,represented_c,0,FRA,,4940.0,0.3333333333333333,48.0
+MRT,LUX,Mauritania,Luxembourg,neighbour_post,0,,,422.0,2.3333333333333335,42.0
+MRT,LVA,Mauritania,Latvia,represented_c,0,FRA,,4940.0,0.0,48.0
+MRT,MLT,Mauritania,Malta,represented_c,0,FRA,,3297.0,3.3333333333333335,48.0
+MRT,NLD,Mauritania,Netherlands,neighbour_post,0,,,422.0,0.6666666666666666,42.0
+MRT,POL,Mauritania,Poland,neighbour_post,0,,,422.0,0.6666666666666666,42.0
+MRT,PRT,Mauritania,Portugal,neighbour_post,0,,,422.0,3.6666666666666665,42.0
+MRT,ROU,Mauritania,Romania,neighbour_post,0,,,422.0,0.3333333333333333,42.0
+MRT,SWE,Mauritania,Sweden,neighbour_post,0,,,1051.0,1.0,42.0
+MRT,SVN,Mauritania,Slovenia,neighbour_post,0,,,2787.0,0.0,42.0
+MRT,SVK,Mauritania,Slovakia,regional_post,0,,,961.0,0.0,33.490625
+MUS,AUT,Mauritius,Austria,regional_post,0,,,3057.0,0.3333333333333333,13.840625
+MUS,BEL,Mauritius,Belgium,regional_post,0,,,2820.0,13.666666666666666,16.0625
+MUS,BGR,Mauritius,Bulgaria,regional_post,0,,,3057.0,0.0,13.840625
+MUS,CYP,Mauritius,Cyprus,regional_post,0,,,6257.0,1.0,5.0
+MUS,CZE,Mauritius,Czechia,regional_post,0,,,3057.0,4.0,13.840625
+MUS,DEU,Mauritius,Germany,regional_post,0,,,1059.0,23.0,32.571875
+MUS,DNK,Mauritius,Denmark,regional_post,0,,,2804.0,5.333333333333333,16.2125
+MUS,EST,Mauritius,Estonia,regional_post,0,,,6257.0,0.3333333333333333,5.0
+MUS,GRC,Mauritius,Greece,regional_post,0,,,2793.0,0.0,16.315625
+MUS,ESP,Mauritius,Spain,regional_post,0,,,2627.0,5.333333333333333,17.871875
+MUS,FIN,Mauritius,Finland,regional_post,0,,,2627.0,8.666666666666666,17.871875
+MUS,FRA,Mauritius,France,own_post_vfs,1,,VFS Global,1059.0,521.6666666666666,100.0
+MUS,HRV,Mauritius,Croatia,regional_post,0,,,3057.0,0.6666666666666666,13.840625
+MUS,HUN,Mauritius,Hungary,regional_post,0,,,3057.0,3.3333333333333335,13.840625
+MUS,IRL,Mauritius,Ireland,regional_post,0,,,2610.0,48.0,18.03125
+MUS,ITA,Mauritius,Italy,regional_post,0,,,2627.0,51.666666666666664,17.871875
+MUS,LTU,Mauritius,Lithuania,represented_c,0,FRA,,3057.0,0.3333333333333333,48.0
+MUS,LUX,Mauritius,Luxembourg,regional_post,0,,,3841.0,172.0,6.490625000000001
+MUS,LVA,Mauritius,Latvia,represented_c,0,FRA,,6257.0,0.3333333333333333,48.0
+MUS,MLT,Mauritius,Malta,represented_c,0,FRA,,6257.0,109.33333333333333,48.0
+MUS,NLD,Mauritius,Netherlands,regional_post,0,,,2627.0,6.0,17.871875
+MUS,POL,Mauritius,Poland,regional_post,0,,,2820.0,5.333333333333333,16.0625
+MUS,PRT,Mauritius,Portugal,regional_post,0,,,2627.0,5.0,17.871875
+MUS,ROU,Mauritius,Romania,regional_post,0,,,2793.0,0.3333333333333333,16.315625
+MUS,SWE,Mauritius,Sweden,regional_post,0,,,1792.0,2.6666666666666665,25.7
+MUS,SVN,Mauritius,Slovenia,regional_post,0,,,3841.0,0.3333333333333333,6.490625000000001
+MUS,SVK,Mauritius,Slovakia,regional_post,0,,,3057.0,0.6666666666666666,13.840625
+MAR,AUT,Morocco,Austria,own_post_vfs,1,,VFS Global,945.0,54.0,100.0
+MAR,BEL,Morocco,Belgium,own_post_vfs,1,,TLScontact,945.0,474.6666666666667,100.0
+MAR,BGR,Morocco,Bulgaria,own_post,1,,,945.0,26.333333333333332,88.0
+MAR,CYP,Morocco,Cyprus,regional_post,0,,,3601.0,9.666666666666666,8.740625000000001
+MAR,CZE,Morocco,Czechia,own_post_vfs,1,,VFS Global,945.0,24.333333333333332,100.0
+MAR,DEU,Morocco,Germany,own_post_vfs,1,,VFS Global,945.0,745.6666666666666,100.0
+MAR,DNK,Morocco,Denmark,vfs_only,1,,VFS Global,2408.0,33.0,82.0
+MAR,EST,Morocco,Estonia,regional_post,0,,,3601.0,5.666666666666667,8.740625000000001
+MAR,GRC,Morocco,Greece,own_post_vfs,1,,VFS Global,945.0,64.0,100.0
+MAR,ESP,Morocco,Spain,own_post_vfs,1,,BLS International,945.0,17970.0,100.0
+MAR,FIN,Morocco,Finland,own_post_vfs,1,,VFS Global,945.0,104.0,100.0
+MAR,FRA,Morocco,France,own_post_vfs,1,,TLScontact,945.0,11421.333333333334,100.0
+MAR,HRV,Morocco,Croatia,own_post,1,,,945.0,84.66666666666667,88.0
+MAR,HUN,Morocco,Hungary,own_post_vfs,1,,VFS Global,945.0,78.66666666666667,100.0
+MAR,IRL,Morocco,Ireland,vfs_only,1,,VFS Global,2917.0,55.333333333333336,82.0
+MAR,ITA,Morocco,Italy,own_post_vfs,1,,VFS Global,945.0,5378.0,100.0
+MAR,LTU,Morocco,Lithuania,represented_c,0,FRA,,3601.0,7.666666666666667,48.0
+MAR,LUX,Morocco,Luxembourg,represented_d,1,BEL,,2408.0,163.0,48.0
+MAR,LVA,Morocco,Latvia,represented_c,0,FRA,,3601.0,0.6666666666666666,48.0
+MAR,MLT,Morocco,Malta,own_post_vfs,1,,VFS Global,1576.0,216.33333333333334,100.0
+MAR,NLD,Morocco,Netherlands,own_post_vfs,1,,VFS Global,945.0,103.66666666666667,100.0
+MAR,POL,Morocco,Poland,own_post_vfs,1,,VFS Global,945.0,202.66666666666666,100.0
+MAR,PRT,Morocco,Portugal,own_post_vfs,1,,VFS Global,945.0,982.0,100.0
+MAR,ROU,Morocco,Romania,own_post,1,,,945.0,731.6666666666666,88.0
+MAR,SWE,Morocco,Sweden,own_post_vfs,1,,VFS Global,945.0,158.66666666666666,100.0
+MAR,SVN,Morocco,Slovenia,neighbour_post,0,,,945.0,21.0,42.0
+MAR,SVK,Morocco,Slovakia,regional_post,0,,,2875.0,4.0,15.546875
+MOZ,AUT,Mozambique,Austria,neighbour_post,0,,,438.0,0.6666666666666666,42.0
+MOZ,BEL,Mozambique,Belgium,neighbour_post,0,,,438.0,0.3333333333333333,42.0
+MOZ,BGR,Mozambique,Bulgaria,neighbour_post,0,,,438.0,0.0,42.0
+MOZ,CYP,Mozambique,Cyprus,regional_post,0,,,6236.0,0.6666666666666666,5.0
+MOZ,CZE,Mozambique,Czechia,neighbour_post,0,,,438.0,0.3333333333333333,42.0
+MOZ,DEU,Mozambique,Germany,own_post_vfs,1,,VFS Global,438.0,12.0,100.0
+MOZ,DNK,Mozambique,Denmark,regional_post,0,,,2688.0,3.0,17.3
+MOZ,EST,Mozambique,Estonia,regional_post,0,,,6236.0,0.0,5.0
+MOZ,GRC,Mozambique,Greece,neighbour_post,0,,,438.0,0.0,42.0
+MOZ,ESP,Mozambique,Spain,own_post,1,,,438.0,13.333333333333334,88.0
+MOZ,FIN,Mozambique,Finland,own_post,1,,,438.0,1.0,88.0
+MOZ,FRA,Mozambique,France,own_post,1,,,438.0,7.666666666666667,88.0
+MOZ,HRV,Mozambique,Croatia,neighbour_post,0,,,438.0,0.0,42.0
+MOZ,HUN,Mozambique,Hungary,neighbour_post,0,,,438.0,1.3333333333333333,42.0
+MOZ,IRL,Mozambique,Ireland,own_post,1,,,438.0,1.3333333333333333,88.0
+MOZ,ITA,Mozambique,Italy,own_post,1,,,438.0,1.6666666666666667,88.0
+MOZ,LTU,Mozambique,Lithuania,represented_c,0,FRA,,438.0,0.0,48.0
+MOZ,LUX,Mozambique,Luxembourg,represented_d,1,NLD,,3956.0,0.0,48.0
+MOZ,LVA,Mozambique,Latvia,represented_c,0,FRA,,6236.0,0.0,48.0
+MOZ,MLT,Mozambique,Malta,represented_c,0,FRA,,6236.0,0.0,48.0
+MOZ,NLD,Mozambique,Netherlands,own_post,1,,,438.0,5.666666666666667,88.0
+MOZ,POL,Mozambique,Poland,neighbour_post,0,,,438.0,11.333333333333334,42.0
+MOZ,PRT,Mozambique,Portugal,own_post_vfs,1,,VFS Global,438.0,536.3333333333334,100.0
+MOZ,ROU,Mozambique,Romania,neighbour_post,0,,,438.0,0.3333333333333333,42.0
+MOZ,SWE,Mozambique,Sweden,own_post,1,,,151.0,0.3333333333333333,88.0
+MOZ,SVN,Mozambique,Slovenia,regional_post,0,,,3956.0,0.0,5.412500000000001
+MOZ,SVK,Mozambique,Slovakia,neighbour_post,0,,,438.0,0.0,42.0
+NAM,AUT,Namibia,Austria,neighbour_post,0,,,1182.0,1.6666666666666667,42.0
+NAM,BEL,Namibia,Belgium,neighbour_post,0,,,1182.0,3.6666666666666665,42.0
+NAM,BGR,Namibia,Bulgaria,neighbour_post,0,,,1182.0,0.0,42.0
+NAM,CYP,Namibia,Cyprus,regional_post,0,,,6049.0,0.6666666666666666,5.0
+NAM,CZE,Namibia,Czechia,neighbour_post,0,,,1182.0,1.0,42.0
+NAM,DEU,Namibia,Germany,own_post_vfs,1,,VFS Global,931.0,77.66666666666667,100.0
+NAM,DNK,Namibia,Denmark,regional_post,0,,,2690.0,3.6666666666666665,17.28125
+NAM,EST,Namibia,Estonia,regional_post,0,,,6049.0,0.3333333333333333,5.0
+NAM,GRC,Namibia,Greece,neighbour_post,0,,,1182.0,0.0,42.0
+NAM,ESP,Namibia,Spain,own_post,1,,,1182.0,2.3333333333333335,88.0
+NAM,FIN,Namibia,Finland,own_post,1,,,1182.0,3.3333333333333335,88.0
+NAM,FRA,Namibia,France,own_post,1,,,931.0,4.0,88.0
+NAM,HRV,Namibia,Croatia,neighbour_post,0,,,1182.0,2.3333333333333335,42.0
+NAM,HUN,Namibia,Hungary,neighbour_post,0,,,1182.0,1.3333333333333333,42.0
+NAM,IRL,Namibia,Ireland,neighbour_post,0,,,1182.0,4.666666666666667,42.0
+NAM,ITA,Namibia,Italy,neighbour_post,0,,,1182.0,0.3333333333333333,42.0
+NAM,LTU,Namibia,Lithuania,represented_c,0,FRA,,1182.0,0.0,48.0
+NAM,LUX,Namibia,Luxembourg,regional_post,0,,,4242.0,1.3333333333333333,5.0
+NAM,LVA,Namibia,Latvia,represented_c,0,FRA,,6049.0,0.0,48.0
+NAM,MLT,Namibia,Malta,represented_c,0,FRA,,6049.0,2.0,48.0
+NAM,NLD,Namibia,Netherlands,neighbour_post,0,,,1182.0,13.333333333333334,42.0
+NAM,POL,Namibia,Poland,neighbour_post,0,,,1182.0,7.666666666666667,42.0
+NAM,PRT,Namibia,Portugal,own_post,1,,,1182.0,2.0,88.0
+NAM,ROU,Namibia,Romania,neighbour_post,0,,,1182.0,0.0,42.0
+NAM,SWE,Namibia,Sweden,neighbour_post,0,,,1182.0,0.3333333333333333,42.0
+NAM,SVN,Namibia,Slovenia,regional_post,0,,,4242.0,0.0,5.0
+NAM,SVK,Namibia,Slovakia,neighbour_post,0,,,1182.0,0.0,42.0
+NER,AUT,Niger,Austria,represented_c,0,BEL,,737.0,0.0,48.0
+NER,BEL,Niger,Belgium,own_post,1,,,428.0,4.666666666666667,88.0
+NER,BGR,Niger,Bulgaria,neighbour_post,0,,,737.0,0.3333333333333333,42.0
+NER,CYP,Niger,Cyprus,regional_post,0,,,3513.0,0.0,9.565625
+NER,CZE,Niger,Czechia,neighbour_post,0,,,737.0,0.0,42.0
+NER,DEU,Niger,Germany,own_post,1,,,428.0,5.0,88.0
+NER,DNK,Niger,Denmark,regional_post,0,,,2112.0,0.3333333333333333,22.7
+NER,EST,Niger,Estonia,regional_post,0,,,3513.0,0.0,9.565625
+NER,GRC,Niger,Greece,neighbour_post,0,,,737.0,0.0,42.0
+NER,ESP,Niger,Spain,own_post,1,,,737.0,7.666666666666667,88.0
+NER,FIN,Niger,Finland,neighbour_post,0,,,737.0,0.3333333333333333,42.0
+NER,FRA,Niger,France,own_post_vfs,1,,VFS Global,428.0,33.666666666666664,100.0
+NER,HRV,Niger,Croatia,neighbour_post,0,,,2413.0,0.3333333333333333,42.0
+NER,HUN,Niger,Hungary,neighbour_post,0,,,737.0,1.3333333333333333,42.0
+NER,IRL,Niger,Ireland,neighbour_post,0,,,737.0,1.0,42.0
+NER,ITA,Niger,Italy,own_post,1,,,428.0,6.333333333333333,88.0
+NER,LTU,Niger,Lithuania,represented_c,0,FRA,,3513.0,0.0,48.0
+NER,LUX,Niger,Luxembourg,represented_d,1,BEL,,2112.0,2.0,48.0
+NER,LVA,Niger,Latvia,represented_c,0,FRA,,3513.0,0.0,48.0
+NER,MLT,Niger,Malta,represented_c,0,FRA,,2413.0,2.0,48.0
+NER,NLD,Niger,Netherlands,own_post,1,,,428.0,3.0,88.0
+NER,POL,Niger,Poland,neighbour_post,0,,,737.0,1.3333333333333333,42.0
+NER,PRT,Niger,Portugal,neighbour_post,0,,,737.0,1.3333333333333333,42.0
+NER,ROU,Niger,Romania,neighbour_post,0,,,737.0,0.3333333333333333,42.0
+NER,SWE,Niger,Sweden,represented_c,0,BEL,,428.0,1.3333333333333333,48.0
+NER,SVN,Niger,Slovenia,neighbour_post,0,,,2595.0,0.0,42.0
+NER,SVK,Niger,Slovakia,neighbour_post,0,,,737.0,0.0,42.0
+NGA,AUT,Nigeria,Austria,own_post_vfs,1,,VFS Global,2692.0,22.666666666666668,100.0
+NGA,BEL,Nigeria,Belgium,own_post,1,,,568.0,29.333333333333332,88.0
+NGA,BGR,Nigeria,Bulgaria,own_post,1,,,3093.0,14.666666666666666,88.0
+NGA,CYP,Nigeria,Cyprus,regional_post,0,,,3415.0,12.0,10.484375
+NGA,CZE,Nigeria,Czechia,own_post,1,,,913.0,32.666666666666664,88.0
+NGA,DEU,Nigeria,Germany,own_post_vfs,1,,VFS Global,568.0,460.3333333333333,100.0
+NGA,DNK,Nigeria,Denmark,own_post_vfs,1,,VFS Global,2747.0,65.33333333333333,100.0
+NGA,EST,Nigeria,Estonia,regional_post,0,,,3415.0,15.0,10.484375
+NGA,GRC,Nigeria,Greece,own_post,1,,,1751.0,25.0,88.0
+NGA,ESP,Nigeria,Spain,own_post_vfs,1,,BLS International,631.0,644.3333333333334,100.0
+NGA,FIN,Nigeria,Finland,own_post_vfs,1,,VFS Global,2747.0,122.66666666666667,100.0
+NGA,FRA,Nigeria,France,own_post_vfs,1,,VFS Global,568.0,191.66666666666666,100.0
+NGA,HRV,Nigeria,Croatia,regional_post,0,,,2692.0,40.666666666666664,17.2625
+NGA,HUN,Nigeria,Hungary,own_post,1,,,913.0,102.33333333333333,88.0
+NGA,IRL,Nigeria,Ireland,own_post_vfs,1,,VFS Global,2003.0,410.0,100.0
+NGA,ITA,Nigeria,Italy,own_post_vfs,1,,VFS Global,737.0,526.0,100.0
+NGA,LTU,Nigeria,Lithuania,represented_c,0,FRA,,3415.0,27.333333333333332,48.0
+NGA,LUX,Nigeria,Luxembourg,represented_d,1,BEL,,2747.0,18.0,48.0
+NGA,LVA,Nigeria,Latvia,represented_c,0,FRA,,3415.0,2.6666666666666665,48.0
+NGA,MLT,Nigeria,Malta,represented_c,0,FRA,,2692.0,150.66666666666666,48.0
+NGA,NLD,Nigeria,Netherlands,own_post_vfs,1,,VFS Global,568.0,187.0,100.0
+NGA,POL,Nigeria,Poland,own_post_vfs,1,,VFS Global,2115.0,337.6666666666667,100.0
+NGA,PRT,Nigeria,Portugal,own_post_vfs,1,,VFS Global,1001.0,191.66666666666666,100.0
+NGA,ROU,Nigeria,Romania,own_post,1,,,2115.0,123.66666666666667,88.0
+NGA,SWE,Nigeria,Sweden,own_post_vfs,1,,VFS Global,1028.0,177.0,100.0
+NGA,SVN,Nigeria,Slovenia,regional_post,0,,,3106.0,7.666666666666667,13.381250000000001
+NGA,SVK,Nigeria,Slovakia,own_post,1,,,2513.0,21.333333333333332,88.0
+RWA,AUT,Rwanda,Austria,represented_c,0,BEL,,756.0,3.3333333333333335,48.0
+RWA,BEL,Rwanda,Belgium,own_post_vfs,1,,VFS Global,180.0,8.333333333333334,100.0
+RWA,BGR,Rwanda,Bulgaria,regional_post,0,,,1562.0,0.0,27.85625
+RWA,CYP,Rwanda,Cyprus,regional_post,0,,,3562.0,0.0,9.10625
+RWA,CZE,Rwanda,Czechia,regional_post,0,,,756.0,1.3333333333333333,35.0
+RWA,DEU,Rwanda,Germany,own_post,1,,,180.0,65.33333333333333,88.0
+RWA,DNK,Rwanda,Denmark,own_post,1,,,1757.0,2.0,88.0
+RWA,EST,Rwanda,Estonia,regional_post,0,,,3562.0,0.0,9.10625
+RWA,GRC,Rwanda,Greece,neighbour_post,0,,,756.0,0.0,42.0
+RWA,ESP,Rwanda,Spain,neighbour_post,0,,,756.0,17.333333333333332,42.0
+RWA,FIN,Rwanda,Finland,neighbour_post,0,,,756.0,4.0,42.0
+RWA,FRA,Rwanda,France,own_post,1,,,180.0,27.666666666666668,88.0
+RWA,HRV,Rwanda,Croatia,regional_post,0,,,2656.0,0.6666666666666666,17.6
+RWA,HUN,Rwanda,Hungary,regional_post,0,,,756.0,2.0,35.0
+RWA,IRL,Rwanda,Ireland,neighbour_post,0,,,377.0,1.6666666666666667,42.0
+RWA,ITA,Rwanda,Italy,neighbour_post,0,,,377.0,2.3333333333333335,42.0
+RWA,LTU,Rwanda,Lithuania,represented_c,0,FRA,,2656.0,0.0,48.0
+RWA,LUX,Rwanda,Luxembourg,represented_d,1,BEL,,1562.0,1.0,48.0
+RWA,LVA,Rwanda,Latvia,represented_c,0,FRA,,3562.0,0.3333333333333333,48.0
+RWA,MLT,Rwanda,Malta,represented_c,0,FRA,,3562.0,2.3333333333333335,48.0
+RWA,NLD,Rwanda,Netherlands,own_post,1,,,180.0,14.333333333333334,88.0
+RWA,POL,Rwanda,Poland,own_post,1,,,756.0,309.6666666666667,88.0
+RWA,PRT,Rwanda,Portugal,neighbour_post,0,,,756.0,2.3333333333333335,42.0
+RWA,ROU,Rwanda,Romania,regional_post,0,,,756.0,2.6666666666666665,35.0
+RWA,SWE,Rwanda,Sweden,own_post,1,,,377.0,9.333333333333334,88.0
+RWA,SVN,Rwanda,Slovenia,regional_post,0,,,1562.0,0.0,27.85625
+RWA,SVK,Rwanda,Slovakia,regional_post,0,,,756.0,0.0,35.0
+STP,AUT,São Tomé & Príncipe,Austria,regional_post,0,,,1001.0,0.0,33.115625
+STP,BEL,São Tomé & Príncipe,Belgium,regional_post,0,,,671.0,0.0,35.0
+STP,BGR,São Tomé & Príncipe,Bulgaria,regional_post,0,,,1001.0,0.0,33.115625
+STP,CYP,São Tomé & Príncipe,Cyprus,regional_post,0,,,4217.0,0.0,5.0
+STP,CZE,São Tomé & Príncipe,Czechia,regional_post,0,,,977.0,0.0,33.340625
+STP,DEU,São Tomé & Príncipe,Germany,regional_post,0,,,301.0,0.0,35.0
+STP,DNK,São Tomé & Príncipe,Denmark,regional_post,0,,,2609.0,0.0,18.040625
+STP,EST,São Tomé & Príncipe,Estonia,regional_post,0,,,4217.0,0.0,5.0
+STP,GRC,São Tomé & Príncipe,Greece,regional_post,0,,,1001.0,0.0,33.115625
+STP,ESP,São Tomé & Príncipe,Spain,regional_post,0,,,301.0,1.6666666666666667,35.0
+STP,FIN,São Tomé & Príncipe,Finland,regional_post,0,,,1001.0,0.0,33.115625
+STP,FRA,São Tomé & Príncipe,France,own_post,1,,,301.0,1.3333333333333333,88.0
+STP,HRV,São Tomé & Príncipe,Croatia,regional_post,0,,,3683.0,0.0,7.971875000000001
+STP,HUN,São Tomé & Príncipe,Hungary,regional_post,0,,,977.0,0.0,33.340625
+STP,IRL,São Tomé & Príncipe,Ireland,regional_post,0,,,1001.0,0.0,33.115625
+STP,ITA,São Tomé & Príncipe,Italy,regional_post,0,,,301.0,0.0,35.0
+STP,LTU,São Tomé & Príncipe,Lithuania,represented_c,0,FRA,,3697.0,0.0,48.0
+STP,LUX,São Tomé & Príncipe,Luxembourg,regional_post,0,,,3107.0,0.0,13.371875
+STP,LVA,São Tomé & Príncipe,Latvia,represented_c,0,FRA,,4217.0,0.0,48.0
+STP,MLT,São Tomé & Príncipe,Malta,represented_c,0,FRA,,3683.0,0.0,48.0
+STP,NLD,São Tomé & Príncipe,Netherlands,regional_post,0,,,826.0,0.0,34.75625
+STP,POL,São Tomé & Príncipe,Poland,regional_post,0,,,1001.0,0.0,33.115625
+STP,PRT,São Tomé & Príncipe,Portugal,own_post_vfs,1,,VFS Global,1001.0,928.3333333333334,100.0
+STP,ROU,São Tomé & Príncipe,Romania,regional_post,0,,,1001.0,0.0,33.115625
+STP,SWE,São Tomé & Príncipe,Sweden,regional_post,0,,,1001.0,0.0,33.115625
+STP,SVN,São Tomé & Príncipe,Slovenia,regional_post,0,,,3693.0,0.0,7.878125000000001
+STP,SVK,São Tomé & Príncipe,Slovakia,regional_post,0,,,1001.0,0.0,33.115625
+SEN,AUT,Senegal,Austria,own_post,1,,,2408.0,4.666666666666667,88.0
+SEN,BEL,Senegal,Belgium,own_post_vfs,1,,VFS Global,600.0,19.666666666666668,100.0
+SEN,BGR,Senegal,Bulgaria,regional_post,0,,,2408.0,2.3333333333333335,19.925
+SEN,CYP,Senegal,Cyprus,regional_post,0,,,5255.0,2.6666666666666665,5.0
+SEN,CZE,Senegal,Czechia,own_post,1,,,600.0,1.0,88.0
+SEN,DEU,Senegal,Germany,own_post_vfs,1,,VFS Global,156.0,52.0,100.0
+SEN,DNK,Senegal,Denmark,own_post,1,,,5550.0,5.666666666666667,88.0
+SEN,EST,Senegal,Estonia,regional_post,0,,,5255.0,0.0,5.0
+SEN,GRC,Senegal,Greece,own_post,1,,,2408.0,14.333333333333334,88.0
+SEN,ESP,Senegal,Spain,own_post_vfs,1,,BLS International,364.0,4060.6666666666665,100.0
+SEN,FIN,Senegal,Finland,own_post,1,,,2408.0,4.0,88.0
+SEN,FRA,Senegal,France,own_post_vfs,1,,VFS Global,364.0,1341.0,100.0
+SEN,HRV,Senegal,Croatia,regional_post,0,,,2408.0,5.333333333333333,19.925
+SEN,HUN,Senegal,Hungary,regional_post,0,,,2137.0,0.6666666666666666,22.465625
+SEN,IRL,Senegal,Ireland,regional_post,0,,,820.0,3.3333333333333335,34.8125
+SEN,ITA,Senegal,Italy,own_post_vfs,1,,VFS Global,600.0,1404.6666666666667,100.0
+SEN,LTU,Senegal,Lithuania,represented_c,0,FRA,,5255.0,1.0,48.0
+SEN,LUX,Senegal,Luxembourg,own_post,1,,,652.0,13.0,88.0
+SEN,LVA,Senegal,Latvia,represented_c,0,FRA,,5255.0,10.0,48.0
+SEN,MLT,Senegal,Malta,represented_c,0,FRA,,3688.0,4.333333333333333,48.0
+SEN,NLD,Senegal,Netherlands,own_post,1,,,1047.0,4.333333333333333,88.0
+SEN,POL,Senegal,Poland,own_post,1,,,2408.0,12.333333333333334,88.0
+SEN,PRT,Senegal,Portugal,own_post_vfs,1,,VFS Global,364.0,450.6666666666667,100.0
+SEN,ROU,Senegal,Romania,own_post,1,,,2408.0,9.333333333333334,88.0
+SEN,SWE,Senegal,Sweden,represented_c,0,BEL,,1047.0,10.333333333333334,48.0
+SEN,SVN,Senegal,Slovenia,regional_post,0,,,3195.0,0.6666666666666666,12.546875
+SEN,SVK,Senegal,Slovakia,neighbour_post,0,,,600.0,2.3333333333333335,42.0
+SYC,AUT,Seychelles,Austria,regional_post,0,,,2104.0,0.3333333333333333,22.775
+SYC,BEL,Seychelles,Belgium,regional_post,0,,,2104.0,0.0,22.775
+SYC,BGR,Seychelles,Bulgaria,regional_post,0,,,2393.0,0.0,20.065625
+SYC,CYP,Seychelles,Cyprus,regional_post,0,,,4644.0,0.3333333333333333,5.0
+SYC,CZE,Seychelles,Czechia,regional_post,0,,,2104.0,0.0,22.775
+SYC,DEU,Seychelles,Germany,regional_post,0,,,1805.0,1.0,25.578125
+SYC,DNK,Seychelles,Denmark,regional_post,0,,,1348.0,1.0,29.8625
+SYC,EST,Seychelles,Estonia,regional_post,0,,,4644.0,0.0,5.0
+SYC,GRC,Seychelles,Greece,regional_post,0,,,2104.0,0.0,22.775
+SYC,ESP,Seychelles,Spain,regional_post,0,,,2104.0,1.3333333333333333,22.775
+SYC,FIN,Seychelles,Finland,regional_post,0,,,2104.0,0.0,22.775
+SYC,FRA,Seychelles,France,own_post,1,,,1555.0,15.666666666666666,88.0
+SYC,HRV,Seychelles,Croatia,regional_post,0,,,3735.0,0.0,7.484375
+SYC,HUN,Seychelles,Hungary,regional_post,0,,,2104.0,0.6666666666666666,22.775
+SYC,IRL,Seychelles,Ireland,regional_post,0,,,2104.0,1.3333333333333333,22.775
+SYC,ITA,Seychelles,Italy,regional_post,0,,,1348.0,0.6666666666666666,29.8625
+SYC,LTU,Seychelles,Lithuania,represented_c,0,FRA,,3735.0,0.0,48.0
+SYC,LUX,Seychelles,Luxembourg,regional_post,0,,,2393.0,0.0,20.065625
+SYC,LVA,Seychelles,Latvia,represented_c,0,FRA,,4644.0,0.0,48.0
+SYC,MLT,Seychelles,Malta,represented_c,0,FRA,,4644.0,1.3333333333333333,48.0
+SYC,NLD,Seychelles,Netherlands,regional_post,0,,,2104.0,0.0,22.775
+SYC,POL,Seychelles,Poland,regional_post,0,,,2104.0,1.0,22.775
+SYC,PRT,Seychelles,Portugal,regional_post,0,,,2104.0,0.0,22.775
+SYC,ROU,Seychelles,Romania,regional_post,0,,,2104.0,0.0,22.775
+SYC,SWE,Seychelles,Sweden,regional_post,0,,,1555.0,0.0,27.921875
+SYC,SVN,Seychelles,Slovenia,regional_post,0,,,2393.0,0.0,20.065625
+SYC,SVK,Seychelles,Slovakia,regional_post,0,,,2104.0,0.3333333333333333,22.775
+SLE,AUT,Sierra Leone,Austria,regional_post,0,,,820.0,0.6666666666666666,34.8125
+SLE,BEL,Sierra Leone,Belgium,neighbour_post,0,,,290.0,0.3333333333333333,42.0
+SLE,BGR,Sierra Leone,Bulgaria,regional_post,0,,,2250.0,0.3333333333333333,21.40625
+SLE,CYP,Sierra Leone,Cyprus,regional_post,0,,,5211.0,1.0,5.0
+SLE,CZE,Sierra Leone,Czechia,neighbour_post,0,,,290.0,0.0,42.0
+SLE,DEU,Sierra Leone,Germany,own_post,1,,,290.0,9.0,88.0
+SLE,DNK,Sierra Leone,Denmark,regional_post,0,,,820.0,1.3333333333333333,34.8125
+SLE,EST,Sierra Leone,Estonia,regional_post,0,,,5211.0,0.0,5.0
+SLE,GRC,Sierra Leone,Greece,regional_post,0,,,820.0,4.333333333333333,34.8125
+SLE,ESP,Sierra Leone,Spain,neighbour_post,0,,,290.0,20.0,42.0
+SLE,FIN,Sierra Leone,Finland,regional_post,0,,,820.0,2.6666666666666665,34.8125
+SLE,FRA,Sierra Leone,France,own_post,1,,,290.0,42.333333333333336,88.0
+SLE,HRV,Sierra Leone,Croatia,regional_post,0,,,2917.0,1.0,15.153125
+SLE,HUN,Sierra Leone,Hungary,regional_post,0,,,1476.0,1.6666666666666667,28.6625
+SLE,IRL,Sierra Leone,Ireland,own_post,1,,,368.0,4.333333333333333,88.0
+SLE,ITA,Sierra Leone,Italy,neighbour_post,0,,,290.0,3.6666666666666665,42.0
+SLE,LTU,Sierra Leone,Lithuania,represented_c,0,FRA,,5211.0,0.0,48.0
+SLE,LUX,Sierra Leone,Luxembourg,regional_post,0,,,820.0,0.0,34.8125
+SLE,LVA,Sierra Leone,Latvia,represented_c,0,FRA,,5211.0,0.0,48.0
+SLE,MLT,Sierra Leone,Malta,represented_c,0,FRA,,3829.0,0.3333333333333333,48.0
+SLE,NLD,Sierra Leone,Netherlands,regional_post,0,,,742.0,1.3333333333333333,35.0
+SLE,POL,Sierra Leone,Poland,regional_post,0,,,820.0,1.3333333333333333,34.8125
+SLE,PRT,Sierra Leone,Portugal,regional_post,0,,,456.0,14.333333333333334,35.0
+SLE,ROU,Sierra Leone,Romania,regional_post,0,,,820.0,4.0,34.8125
+SLE,SWE,Sierra Leone,Sweden,neighbour_post,0,,,368.0,7.0,42.0
+SLE,SVN,Sierra Leone,Slovenia,regional_post,0,,,3557.0,0.0,9.153125
+SLE,SVK,Sierra Leone,Slovakia,neighbour_post,0,,,290.0,0.0,42.0
+SOM,AUT,"Somalia, Fed. Rep.",Austria,neighbour_post,0,,,1017.0,0.0,42.0
+SOM,BEL,"Somalia, Fed. Rep.",Belgium,neighbour_post,0,,,1017.0,0.3333333333333333,42.0
+SOM,BGR,"Somalia, Fed. Rep.",Bulgaria,neighbour_post,0,,,1063.0,0.0,42.0
+SOM,CYP,"Somalia, Fed. Rep.",Cyprus,regional_post,0,,,3455.0,0.0,10.109375
+SOM,CZE,"Somalia, Fed. Rep.",Czechia,neighbour_post,0,,,1017.0,0.0,42.0
+SOM,DEU,"Somalia, Fed. Rep.",Germany,neighbour_post,0,,,1017.0,7.333333333333333,42.0
+SOM,DNK,"Somalia, Fed. Rep.",Denmark,own_post,1,,,1757.0,2.0,88.0
+SOM,EST,"Somalia, Fed. Rep.",Estonia,regional_post,0,,,3455.0,0.0,10.109375
+SOM,GRC,"Somalia, Fed. Rep.",Greece,neighbour_post,0,,,1017.0,0.0,42.0
+SOM,ESP,"Somalia, Fed. Rep.",Spain,neighbour_post,0,,,1017.0,0.0,42.0
+SOM,FIN,"Somalia, Fed. Rep.",Finland,neighbour_post,0,,,1017.0,1.6666666666666667,42.0
+SOM,FRA,"Somalia, Fed. Rep.",France,neighbour_post,0,,,1017.0,1.0,42.0
+SOM,HRV,"Somalia, Fed. Rep.",Croatia,regional_post,0,,,3455.0,0.0,10.109375
+SOM,HUN,"Somalia, Fed. Rep.",Hungary,neighbour_post,0,,,1017.0,0.0,42.0
+SOM,IRL,"Somalia, Fed. Rep.",Ireland,neighbour_post,0,,,1017.0,13.333333333333334,42.0
+SOM,ITA,"Somalia, Fed. Rep.",Italy,own_post,1,,,1017.0,3.3333333333333335,88.0
+SOM,LTU,"Somalia, Fed. Rep.",Lithuania,regional_post,0,,,3455.0,0.0,10.109375
+SOM,LUX,"Somalia, Fed. Rep.",Luxembourg,neighbour_post,0,,,1063.0,0.0,42.0
+SOM,LVA,"Somalia, Fed. Rep.",Latvia,regional_post,0,,,3455.0,0.3333333333333333,10.109375
+SOM,MLT,"Somalia, Fed. Rep.",Malta,regional_post,0,,,3455.0,0.3333333333333333,10.109375
+SOM,NLD,"Somalia, Fed. Rep.",Netherlands,neighbour_post,0,,,1017.0,0.0,42.0
+SOM,POL,"Somalia, Fed. Rep.",Poland,neighbour_post,0,,,1017.0,1.6666666666666667,42.0
+SOM,PRT,"Somalia, Fed. Rep.",Portugal,neighbour_post,0,,,1017.0,0.0,42.0
+SOM,ROU,"Somalia, Fed. Rep.",Romania,neighbour_post,0,,,1017.0,0.3333333333333333,42.0
+SOM,SWE,"Somalia, Fed. Rep.",Sweden,neighbour_post,0,,,1017.0,3.6666666666666665,42.0
+SOM,SVN,"Somalia, Fed. Rep.",Slovenia,neighbour_post,0,,,1063.0,0.0,42.0
+SOM,SVK,"Somalia, Fed. Rep.",Slovakia,neighbour_post,0,,,1017.0,0.0,42.0
+ZAF,AUT,South Africa,Austria,own_post_vfs,1,,VFS Global,2873.0,40.0,100.0
+ZAF,BEL,South Africa,Belgium,own_post,1,,,2319.0,147.0,88.0
+ZAF,BGR,South Africa,Bulgaria,own_post,1,,,4038.0,5.333333333333333,88.0
+ZAF,CYP,South Africa,Cyprus,regional_post,0,,,6217.0,17.666666666666668,5.0
+ZAF,CZE,South Africa,Czechia,own_post_vfs,1,,VFS Global,1142.0,31.666666666666668,100.0
+ZAF,DEU,South Africa,Germany,own_post_vfs,1,,VFS Global,256.0,414.0,100.0
+ZAF,DNK,South Africa,Denmark,vfs_only,1,,VFS Global,2656.0,123.0,82.0
+ZAF,EST,South Africa,Estonia,regional_post,0,,,6217.0,10.666666666666666,5.0
+ZAF,GRC,South Africa,Greece,own_post_vfs,1,,VFS Global,926.0,7.0,100.0
+ZAF,ESP,South Africa,Spain,own_post_vfs,1,,BLS International,438.0,145.66666666666666,100.0
+ZAF,FIN,South Africa,Finland,own_post,1,,,438.0,45.0,88.0
+ZAF,FRA,South Africa,France,own_post_vfs,1,,VFS Global,256.0,187.0,100.0
+ZAF,HRV,South Africa,Croatia,own_post,1,,,6217.0,14.333333333333334,88.0
+ZAF,HUN,South Africa,Hungary,own_post_vfs,1,,VFS Global,2458.0,50.333333333333336,100.0
+ZAF,IRL,South Africa,Ireland,own_post_vfs,1,,VFS Global,438.0,927.0,100.0
+ZAF,ITA,South Africa,Italy,own_post_vfs,1,,VFS Global,438.0,25.666666666666668,100.0
+ZAF,LTU,South Africa,Lithuania,own_post,1,,,6217.0,9.666666666666666,88.0
+ZAF,LUX,South Africa,Luxembourg,represented_d,1,BEL,,4038.0,42.333333333333336,48.0
+ZAF,LVA,South Africa,Latvia,represented_c,0,FRA,,6217.0,2.6666666666666665,48.0
+ZAF,MLT,South Africa,Malta,represented_c,0,FRA,,6217.0,98.33333333333333,48.0
+ZAF,NLD,South Africa,Netherlands,own_post_vfs,1,,VFS Global,438.0,1671.6666666666667,100.0
+ZAF,POL,South Africa,Poland,own_post_vfs,1,,VFS Global,2319.0,150.33333333333334,100.0
+ZAF,PRT,South Africa,Portugal,own_post,1,,,438.0,196.33333333333334,88.0
+ZAF,ROU,South Africa,Romania,own_post,1,,,926.0,9.0,88.0
+ZAF,SWE,South Africa,Sweden,own_post_vfs,1,,VFS Global,299.0,100.0,100.0
+ZAF,SVN,South Africa,Slovenia,regional_post,0,,,4038.0,9.333333333333334,5.0
+ZAF,SVK,South Africa,Slovakia,own_post,1,,,2873.0,7.666666666666667,88.0
+SSD,AUT,South Sudan,Austria,neighbour_post,0,,,894.0,0.0,42.0
+SSD,BEL,South Sudan,Belgium,neighbour_post,0,,,516.0,1.3333333333333333,42.0
+SSD,BGR,South Sudan,Bulgaria,neighbour_post,0,,,915.0,0.0,42.0
+SSD,CYP,South Sudan,Cyprus,regional_post,0,,,2808.0,0.0,16.175
+SSD,CZE,South Sudan,Czechia,neighbour_post,0,,,894.0,0.0,42.0
+SSD,DEU,South Sudan,Germany,own_post,1,,,516.0,0.6666666666666666,88.0
+SSD,DNK,South Sudan,Denmark,regional_post,0,,,776.0,1.6666666666666667,35.0
+SSD,EST,South Sudan,Estonia,regional_post,0,,,2808.0,0.0,16.175
+SSD,GRC,South Sudan,Greece,neighbour_post,0,,,894.0,0.0,42.0
+SSD,ESP,South Sudan,Spain,neighbour_post,0,,,894.0,0.3333333333333333,42.0
+SSD,FIN,South Sudan,Finland,neighbour_post,0,,,894.0,0.3333333333333333,42.0
+SSD,FRA,South Sudan,France,own_post,1,,,516.0,6.333333333333333,88.0
+SSD,HRV,South Sudan,Croatia,regional_post,0,,,2808.0,0.0,16.175
+SSD,HUN,South Sudan,Hungary,neighbour_post,0,,,894.0,0.0,42.0
+SSD,IRL,South Sudan,Ireland,neighbour_post,0,,,516.0,1.0,42.0
+SSD,ITA,South Sudan,Italy,neighbour_post,0,,,516.0,0.3333333333333333,42.0
+SSD,LTU,South Sudan,Lithuania,represented_c,0,FRA,,2808.0,1.0,48.0
+SSD,LUX,South Sudan,Luxembourg,represented_d,1,NLD,,915.0,0.0,48.0
+SSD,LVA,South Sudan,Latvia,represented_c,0,FRA,,2808.0,0.0,48.0
+SSD,MLT,South Sudan,Malta,represented_c,0,FRA,,2808.0,0.0,48.0
+SSD,NLD,South Sudan,Netherlands,own_post,1,,,516.0,0.6666666666666666,88.0
+SSD,POL,South Sudan,Poland,neighbour_post,0,,,776.0,0.0,42.0
+SSD,PRT,South Sudan,Portugal,neighbour_post,0,,,894.0,0.0,42.0
+SSD,ROU,South Sudan,Romania,neighbour_post,0,,,894.0,1.3333333333333333,42.0
+SSD,SWE,South Sudan,Sweden,neighbour_post,0,,,516.0,0.0,42.0
+SSD,SVN,South Sudan,Slovenia,neighbour_post,0,,,915.0,0.0,42.0
+SSD,SVK,South Sudan,Slovakia,neighbour_post,0,,,894.0,0.0,42.0
+SDN,AUT,Sudan,Austria,neighbour_post,0,,,996.0,3.0,42.0
+SDN,BEL,Sudan,Belgium,neighbour_post,0,,,996.0,4.666666666666667,42.0
+SDN,BGR,Sudan,Bulgaria,neighbour_post,0,,,996.0,0.3333333333333333,42.0
+SDN,CYP,Sudan,Cyprus,neighbour_post,0,,,1619.0,1.0,42.0
+SDN,CZE,Sudan,Czechia,neighbour_post,0,,,996.0,3.0,42.0
+SDN,DEU,Sudan,Germany,own_post,1,,,682.0,58.0,88.0
+SDN,DNK,Sudan,Denmark,regional_post,0,,,1965.0,3.6666666666666665,24.078125
+SDN,EST,Sudan,Estonia,neighbour_post,0,,,1619.0,0.6666666666666666,42.0
+SDN,GRC,Sudan,Greece,neighbour_post,0,,,996.0,1.0,42.0
+SDN,ESP,Sudan,Spain,own_post,1,,,996.0,5.333333333333333,88.0
+SDN,FIN,Sudan,Finland,neighbour_post,0,,,996.0,4.0,42.0
+SDN,FRA,Sudan,France,own_post,1,,,682.0,12.666666666666666,88.0
+SDN,HRV,Sudan,Croatia,neighbour_post,0,,,1619.0,1.0,42.0
+SDN,HUN,Sudan,Hungary,neighbour_post,0,,,1619.0,5.333333333333333,42.0
+SDN,IRL,Sudan,Ireland,neighbour_post,0,,,996.0,107.0,42.0
+SDN,ITA,Sudan,Italy,own_post,1,,,682.0,14.0,88.0
+SDN,LTU,Sudan,Lithuania,represented_c,0,FRA,,1619.0,0.6666666666666666,48.0
+SDN,LUX,Sudan,Luxembourg,represented_d,1,NLD,,996.0,1.6666666666666667,48.0
+SDN,LVA,Sudan,Latvia,represented_c,0,FRA,,1619.0,0.0,48.0
+SDN,MLT,Sudan,Malta,represented_c,0,FRA,,1619.0,3.6666666666666665,48.0
+SDN,NLD,Sudan,Netherlands,own_post,1,,,996.0,25.333333333333332,88.0
+SDN,POL,Sudan,Poland,neighbour_post,0,,,996.0,8.666666666666666,42.0
+SDN,PRT,Sudan,Portugal,neighbour_post,0,,,996.0,3.3333333333333335,42.0
+SDN,ROU,Sudan,Romania,own_post,1,,,996.0,137.66666666666666,88.0
+SDN,SWE,Sudan,Sweden,own_post,1,,,996.0,6.666666666666667,88.0
+SDN,SVN,Sudan,Slovenia,neighbour_post,0,,,996.0,0.0,42.0
+SDN,SVK,Sudan,Slovakia,neighbour_post,0,,,996.0,0.0,42.0
+TZA,AUT,Tanzania,Austria,represented_c,0,BEL,,557.0,4.666666666666667,48.0
+TZA,BEL,Tanzania,Belgium,own_post,1,,,557.0,1.6666666666666667,88.0
+TZA,BGR,Tanzania,Bulgaria,regional_post,0,,,1728.0,0.0,26.3
+TZA,CYP,Tanzania,Cyprus,regional_post,0,,,4060.0,0.6666666666666666,5.0
+TZA,CZE,Tanzania,Czechia,neighbour_post,0,,,557.0,2.6666666666666665,42.0
+TZA,DEU,Tanzania,Germany,own_post_vfs,1,,VFS Global,557.0,68.0,100.0
+TZA,DNK,Tanzania,Denmark,neighbour_post,0,,,787.0,163.0,42.0
+TZA,EST,Tanzania,Estonia,regional_post,0,,,4060.0,0.6666666666666666,5.0
+TZA,GRC,Tanzania,Greece,neighbour_post,0,,,557.0,2.0,42.0
+TZA,ESP,Tanzania,Spain,own_post,1,,,557.0,15.0,88.0
+TZA,FIN,Tanzania,Finland,own_post,1,,,557.0,15.666666666666666,88.0
+TZA,FRA,Tanzania,France,own_post_vfs,1,,VFS Global,557.0,7.666666666666667,100.0
+TZA,HRV,Tanzania,Croatia,regional_post,0,,,2319.0,23.333333333333332,20.759375
+TZA,HUN,Tanzania,Hungary,neighbour_post,0,,,557.0,5.0,42.0
+TZA,IRL,Tanzania,Ireland,own_post,1,,,557.0,10.0,88.0
+TZA,ITA,Tanzania,Italy,own_post,1,,,557.0,2.3333333333333335,88.0
+TZA,LTU,Tanzania,Lithuania,represented_c,0,FRA,,2319.0,0.0,48.0
+TZA,LUX,Tanzania,Luxembourg,represented_d,1,BEL,,1728.0,0.6666666666666666,48.0
+TZA,LVA,Tanzania,Latvia,represented_c,0,FRA,,4060.0,0.0,48.0
+TZA,MLT,Tanzania,Malta,represented_c,0,FRA,,4060.0,3.3333333333333335,48.0
+TZA,NLD,Tanzania,Netherlands,own_post,1,,,557.0,21.666666666666668,88.0
+TZA,POL,Tanzania,Poland,own_post,1,,,557.0,76.33333333333333,88.0
+TZA,PRT,Tanzania,Portugal,neighbour_post,0,,,557.0,2.6666666666666665,42.0
+TZA,ROU,Tanzania,Romania,neighbour_post,0,,,557.0,13.0,42.0
+TZA,SWE,Tanzania,Sweden,own_post,1,,,557.0,6.666666666666667,88.0
+TZA,SVN,Tanzania,Slovenia,regional_post,0,,,1728.0,0.3333333333333333,26.3
+TZA,SVK,Tanzania,Slovakia,neighbour_post,0,,,557.0,0.6666666666666666,42.0
+TGO,AUT,Togo,Austria,regional_post,0,,,724.0,1.0,35.0
+TGO,BEL,Togo,Belgium,neighbour_post,0,,,163.0,3.6666666666666665,42.0
+TGO,BGR,Togo,Bulgaria,regional_post,0,,,724.0,0.0,35.0
+TGO,CYP,Togo,Cyprus,regional_post,0,,,4105.0,0.3333333333333333,5.0
+TGO,CZE,Togo,Czechia,neighbour_post,0,,,190.0,0.0,42.0
+TGO,DEU,Togo,Germany,own_post,1,,,163.0,68.66666666666667,88.0
+TGO,DNK,Togo,Denmark,regional_post,0,,,2261.0,0.3333333333333333,21.303125
+TGO,EST,Togo,Estonia,regional_post,0,,,4105.0,0.0,5.0
+TGO,GRC,Togo,Greece,regional_post,0,,,724.0,2.0,35.0
+TGO,ESP,Togo,Spain,neighbour_post,0,,,190.0,22.666666666666668,42.0
+TGO,FIN,Togo,Finland,regional_post,0,,,724.0,2.0,35.0
+TGO,FRA,Togo,France,own_post_vfs,1,,VFS Global,163.0,90.0,100.0
+TGO,HRV,Togo,Croatia,regional_post,0,,,3198.0,0.0,12.51875
+TGO,HUN,Togo,Hungary,neighbour_post,0,,,190.0,6.0,42.0
+TGO,IRL,Togo,Ireland,regional_post,0,,,724.0,2.0,35.0
+TGO,ITA,Togo,Italy,neighbour_post,0,,,190.0,20.666666666666668,42.0
+TGO,LTU,Togo,Lithuania,represented_c,0,FRA,,4105.0,1.3333333333333333,48.0
+TGO,LUX,Togo,Luxembourg,regional_post,0,,,2261.0,5.0,21.303125
+TGO,LVA,Togo,Latvia,represented_c,0,FRA,,4105.0,0.0,48.0
+TGO,MLT,Togo,Malta,represented_c,0,FRA,,3198.0,1.6666666666666667,48.0
+TGO,NLD,Togo,Netherlands,neighbour_post,0,,,163.0,2.6666666666666665,42.0
+TGO,POL,Togo,Poland,regional_post,0,,,724.0,0.6666666666666666,35.0
+TGO,PRT,Togo,Portugal,regional_post,0,,,724.0,5.333333333333333,35.0
+TGO,ROU,Togo,Romania,regional_post,0,,,724.0,3.6666666666666665,35.0
+TGO,SWE,Togo,Sweden,neighbour_post,0,,,724.0,1.0,42.0
+TGO,SVN,Togo,Slovenia,regional_post,0,,,3417.0,0.3333333333333333,10.465625
+TGO,SVK,Togo,Slovakia,regional_post,0,,,724.0,0.0,35.0
+TUN,AUT,Tunisia,Austria,own_post,1,,,528.0,97.0,88.0
+TUN,BEL,Tunisia,Belgium,own_post_vfs,1,,TLScontact,643.0,318.3333333333333,100.0
+TUN,BGR,Tunisia,Bulgaria,own_post,1,,,643.0,68.66666666666667,88.0
+TUN,CYP,Tunisia,Cyprus,regional_post,0,,,2089.0,3.3333333333333335,22.915625
+TUN,CZE,Tunisia,Czechia,own_post,1,,,643.0,30.666666666666668,88.0
+TUN,DEU,Tunisia,Germany,own_post_vfs,1,,VFS Global,643.0,1696.6666666666667,100.0
+TUN,DNK,Tunisia,Denmark,regional_post,0,,,3689.0,23.0,7.915624999999999
+TUN,EST,Tunisia,Estonia,regional_post,0,,,2089.0,2.3333333333333335,22.915625
+TUN,GRC,Tunisia,Greece,own_post,1,,,528.0,184.0,88.0
+TUN,ESP,Tunisia,Spain,own_post,1,,,528.0,163.66666666666666,88.0
+TUN,FIN,Tunisia,Finland,own_post,1,,,643.0,33.0,88.0
+TUN,FRA,Tunisia,France,own_post_vfs,1,,TLScontact,528.0,8180.666666666667,100.0
+TUN,HRV,Tunisia,Croatia,neighbour_post,0,,,528.0,69.0,42.0
+TUN,HUN,Tunisia,Hungary,own_post,1,,,528.0,90.33333333333333,88.0
+TUN,IRL,Tunisia,Ireland,regional_post,0,,,2089.0,43.0,22.915625
+TUN,ITA,Tunisia,Italy,own_post_vfs,1,,VFS Global,528.0,1953.3333333333333,100.0
+TUN,LTU,Tunisia,Lithuania,represented_c,0,FRA,,2089.0,5.333333333333333,48.0
+TUN,LUX,Tunisia,Luxembourg,represented_d,1,BEL,,3689.0,168.0,48.0
+TUN,LVA,Tunisia,Latvia,represented_c,0,FRA,,2089.0,3.6666666666666665,48.0
+TUN,MLT,Tunisia,Malta,own_post_vfs,1,,VFS Global,528.0,161.33333333333334,100.0
+TUN,NLD,Tunisia,Netherlands,own_post,1,,,528.0,122.66666666666667,88.0
+TUN,POL,Tunisia,Poland,own_post,1,,,528.0,148.66666666666666,88.0
+TUN,PRT,Tunisia,Portugal,own_post,1,,,643.0,262.6666666666667,88.0
+TUN,ROU,Tunisia,Romania,own_post,1,,,528.0,170.66666666666666,88.0
+TUN,SWE,Tunisia,Sweden,own_post,1,,,643.0,56.0,88.0
+TUN,SVN,Tunisia,Slovenia,neighbour_post,0,,,643.0,17.666666666666668,42.0
+TUN,SVK,Tunisia,Slovakia,regional_post,0,,,2089.0,3.3333333333333335,22.915625
+UGA,AUT,Uganda,Austria,represented_c,0,BEL,,506.0,11.333333333333334,48.0
+UGA,BEL,Uganda,Belgium,own_post,1,,,506.0,5.666666666666667,88.0
+UGA,BGR,Uganda,Bulgaria,regional_post,0,,,1192.0,0.3333333333333333,31.325
+UGA,CYP,Uganda,Cyprus,regional_post,0,,,3310.0,7.0,11.46875
+UGA,CZE,Uganda,Czechia,neighbour_post,0,,,506.0,4.666666666666667,42.0
+UGA,DEU,Uganda,Germany,own_post_vfs,1,,VFS Global,377.0,218.66666666666666,100.0
+UGA,DNK,Uganda,Denmark,neighbour_post,0,,,377.0,367.0,42.0
+UGA,EST,Uganda,Estonia,regional_post,0,,,3310.0,0.0,11.46875
+UGA,GRC,Uganda,Greece,neighbour_post,0,,,506.0,5.333333333333333,42.0
+UGA,ESP,Uganda,Spain,neighbour_post,0,,,506.0,12.0,42.0
+UGA,FIN,Uganda,Finland,neighbour_post,0,,,506.0,11.0,42.0
+UGA,FRA,Uganda,France,own_post,1,,,377.0,8.666666666666666,88.0
+UGA,HRV,Uganda,Croatia,regional_post,0,,,2938.0,8.666666666666666,14.95625
+UGA,HUN,Uganda,Hungary,neighbour_post,0,,,506.0,8.333333333333334,42.0
+UGA,IRL,Uganda,Ireland,own_post,1,,,506.0,27.0,88.0
+UGA,ITA,Uganda,Italy,own_post,1,,,506.0,6.666666666666667,88.0
+UGA,LTU,Uganda,Lithuania,represented_c,0,FRA,,2938.0,1.3333333333333333,48.0
+UGA,LUX,Uganda,Luxembourg,represented_d,1,BEL,,1192.0,1.0,48.0
+UGA,LVA,Uganda,Latvia,represented_c,0,FRA,,3310.0,0.0,48.0
+UGA,MLT,Uganda,Malta,represented_c,0,FRA,,3310.0,15.333333333333334,48.0
+UGA,NLD,Uganda,Netherlands,own_post,1,,,377.0,27.0,88.0
+UGA,POL,Uganda,Poland,neighbour_post,0,,,377.0,143.0,42.0
+UGA,PRT,Uganda,Portugal,neighbour_post,0,,,506.0,2.0,42.0
+UGA,ROU,Uganda,Romania,neighbour_post,0,,,506.0,26.0,42.0
+UGA,SWE,Uganda,Sweden,own_post,1,,,377.0,10.666666666666666,88.0
+UGA,SVN,Uganda,Slovenia,regional_post,0,,,1192.0,0.3333333333333333,31.325
+UGA,SVK,Uganda,Slovakia,neighbour_post,0,,,506.0,0.6666666666666666,42.0
+ZMB,AUT,Zambia,Austria,regional_post,0,,,1142.0,0.6666666666666666,31.79375
+ZMB,BEL,Zambia,Belgium,neighbour_post,0,,,1142.0,2.3333333333333335,42.0
+ZMB,BGR,Zambia,Bulgaria,regional_post,0,,,1142.0,0.3333333333333333,31.79375
+ZMB,CYP,Zambia,Cyprus,regional_post,0,,,5076.0,0.6666666666666666,5.0
+ZMB,CZE,Zambia,Czechia,own_post,1,,,1142.0,3.3333333333333335,88.0
+ZMB,DEU,Zambia,Germany,own_post_vfs,1,,VFS Global,397.0,20.666666666666668,100.0
+ZMB,DNK,Zambia,Denmark,regional_post,0,,,1519.0,2.6666666666666665,28.259375
+ZMB,EST,Zambia,Estonia,regional_post,0,,,5076.0,0.0,5.0
+ZMB,GRC,Zambia,Greece,neighbour_post,0,,,397.0,0.3333333333333333,42.0
+ZMB,ESP,Zambia,Spain,neighbour_post,0,,,397.0,3.0,42.0
+ZMB,FIN,Zambia,Finland,own_post,1,,,1142.0,22.666666666666668,88.0
+ZMB,FRA,Zambia,France,own_post,1,,,397.0,2.3333333333333335,88.0
+ZMB,HRV,Zambia,Croatia,regional_post,0,,,1142.0,2.6666666666666665,31.79375
+ZMB,HUN,Zambia,Hungary,neighbour_post,0,,,1142.0,2.0,42.0
+ZMB,IRL,Zambia,Ireland,own_post,1,,,620.0,17.666666666666668,88.0
+ZMB,ITA,Zambia,Italy,own_post,1,,,397.0,1.0,88.0
+ZMB,LTU,Zambia,Lithuania,represented_c,0,FRA,,1142.0,0.3333333333333333,48.0
+ZMB,LUX,Zambia,Luxembourg,regional_post,0,,,2967.0,0.3333333333333333,14.684375
+ZMB,LVA,Zambia,Latvia,represented_c,0,FRA,,5076.0,0.0,48.0
+ZMB,MLT,Zambia,Malta,represented_c,0,FRA,,5076.0,1.6666666666666667,48.0
+ZMB,NLD,Zambia,Netherlands,neighbour_post,0,,,397.0,11.0,42.0
+ZMB,POL,Zambia,Poland,neighbour_post,0,,,1142.0,14.0,42.0
+ZMB,PRT,Zambia,Portugal,neighbour_post,0,,,397.0,1.3333333333333333,42.0
+ZMB,ROU,Zambia,Romania,neighbour_post,0,,,397.0,4.0,42.0
+ZMB,SWE,Zambia,Sweden,own_post,1,,,397.0,2.6666666666666665,88.0
+ZMB,SVN,Zambia,Slovenia,regional_post,0,,,2967.0,0.0,14.684375
+ZMB,SVK,Zambia,Slovakia,regional_post,0,,,1142.0,0.6666666666666666,31.79375
+ZWE,AUT,Zimbabwe,Austria,neighbour_post,0,,,926.0,11.0,42.0
+ZWE,BEL,Zimbabwe,Belgium,neighbour_post,0,,,926.0,11.333333333333334,42.0
+ZWE,BGR,Zimbabwe,Bulgaria,neighbour_post,0,,,926.0,0.3333333333333333,42.0
+ZWE,CYP,Zimbabwe,Cyprus,regional_post,0,,,5329.0,4.333333333333333,5.0
+ZWE,CZE,Zimbabwe,Czechia,neighbour_post,0,,,397.0,17.666666666666668,42.0
+ZWE,DEU,Zimbabwe,Germany,own_post_vfs,1,,VFS Global,397.0,154.66666666666666,100.0
+ZWE,DNK,Zimbabwe,Denmark,regional_post,0,,,1773.0,13.666666666666666,25.878125
+ZWE,EST,Zimbabwe,Estonia,regional_post,0,,,5329.0,0.0,5.0
+ZWE,GRC,Zimbabwe,Greece,own_post,1,,,926.0,3.6666666666666665,88.0
+ZWE,ESP,Zimbabwe,Spain,own_post,1,,,919.0,10.0,88.0
+ZWE,FIN,Zimbabwe,Finland,neighbour_post,0,,,397.0,13.333333333333334,42.0
+ZWE,FRA,Zimbabwe,France,own_post,1,,,397.0,18.666666666666668,88.0
+ZWE,HRV,Zimbabwe,Croatia,neighbour_post,0,,,926.0,3.0,42.0
+ZWE,HUN,Zimbabwe,Hungary,neighbour_post,0,,,926.0,9.333333333333334,42.0
+ZWE,IRL,Zimbabwe,Ireland,neighbour_post,0,,,397.0,509.3333333333333,42.0
+ZWE,ITA,Zimbabwe,Italy,own_post,1,,,397.0,3.0,88.0
+ZWE,LTU,Zimbabwe,Lithuania,represented_c,0,FRA,,926.0,138.33333333333334,48.0
+ZWE,LUX,Zimbabwe,Luxembourg,represented_d,1,NLD,,3112.0,4.333333333333333,48.0
+ZWE,LVA,Zimbabwe,Latvia,represented_c,0,FRA,,5329.0,0.0,48.0
+ZWE,MLT,Zimbabwe,Malta,represented_c,0,FRA,,5329.0,24.333333333333332,48.0
+ZWE,NLD,Zimbabwe,Netherlands,own_post,1,,,919.0,72.0,88.0
+ZWE,POL,Zimbabwe,Poland,neighbour_post,0,,,926.0,1103.0,42.0
+ZWE,PRT,Zimbabwe,Portugal,own_post,1,,,919.0,9.333333333333334,88.0
+ZWE,ROU,Zimbabwe,Romania,own_post,1,,,926.0,1.6666666666666667,88.0
+ZWE,SWE,Zimbabwe,Sweden,own_post,1,,,397.0,9.666666666666666,88.0
+ZWE,SVN,Zimbabwe,Slovenia,regional_post,0,,,3112.0,2.0,13.325
+ZWE,SVK,Zimbabwe,Slovakia,neighbour_post,0,,,926.0,55.333333333333336,42.0

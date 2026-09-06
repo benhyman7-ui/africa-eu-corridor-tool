@@ -1,0 +1,8 @@
+represented_iso3,representing_iso3,scope,source_url,confidence,note
+LUX,BEL,both,https://guichet.public.lu/en/citoyens/immigration/moins-3-mois/ressortissant-tiers/entree-visa.html,high,"Luxembourg states long-stay (type D) applications go to a Luxembourg OR Belgian post depending on country of residence; Benelux arrangement covers both scopes."
+LUX,NLD,both,https://mae.gouvernement.lu/en/services-aux-citoyens/visa-immigration.html,medium,"Where Luxembourg is not represented, the Belgian or Dutch consulate acts on its behalf including for long-stay issuance."
+MLT,FRA,short_stay,https://www.eeas.europa.eu/,medium,"Cote d'Ivoire published guidance routes Malta short-stay applications to the French Consulate General. Long-stay work visas are not covered by Art 8 representation and remain with Malta's own posts."
+LVA,FRA,short_stay,https://www.eeas.europa.eu/,medium,"Same Cote d'Ivoire guidance; France receives for Latvia. Short-stay only."
+LTU,FRA,short_stay,https://www.eeas.europa.eu/,medium,"Same Cote d'Ivoire guidance; France receives for Lithuania. Short-stay only."
+AUT,BEL,short_stay,https://www.eeas.europa.eu/,low,"Cote d'Ivoire guidance lists Belgium receiving for Austria. Austria has wide own coverage in Africa so this rarely binds."
+SWE,BEL,short_stay,https://www.eeas.europa.eu/,low,"Cote d'Ivoire guidance lists Belgium receiving for Sweden."

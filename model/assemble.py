@@ -479,6 +479,61 @@ def main() -> None:
           f"salary threshold on file for "
           f"{int(C.req_blue_card_salary_eur.notna().sum() / 54)} destinations")
 
+    # ---- the route an applicant actually has ------------------------------- #
+    # Built because the tool previously modelled a destination's OWN posts and
+    # nothing else, and so scored 21 corridors at 5-20 on consular access while
+    # they moved 1,398 permits a year between them. Two mechanisms were
+    # invisible: outsourcing to VFS/TLS/BLS, and Schengen Article 8
+    # representation, where another member state receives applications on
+    # behalf of one with no post.
+    #
+    # Representation is encoded as RULES in ref/visa_representation.csv
+    # (represented state, representing state, scope) and applied wherever the
+    # representing state has a post and the represented one does not - far more
+    # defensible than hand-curating 1,458 rows. The scope column is the point:
+    # most representation covers short-stay type C only, which does nothing for
+    # someone who needs a work visa, and Luxembourg's Benelux arrangement is
+    # the documented exception that also covers long-stay type D.
+    step("visa access route per corridor")
+    rep = pd.read_csv(REF / "visa_representation.csv", encoding="utf-8")
+    own = ((C.visa_consulate_present == 1) | (C.dest_embassy_in_orig == 1))
+    own_lookup = {(d, o) for d, o, k in zip(C.dest, C.orig, own) if k}
+
+    rep_state, rep_scope = [], []
+    for dest, orig, has_own in zip(C.dest, C.orig, own):
+        state, scope = "", ""
+        if not has_own:
+            for r in rep[rep.represented_iso3 == dest].itertuples():
+                if (r.representing_iso3, orig) in own_lookup:
+                    # A long-stay arrangement beats a short-stay one.
+                    if r.scope in ("both", "long_stay") and scope != "both":
+                        state, scope = r.representing_iso3, "both"
+                    elif not scope:
+                        state, scope = r.representing_iso3, r.scope
+        rep_state.append(state)
+        rep_scope.append(scope)
+    C["represented_by"] = rep_state
+    C["representation_scope"] = rep_scope
+
+    C["visa_route"] = np.select(
+        [own & (C.vfs_present == 1),
+         own,
+         C.vfs_present == 1,
+         C.representation_scope == "both",
+         C.representation_scope != "",
+         C.neighbour_embassy == 1,
+         C.nearest_embassy_km.notna()],
+        ["own_post_vfs", "own_post", "vfs_only", "represented_d",
+         "represented_c", "neighbour_post", "regional_post"],
+        default="none")
+    # Can a LONG-STAY work application be lodged in the applicant's own country?
+    C["route_covers_long_stay"] = C.visa_route.isin(
+        ["own_post_vfs", "own_post", "vfs_only", "represented_d"]).astype(int)
+    counts = C.visa_route.value_counts()
+    print("    " + ", ".join(f"{k} {v}" for k, v in counts.items()))
+    print(f"    long-stay lodgeable in country on {int(C.route_covers_long_stay.sum())}"
+          f" of {len(C)} corridors")
+
     step("skills supply at origin (UNESCO UIS, WHO)")
     uis = _opt("uis_skills")
     if uis is not None:
